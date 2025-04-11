@@ -58,7 +58,9 @@ export default {
 				sciscribe: {
 					navy: '#0A192F',
 					light: '#F7F8FA',
-					gold: '#FFC107'
+					gold: '#FFC107',
+					dark: '#121212',
+					darkAccent: '#1E1E1E'
 				},
 				sidebar: {
 					DEFAULT: 'hsl(var(--sidebar-background))',
