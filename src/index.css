@@ -2,6 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&display=swap');
+
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -96,6 +98,21 @@
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-sans antialiased;
+    scroll-behavior: smooth;
+  }
+}
+
+@layer components {
+  .nav-link {
+    @apply relative py-2 after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 after:bg-sciscribe-gold after:transition-all after:duration-300 hover:after:w-full;
+  }
+
+  .btn-hover {
+    @apply transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5;
+  }
+
+  .section-container {
+    @apply container mx-auto px-6 py-16 md:py-24;
   }
 }
