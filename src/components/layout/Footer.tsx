@@ -1,5 +1,6 @@
 
 import { Linkedin, Twitter } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
@@ -8,9 +9,11 @@ const Footer = () => {
         <div className="flex flex-col items-center justify-between space-y-6 md:flex-row md:space-y-0">
           {/* Logo */}
           <div className="text-center md:text-left">
-            <h3 className="text-xl font-bold">
-              SciScribe<span className="text-sciscribe-gold">Solutions</span>
-            </h3>
+            <Link to="/">
+              <h3 className="text-xl font-bold">
+                SciScribe<span className="text-sciscribe-gold">Solutions</span>
+              </h3>
+            </Link>
             <p className="mt-1 text-sm text-gray-300">
               Elevating research through expert editing
             </p>
@@ -18,34 +21,38 @@ const Footer = () => {
 
           {/* Quick Links */}
           <div className="flex flex-wrap justify-center gap-6 text-sm">
-            <a href="#" className="hover:text-sciscribe-gold">
+            <Link to="/" className="hover:text-sciscribe-gold transition-colors duration-300">
               Home
-            </a>
-            <a href="#about" className="hover:text-sciscribe-gold">
+            </Link>
+            <Link to="/about" className="hover:text-sciscribe-gold transition-colors duration-300">
               About
-            </a>
-            <a href="#services" className="hover:text-sciscribe-gold">
+            </Link>
+            <Link to="/services" className="hover:text-sciscribe-gold transition-colors duration-300">
               Services
-            </a>
-            <a href="#portfolio" className="hover:text-sciscribe-gold">
-              Portfolio
-            </a>
-            <a href="#contact" className="hover:text-sciscribe-gold">
+            </Link>
+            <Link to="/pricing" className="hover:text-sciscribe-gold transition-colors duration-300">
+              Pricing
+            </Link>
+            <Link to="/contact" className="hover:text-sciscribe-gold transition-colors duration-300">
               Contact
-            </a>
+            </Link>
           </div>
 
           {/* Social Media */}
           <div className="flex space-x-4">
             <a
-              href="#"
+              href="https://linkedin.com"
+              target="_blank"
+              rel="noopener noreferrer"
               className="rounded-full bg-white/10 p-2 transition-colors hover:bg-sciscribe-gold"
               aria-label="LinkedIn"
             >
               <Linkedin size={18} />
             </a>
             <a
-              href="#"
+              href="https://twitter.com"
+              target="_blank"
+              rel="noopener noreferrer"
               className="rounded-full bg-white/10 p-2 transition-colors hover:bg-sciscribe-gold"
               aria-label="Twitter"
             >
