@@ -58,18 +58,18 @@ export default {
 					foreground: 'hsl(var(--card-foreground))'
 				},
 				sciscribe: {
-					navy: '#0B1B2A', // Updated to Deep Navy
-					light: '#F9FAFB', // Updated to Snow White
-					gold: '#FBBF24', // Updated to Golden Ochre
-					dark: '#121212',
-					darkAccent: '#1E1E1E',
-					purple: '#8B5CF6',
-					blue: '#3B82F6', // Updated to Royal Blue
+					navy: '#0B1B2A', // Deep Navy (keeping for compatibility)
+					teal: '#14B8A6', // Vibrant Teal (now primary)
+					light: '#F9FAFD', // Ultra Light Teal background
+					dark: '#141E26', // Deep Charcoal
+					darkAccent: '#1E252D',
+					purple: '#A855F7', // Vibrant Purple (now accent)
+					blue: '#0EA5E9', // Cyan Blue
 					pink: '#D946EF',
-					teal: '#14B8A6',
-					amber: '#F59E0B',
-					emerald: '#10B981', // Success Alert Color
-					sky: '#93C5FD', // Sky Blue Tint for hover
+					dark: '#121212',
+					emerald: '#10B981', // Success Color
+					coral: '#F97066', // Alternative accent/highlight
+					slate: '#64748B', // Neutral slate
 					mist: '#E5E7EB', // Mist Gray for card backgrounds/dividers
 				},
 				sidebar: {
@@ -164,11 +164,15 @@ export default {
 			backgroundImage: {
 				'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
 				'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
-				'gradient-primary': 'linear-gradient(90deg, hsla(46, 73%, 75%, 1) 0%, hsla(176, 73%, 88%, 1) 100%)',
-				'gradient-gold': 'linear-gradient(90deg, #FFC107 0%, #F7CE68 100%)',
-				'gradient-blue': 'linear-gradient(90deg, hsla(221, 45%, 73%, 1) 0%, hsla(220, 78%, 29%, 1) 100%)',
-				'gradient-purple': 'linear-gradient(90deg, hsla(277, 75%, 84%, 1) 0%, hsla(297, 50%, 51%, 1) 100%)',
-				'gradient-shimmer': 'linear-gradient(to right, transparent 0%, rgba(255,255,255,0.2) 20%, transparent 40%, transparent 100%)'
+				'gradient-primary': 'linear-gradient(90deg, #14B8A6 0%, #0EA5E9 100%)',
+				'gradient-secondary': 'linear-gradient(90deg, #A855F7 0%, #D946EF 100%)',
+				'gradient-teal': 'linear-gradient(90deg, #2DD4BF 0%, #14B8A6 100%)',
+				'gradient-purple': 'linear-gradient(90deg, #A855F7 0%, #D946EF 100%)',
+				'gradient-coral': 'linear-gradient(90deg, #F97066 0%, #FB923C 100%)',
+				'gradient-shimmer': 'linear-gradient(to right, transparent 0%, rgba(255,255,255,0.2) 20%, transparent 40%, transparent 100%)',
+				'gradient-dark': 'linear-gradient(180deg, #141E26 0%, #1E252D 100%)',
+				'gradient-glass': 'linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%)',
+				'gradient-mesh': 'radial-gradient(at 80% 20%, hsla(175, 84%, 32%, 0.2) 0px, transparent 50%), radial-gradient(at 20% 70%, hsla(265, 80%, 65%, 0.2) 0px, transparent 50%)'
 			}
 		}
 	},

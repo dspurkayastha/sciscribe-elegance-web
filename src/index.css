@@ -6,45 +6,45 @@
 
 @layer base {
   :root {
-    /* Snow White background */
-    --background: 210 20% 98%; 
-    /* Deep Navy text */
-    --foreground: 212 54% 11%; 
+    /* Modern teal-inspired background */
+    --background: 180 10% 99%; 
+    /* Deep teal text */
+    --foreground: 180 40% 12%; 
 
     --card: 0 0% 100%;
-    --card-foreground: 212 54% 11%;
+    --card-foreground: 180 40% 12%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 212 54% 11%;
+    --popover-foreground: 180 40% 12%;
 
-    /* Royal Blue primary */
-    --primary: 214 90% 52%; 
-    --primary-foreground: 210 40% 98%;
+    /* Vibrant Teal primary */
+    --primary: 175 84% 32%; 
+    --primary-foreground: 0 0% 100%;
 
-    /* Mist Gray secondary */
+    /* Light Gray secondary */
     --secondary: 220 13% 91%; 
-    --secondary-foreground: 212 54% 11%;
+    --secondary-foreground: 180 40% 12%;
 
-    --muted: 220 13% 91%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 210 20% 96%;
+    --muted-foreground: 215 20% 45%;
 
-    /* Golden Ochre accent */
-    --accent: 38 96% 58%; 
-    --accent-foreground: 212 54% 11%;
+    /* Accent purple */
+    --accent: 265 80% 65%; 
+    --accent-foreground: 0 0% 100%;
 
-    /* Emerald Green for success/destructive */
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    /* Error/destructive color */
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 220 13% 91%;
-    --input: 220 13% 91%;
-    /* Golden Ochre ring */
-    --ring: 38 96% 58%; 
+    --border: 214 32% 91%;
+    --input: 214 32% 91%;
+    /* Accent purple ring */
+    --ring: 265 80% 65%; 
 
-    --radius: 1rem;
+    --radius: 0.75rem;
 
-    /* Sky Blue for hover */
-    --hover: 210 91% 79%;
+    /* Hover state color */
+    --hover: 175 84% 42%;
 
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5.3% 26.1%;
@@ -57,41 +57,41 @@
   }
 
   .dark {
-    /* Deep rich navy for dark mode */
-    --background: 217 28% 8%; 
-    --foreground: 0 0% 98%;
+    /* Deep rich charcoal background */
+    --background: 200 15% 8%; 
+    --foreground: 0 0% 96%;
 
     /* Slightly brighter for cards in dark mode */
-    --card: 217 28% 10%; 
-    --card-foreground: 0 0% 98%;
+    --card: 200 15% 12%; 
+    --card-foreground: 0 0% 96%;
 
-    --popover: 217 28% 10%;
-    --popover-foreground: 0 0% 98%;
+    --popover: 200 15% 12%;
+    --popover-foreground: 0 0% 96%;
 
-    /* Royal Blue stays bright in dark mode */
-    --primary: 214 90% 52%; 
-    --primary-foreground: 0 0% 98%;
+    /* Vibrant teal stays bright in dark mode */
+    --primary: 175 84% 32%; 
+    --primary-foreground: 0 0% 96%;
 
     /* Darker secondary in dark mode */
-    --secondary: 217 19% 18%; 
-    --secondary-foreground: 0 0% 98%;
+    --secondary: 200 15% 18%; 
+    --secondary-foreground: 0 0% 96%;
 
-    --muted: 217 19% 18%;
-    --muted-foreground: 240 5% 64.9%;
+    --muted: 200 15% 18%;
+    --muted-foreground: 210 10% 70%;
 
-    /* Golden Ochre accent persists in dark mode */
-    --accent: 38 96% 58%; 
-    --accent-foreground: 217 28% 8%;
+    /* Accent purple glows in dark mode */
+    --accent: 265 80% 65%; 
+    --accent-foreground: 0 0% 100%;
 
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
+    --destructive: 0 62.8% 40%;
+    --destructive-foreground: 0 0% 96%;
 
-    --border: 217 19% 18%;
-    --input: 217 19% 18%;
-    --ring: 38 96% 58%;
+    --border: 200 15% 18%;
+    --input: 200 15% 18%;
+    --ring: 265 80% 65%;
 
     /* Darker hover shade for dark mode */
-    --hover: 214 32% 30%;
+    --hover: 175 84% 25%;
 
     --sidebar-background: 217 28% 10%;
     --sidebar-foreground: 0 0% 98%;
