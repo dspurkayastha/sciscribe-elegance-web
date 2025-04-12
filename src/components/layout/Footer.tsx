@@ -33,6 +33,9 @@ const Footer = () => {
             <Link to="/pricing" className="hover:text-sciscribe-gold transition-colors duration-300">
               Pricing
             </Link>
+            <Link to="/payment" className="hover:text-sciscribe-gold transition-colors duration-300">
+              Payment
+            </Link>
             <Link to="/contact" className="hover:text-sciscribe-gold transition-colors duration-300">
               Contact
             </Link>
@@ -63,6 +66,17 @@ const Footer = () => {
 
         <div className="mt-8 border-t border-white/10 pt-6 text-center text-xs text-gray-400">
           <p>&copy; {new Date().getFullYear()} SciScribe Solutions. All rights reserved.</p>
+          <div className="mt-4 space-x-4">
+            <Link to="/privacy" className="hover:text-sciscribe-gold transition-colors duration-300">
+              Privacy Policy
+            </Link>
+            <Link to="/terms" className="hover:text-sciscribe-gold transition-colors duration-300">
+              Terms & Conditions
+            </Link>
+            <Link to="/refund" className="hover:text-sciscribe-gold transition-colors duration-300">
+              Refund Policy
+            </Link>
+          </div>
         </div>
       </div>
     </footer>
