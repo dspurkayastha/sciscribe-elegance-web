@@ -19,7 +19,9 @@ export default {
 		},
 		extend: {
 			fontFamily: {
-				sans: ['Manrope', 'sans-serif'],
+				sans: ['Inter', 'sans-serif'],
+				heading: ['Poppins', 'sans-serif'],
+				body: ['Open Sans', 'sans-serif'],
 			},
 			colors: {
 				border: 'hsl(var(--border))',
@@ -56,17 +58,19 @@ export default {
 					foreground: 'hsl(var(--card-foreground))'
 				},
 				sciscribe: {
-					navy: '#0A192F',
-					light: '#F7F8FA',
-					gold: '#FFC107',
+					navy: '#0B1B2A', // Updated to Deep Navy
+					light: '#F9FAFB', // Updated to Snow White
+					gold: '#FBBF24', // Updated to Golden Ochre
 					dark: '#121212',
 					darkAccent: '#1E1E1E',
 					purple: '#8B5CF6',
-					blue: '#0EA5E9',
+					blue: '#3B82F6', // Updated to Royal Blue
 					pink: '#D946EF',
 					teal: '#14B8A6',
 					amber: '#F59E0B',
-					emerald: '#10B981'
+					emerald: '#10B981', // Success Alert Color
+					sky: '#93C5FD', // Sky Blue Tint for hover
+					mist: '#E5E7EB', // Mist Gray for card backgrounds/dividers
 				},
 				sidebar: {
 					DEFAULT: 'hsl(var(--sidebar-background))',

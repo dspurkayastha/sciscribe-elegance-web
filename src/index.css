@@ -2,39 +2,49 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Open+Sans:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap');
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Snow White background */
+    --background: 210 20% 98%; 
+    /* Deep Navy text */
+    --foreground: 212 54% 11%; 
 
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card-foreground: 212 54% 11%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover-foreground: 212 54% 11%;
 
-    --primary: 222.2 47.4% 11.2%;
+    /* Royal Blue primary */
+    --primary: 214 90% 52%; 
     --primary-foreground: 210 40% 98%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    /* Mist Gray secondary */
+    --secondary: 220 13% 91%; 
+    --secondary-foreground: 212 54% 11%;
 
-    --muted: 210 40% 96.1%;
+    --muted: 220 13% 91%;
     --muted-foreground: 215.4 16.3% 46.9%;
 
-    --accent: 46 100% 64%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    /* Golden Ochre accent */
+    --accent: 38 96% 58%; 
+    --accent-foreground: 212 54% 11%;
 
+    /* Emerald Green for success/destructive */
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 46 100% 64%;
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    /* Golden Ochre ring */
+    --ring: 38 96% 58%; 
 
     --radius: 1rem;
+
+    /* Sky Blue for hover */
+    --hover: 210 91% 79%;
 
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5.3% 26.1%;
@@ -47,42 +57,50 @@
   }
 
   .dark {
-    --background: 240 10% 3.9%;
+    /* Deep rich navy for dark mode */
+    --background: 217 28% 8%; 
     --foreground: 0 0% 98%;
 
-    --card: 240 10% 3.9%;
+    /* Slightly brighter for cards in dark mode */
+    --card: 217 28% 10%; 
     --card-foreground: 0 0% 98%;
 
-    --popover: 240 10% 3.9%;
+    --popover: 217 28% 10%;
     --popover-foreground: 0 0% 98%;
 
-    --primary: 0 0% 98%;
-    --primary-foreground: 240 5.9% 10%;
+    /* Royal Blue stays bright in dark mode */
+    --primary: 214 90% 52%; 
+    --primary-foreground: 0 0% 98%;
 
-    --secondary: 240 3.7% 15.9%;
+    /* Darker secondary in dark mode */
+    --secondary: 217 19% 18%; 
     --secondary-foreground: 0 0% 98%;
 
-    --muted: 240 3.7% 15.9%;
+    --muted: 217 19% 18%;
     --muted-foreground: 240 5% 64.9%;
 
-    --accent: 46 100% 64%; 
-    --accent-foreground: 240 5.9% 10%;
+    /* Golden Ochre accent persists in dark mode */
+    --accent: 38 96% 58%; 
+    --accent-foreground: 217 28% 8%;
 
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 240 3.7% 15.9%;
-    --input: 240 3.7% 15.9%;
-    --ring: 240 4.9% 83.9%;
+    --border: 217 19% 18%;
+    --input: 217 19% 18%;
+    --ring: 38 96% 58%;
 
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    /* Darker hover shade for dark mode */
+    --hover: 214 32% 30%;
+
+    --sidebar-background: 217 28% 10%;
+    --sidebar-foreground: 0 0% 98%;
+    --sidebar-primary: 214 90% 52%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 217 19% 18%;
+    --sidebar-accent-foreground: 0 0% 98%;
+    --sidebar-border: 217 19% 18%;
+    --sidebar-ring: 38 96% 58%;
   }
 }
 
@@ -98,30 +116,82 @@
 }
 
 @layer components {
+  /* Typography */
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading font-bold;
+  }
+  
+  p {
+    @apply font-body leading-relaxed text-foreground/80;
+  }
+
+  /* Navigation */
   .nav-link {
     @apply relative py-2 font-medium after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 after:bg-gradient-to-r after:from-sciscribe-gold after:to-sciscribe-amber after:transition-all after:duration-300 hover:after:w-full hover:text-opacity-90;
+  }
+
+  /* Button Enhancements */
+  .btn-premium {
+    @apply relative rounded-lg bg-sciscribe-blue px-8 py-3 font-medium text-white transition-all duration-500 
+    hover:bg-sciscribe-blue/90 hover:shadow-[0_8px_20px_-6px_rgba(59,130,246,0.6)] hover:-translate-y-0.5 
+    focus:outline-none focus:ring-2 focus:ring-sciscribe-gold focus:ring-offset-2 
+    active:translate-y-0 active:shadow-none;
+  }
+
+  .btn-secondary-premium {
+    @apply relative rounded-lg border border-sciscribe-navy bg-transparent px-8 py-3 font-medium 
+    text-sciscribe-navy transition-all duration-500 hover:bg-sciscribe-sky/20 hover:shadow-md 
+    hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-sciscribe-gold focus:ring-offset-2
+    active:translate-y-0 active:shadow-none;
   }
 
   .btn-hover {
     @apply transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5;
   }
 
+  /* Layout */
   .section-container {
-    @apply container mx-auto px-6 py-16 md:py-24;
+    @apply container mx-auto px-6 py-16 md:py-20 lg:py-24 overflow-hidden;
   }
   
+  /* Glass Effects */
   .glassmorphism {
-    @apply backdrop-blur-md bg-white/15 dark:bg-black/15 border border-white/20 dark:border-white/10;
+    @apply backdrop-blur-md bg-white/15 dark:bg-black/20 border border-white/30 dark:border-white/10 
+    shadow-[0_4px_30px_rgba(0,0,0,0.05)] dark:shadow-[0_4px_30px_rgba(0,0,0,0.2)];
   }
 
+  .premium-glassmorphism {
+    @apply backdrop-blur-xl bg-white/30 dark:bg-black/30 border border-white/40 dark:border-white/10 
+    shadow-[0_10px_30px_rgba(0,0,0,0.08)] dark:shadow-[0_10px_30px_rgba(0,0,0,0.25)]
+    rounded-xl hover:shadow-[0_15px_35px_rgba(0,0,0,0.1)] dark:hover:shadow-[0_15px_35px_rgba(0,0,0,0.3)]
+    hover:-translate-y-1 transition-all duration-500;
+  }
+
+  /* Card Styles */
   .card-gradient {
     @apply bg-gradient-to-br from-card to-background;
   }
   
   .premium-card {
-    @apply rounded-xl border bg-card p-6 shadow-md transition-all duration-500 hover:shadow-xl;
+    @apply rounded-xl border border-sciscribe-mist/50 dark:border-white/5 bg-white dark:bg-sciscribe-navy/30 p-6 
+    shadow-[0_4px_20px_rgba(0,0,0,0.05)] dark:shadow-[0_4px_20px_rgba(0,0,0,0.2)] 
+    transition-all duration-500 hover:shadow-[0_15px_30px_rgba(0,0,0,0.08)] dark:hover:shadow-[0_15px_30px_rgba(0,0,0,0.3)] 
+    hover:-translate-y-1;
   }
 
+  .premium-card-hover {
+    @apply rounded-xl overflow-hidden group cursor-pointer;
+  }
+
+  .premium-card-hover .card-content {
+    @apply transition-all duration-700 ease-in-out transform translate-y-0 group-hover:translate-y-[-30%];
+  }
+
+  .premium-card-hover .card-reveal {
+    @apply transition-all duration-700 ease-in-out transform translate-y-full opacity-0 group-hover:translate-y-0 group-hover:opacity-100;
+  }
+
+  /* Special Effects */
   .shimmer-effect {
     @apply relative overflow-hidden before:absolute before:inset-0 before:-translate-x-full before:animate-shimmer before:bg-gradient-shimmer;
   }
@@ -135,7 +205,7 @@
   }
   
   .animated-border {
-    @apply border border-transparent bg-gradient-to-r from-sciscribe-gold via-sciscribe-purple to-sciscribe-blue bg-[length:400%_400%] p-[1px] animate-rotate-gradient;
+    @apply border border-transparent bg-gradient-to-r from-sciscribe-gold via-sciscribe-blue to-sciscribe-purple bg-[length:400%_400%] p-[1px] animate-rotate-gradient;
   }
   
   .hover-scale {
@@ -143,10 +213,63 @@
   }
 
   .hover-glow {
-    @apply transition-all duration-300 hover:shadow-[0_0_15px_rgba(255,193,7,0.5)];
+    @apply transition-all duration-300 hover:shadow-[0_0_20px_rgba(251,191,36,0.6)] dark:hover:shadow-[0_0_25px_rgba(251,191,36,0.4)];
   }
 
   .interactive-gradient {
-    @apply bg-gradient-gold hover:bg-gradient-purple transition-[background] duration-700;
+    @apply bg-gradient-gold hover:bg-gradient-blue transition-[background] duration-700;
+  }
+  
+  /* 3D Card Effect */
+  .card-3d {
+    @apply transition-transform duration-300 ease-out transform perspective-[1000px];
+  }
+  
+  /* Scroll Animations */
+  .scroll-fade-up {
+    @apply opacity-0 translate-y-10 transition-all duration-1000 ease-out;
+  }
+  
+  .scroll-fade-up.in-view {
+    @apply opacity-100 translate-y-0;
+  }
+  
+  .scroll-fade-in {
+    @apply opacity-0 transition-opacity duration-1000 ease-out;
+  }
+  
+  .scroll-fade-in.in-view {
+    @apply opacity-100;
+  }
+  
+  /* Aceternity-inspired bright accent glow */
+  .accent-glow {
+    @apply relative;
+  }
+  
+  .accent-glow::before {
+    @apply absolute content-[''] -z-10 -inset-[10px] rounded-[inherit] opacity-0 blur-xl
+    bg-gradient-to-r from-sciscribe-gold via-sciscribe-blue to-sciscribe-purple
+    transition-opacity duration-500;
+  }
+  
+  .accent-glow:hover::before {
+    @apply opacity-70;
+  }
+  
+  /* Button Pulse Animation */
+  .pulse-btn {
+    @apply relative overflow-hidden;
+  }
+  
+  .pulse-btn::after {
+    @apply absolute inset-0 rounded-[inherit] opacity-0
+    border-2 border-sciscribe-gold scale-110
+    animate-[pulse_2s_cubic-bezier(0.4,0,0.6,1)_infinite];
+    content: '';
+  }
+  
+  .pulse-btn:hover::after {
+    @apply opacity-100;
   }
 }
