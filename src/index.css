@@ -127,21 +127,21 @@
 
   /* Navigation */
   .nav-link {
-    @apply relative py-2 font-medium after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 after:bg-gradient-to-r after:from-sciscribe-gold after:to-sciscribe-amber after:transition-all after:duration-300 hover:after:w-full hover:text-opacity-90;
+    @apply relative py-2 font-medium after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 after:bg-primary after:transition-all after:duration-300 hover:after:w-full hover:text-opacity-90;
   }
 
   /* Button Enhancements */
   .btn-premium {
     @apply relative rounded-lg bg-sciscribe-blue px-8 py-3 font-medium text-white transition-all duration-500 
     hover:bg-sciscribe-blue/90 hover:shadow-[0_8px_20px_-6px_rgba(59,130,246,0.6)] hover:-translate-y-0.5 
-    focus:outline-none focus:ring-2 focus:ring-sciscribe-gold focus:ring-offset-2 
+    focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 
     active:translate-y-0 active:shadow-none;
   }
 
   .btn-secondary-premium {
     @apply relative rounded-lg border border-sciscribe-navy bg-transparent px-8 py-3 font-medium 
-    text-sciscribe-navy transition-all duration-500 hover:bg-sciscribe-sky/20 hover:shadow-md 
-    hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-sciscribe-gold focus:ring-offset-2
+    text-sciscribe-navy transition-all duration-500 hover:bg-sciscribe-blue/20 hover:shadow-md 
+    hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2
     active:translate-y-0 active:shadow-none;
   }
 
@@ -198,7 +198,7 @@
   }
   
   .text-gradient-gold {
-    @apply bg-gradient-to-r from-sciscribe-gold to-sciscribe-amber bg-clip-text text-transparent;
+    @apply bg-gradient-gold bg-clip-text text-transparent;
   }
   
   .text-gradient-blue {
@@ -206,7 +206,7 @@
   }
   
   .animated-border {
-    @apply border border-transparent bg-gradient-to-r from-sciscribe-gold via-sciscribe-blue to-sciscribe-purple bg-[length:400%_400%] p-[1px] animate-rotate-gradient;
+    @apply border border-transparent bg-gradient-to-r from-[#F59E0B] via-sciscribe-blue to-sciscribe-purple bg-[length:400%_400%] p-[1px] animate-rotate-gradient;
   }
   
   .hover-scale {
@@ -214,7 +214,7 @@
   }
 
   .hover-glow {
-    @apply transition-all duration-300 hover:shadow-[0_0_20px_rgba(251,191,36,0.6)] dark:hover:shadow-[0_0_25px_rgba(251,191,36,0.4)];
+    @apply transition-all duration-300 hover:shadow-[0_0_20px_rgba(20,184,166,0.6)] dark:hover:shadow-[0_0_25px_rgba(20,184,166,0.4)];
   }
 
   .interactive-gradient {
@@ -250,7 +250,7 @@
   
   .accent-glow::before {
     @apply absolute content-[''] -z-10 -inset-[10px] rounded-[inherit] opacity-0 blur-xl
-    bg-gradient-to-r from-sciscribe-gold via-sciscribe-blue to-sciscribe-purple
+    bg-gradient-to-r from-primary via-sciscribe-blue to-accent
     transition-opacity duration-500;
   }
   
@@ -265,7 +265,7 @@
   
   .pulse-btn::after {
     @apply absolute inset-0 rounded-[inherit] opacity-0
-    border-2 border-sciscribe-gold scale-110
+    border-2 border-primary scale-110
     animate-[pulse_2s_cubic-bezier(0.4,0,0.6,1)_infinite];
     content: '';
   }

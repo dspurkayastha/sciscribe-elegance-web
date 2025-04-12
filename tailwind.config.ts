@@ -71,6 +71,8 @@ export default {
 					coral: '#F97066', // Alternative accent/highlight
 					slate: '#64748B', // Neutral slate
 					mist: '#E5E7EB', // Mist Gray for card backgrounds/dividers
+					gold: '#F59E0B', // Gold color for gradients and accents
+					amber: '#FBBF24', // Amber color for gradients
 				},
 				sidebar: {
 					DEFAULT: 'hsl(var(--sidebar-background))',
@@ -172,7 +174,9 @@ export default {
 				'gradient-shimmer': 'linear-gradient(to right, transparent 0%, rgba(255,255,255,0.2) 20%, transparent 40%, transparent 100%)',
 				'gradient-dark': 'linear-gradient(180deg, #141E26 0%, #1E252D 100%)',
 				'gradient-glass': 'linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%)',
-				'gradient-mesh': 'radial-gradient(at 80% 20%, hsla(175, 84%, 32%, 0.2) 0px, transparent 50%), radial-gradient(at 20% 70%, hsla(265, 80%, 65%, 0.2) 0px, transparent 50%)'
+				'gradient-mesh': 'radial-gradient(at 80% 20%, hsla(175, 84%, 32%, 0.2) 0px, transparent 50%), radial-gradient(at 20% 70%, hsla(265, 80%, 65%, 0.2) 0px, transparent 50%)',
+				'gradient-gold': 'linear-gradient(90deg, #F59E0B 0%, #FBBF24 100%)',
+				'gradient-blue': 'linear-gradient(90deg, #0EA5E9 0%, #14B8A6 100%)'
 			}
 		}
 	},
