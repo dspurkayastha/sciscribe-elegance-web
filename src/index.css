@@ -180,8 +180,9 @@
   }
 
   .premium-card-hover {
-    @apply rounded-xl overflow-hidden group cursor-pointer;
+    @apply rounded-xl overflow-hidden cursor-pointer;
   }
+  /* The 'group' class should be added directly in HTML markup */
 
   .premium-card-hover .card-content {
     @apply transition-all duration-700 ease-in-out transform translate-y-0 group-hover:translate-y-[-30%];
