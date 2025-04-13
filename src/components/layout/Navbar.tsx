@@ -58,6 +58,11 @@ const Navbar = () => {
               Services
             </Link>
             <Link 
+              to="/portfolio" 
+              className={`nav-link dark:text-white text-sciscribe-navy ${isActive('/portfolio') ? 'after:w-full' : ''}`}>
+              Portfolio
+            </Link>
+            <Link 
               to="/pricing" 
               className={`nav-link dark:text-white text-sciscribe-navy ${isActive('/pricing') ? 'after:w-full' : ''}`}>
               Pricing
@@ -103,6 +108,13 @@ const Navbar = () => {
               onClick={() => setIsMenuOpen(false)}
             >
               Services
+            </Link>
+            <Link
+              to="/portfolio"
+              className="border-b border-gray-100 dark:border-gray-700 py-2 text-sciscribe-navy dark:text-white"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Portfolio
             </Link>
             <Link
               to="/pricing"

@@ -30,6 +30,9 @@ const Footer = () => {
             <Link to="/services" className="hover:text-sciscribe-gold transition-colors duration-300">
               Services
             </Link>
+            <Link to="/portfolio" className="hover:text-sciscribe-gold transition-colors duration-300">
+              Portfolio
+            </Link>
             <Link to="/pricing" className="hover:text-sciscribe-gold transition-colors duration-300">
               Pricing
             </Link>

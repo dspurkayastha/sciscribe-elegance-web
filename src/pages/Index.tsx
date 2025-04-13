@@ -8,6 +8,12 @@ import PortfolioSection from "@/components/sections/PortfolioSection";
 import TestimonialsSection from "@/components/sections/TestimonialsSection";
 import ContactSection from "@/components/sections/ContactSection";
 import { InteractiveBackground } from "@/components/background/InteractiveBackground";
+import CoreValuesSection from "@/components/sections/CoreValuesSection";
+import AddOnServicesSection from "@/components/sections/AddOnServicesSection";
+import AcademicPartnersSection from "@/components/sections/AcademicPartnersSection";
+import WhyChooseUsSection from "@/components/sections/WhyChooseUsSection";
+import ServicesCarouselSection from "@/components/sections/ServicesCarouselSection";
+import TeamSection from "@/components/sections/TeamSection";
 
 const Index = () => {
   return (
@@ -17,7 +23,13 @@ const Index = () => {
       <main className="dark:bg-sciscribe-navy/5">
         <HeroSection />
         <AboutSection />
+        <CoreValuesSection />
         <ServicesSection />
+        <AddOnServicesSection />
+        <AcademicPartnersSection />
+        <WhyChooseUsSection />
+        <ServicesCarouselSection />
+        <TeamSection />
         <PortfolioSection />
         <TestimonialsSection />
         <ContactSection />

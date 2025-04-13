@@ -1,6 +1,7 @@
 
 import { useState } from "react";
 import { Mail, MapPin, Phone } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const ContactSection = () => {
   const [formData, setFormData] = useState({
@@ -121,10 +122,16 @@ const ContactSection = () => {
 
               <button
                 type="submit"
-                className="btn-hover w-full rounded-lg bg-sciscribe-navy px-6 py-3 font-medium text-white transition-all hover:bg-sciscribe-navy/90"
+                className="btn-hover w-full rounded-lg bg-sciscribe-navy px-6 py-3 font-medium text-white transition-all hover:bg-sciscribe-navy/90 mb-4"
               >
                 Send Message
               </button>
+              
+              <div className="text-center">
+                <Link to="/contact" className="text-sciscribe-gold hover:text-sciscribe-gold/80 font-medium">
+                  Want a full quote? Send us more details →
+                </Link>
+              </div>
             </form>
           </div>
         </div>

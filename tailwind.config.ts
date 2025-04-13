@@ -73,6 +73,7 @@ export default {
 					mist: '#E5E7EB', // Mist Gray for card backgrounds/dividers
 					gold: '#F59E0B', // Gold color for gradients and accents
 					amber: '#FBBF24', // Amber color for gradients
+					sky: '#7DD3FC', // Light blue for hover states
 				},
 				sidebar: {
 					DEFAULT: 'hsl(var(--sidebar-background))',
