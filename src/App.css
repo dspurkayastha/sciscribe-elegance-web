@@ -41,3 +41,15 @@
 .read-the-docs {
   color: #888;
 }
+
+/* Override for correct cursor display */
+body {
+  cursor: none !important;
+}
+
+.cursor, .cursor-follower {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  pointer-events: none !important;
+}

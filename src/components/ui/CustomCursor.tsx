@@ -1,8 +1,8 @@
 
 import { useEffect, useState } from "react";
 import { useTheme } from "../theme/ThemeProvider";
-import { Pen, MousePointer } from "lucide-react";
 import gsap from "gsap";
+import { Pen, MousePointer } from "lucide-react";
 
 const CustomCursor = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -14,10 +14,10 @@ const CustomCursor = () => {
   useEffect(() => {
     // Create cursor elements if they don't exist
     const cursor = document.createElement("div");
-    cursor.classList.add("custom-cursor");
+    cursor.classList.add("cursor");
     
     const follower = document.createElement("div");
-    follower.classList.add("custom-cursor-follower");
+    follower.classList.add("cursor-follower");
     
     document.body.appendChild(cursor);
     document.body.appendChild(follower);
@@ -48,7 +48,7 @@ const CustomCursor = () => {
     });
     
     // Track mouse movement
-    const handleMouseMove = (e: MouseEvent) => {
+    const handleMouseMove = (e) => {
       setIsVisible(true);
       mouseX = e.clientX;
       mouseY = e.clientY;
@@ -100,7 +100,7 @@ const CustomCursor = () => {
       el.addEventListener("mouseleave", handleLinkHoverEnd);
     });
     
-    // Set theme colors for cursor
+    // Set theme colors for cursor based on theme
     const updateCursorTheme = () => {
       const isDark = theme === "dark";
       document.documentElement.style.setProperty(
