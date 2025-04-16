@@ -27,11 +27,15 @@ const HeroSection = () => {
   }, []);
 
   return (
-    <section className="relative h-screen w-full overflow-hidden bg-gradient-mesh">
-      {/* Background Elements */}
+    <section className="relative h-screen w-full overflow-hidden">
+      {/* Modern Background with Gradient Overlay */}
       <div className="absolute inset-0 z-0">
-        <div className="absolute inset-0 bg-gradient-to-b from-background/80 to-background/20 backdrop-blur-[1px]" />
-        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCI+CjxyZWN0IHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCIgZmlsbD0ibm9uZSI+PC9yZWN0Pgo8cGF0aCBkPSJNMzAgNTAgQzE3IDE1IDEwIDAgMTAgMCBMNDAgMCBDNDAgMCA1MCAxNSAzMCA1MFoiIGZpbGw9InJnYmEoMjAsIDIxMCwgMTkwLCAwLjAzKSIgdHJhbnNmb3JtPSJyb3RhdGUoMCwgMzAsIDMwKSI+PC9wYXRoPgo8cGF0aCBkPSJNMzAgNTAgQzE3IDE1IDEwIDAgMTAgMCBMNDAgMCBDNDAgMCA1MCAxNSAzMCA1MFoiIGZpbGw9InJnYmEoMTQwLCA4NSwgMjQ3LCAwLjAzKSIgdHJhbnNmb3JtPSJyb3RhdGUoMTIwLCAzMCwgMzApIj48L3BhdGg+CjxwYXRoIGQ9Ik0zMCA1MCBDMTcgMTUgMTAgMCAxMCAwIEw0MCAwIEM0MCAwIDUwIDE1IDMwIDUwWiIgZmlsbD0icmdiYSgyMCwgMjEwLCAxOTAsIDAuMDMpIiB0cmFuc2Zvcm09InJvdGF0ZSgyNDAsIDMwLCAzMCkiPjwvcGF0aD4KPC9zdmc+')]" />
+        {/* Modern abstract background pattern */}
+        <div className="absolute inset-0 bg-gradient-to-b from-background/40 to-background/80 backdrop-blur-[2px]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,rgba(59,130,246,0.2)_0%,transparent_70%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_70%,rgba(140,85,247,0.15)_0%,transparent_60%)]" />
+        <div className="absolute inset-0 bg-[linear-gradient(40deg,rgba(20,210,190,0.05)_0%,rgba(59,130,246,0.05)_30%,rgba(140,85,247,0.05)_70%)]" />
+        <div className="absolute inset-0 mix-blend-overlay opacity-20 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCI+CjxyZWN0IHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCIgZmlsbD0ibm9uZSI+PC9yZWN0Pgo8cGF0aCBkPSJNMzAgNTAgQzE3IDE1IDEwIDAgMTAgMCBMNDAgMCBDNDAgMCA1MCAxNSAzMCA1MFoiIGZpbGw9InJnYmEoMjAsIDIxMCwgMTkwLCAwLjAzKSIgdHJhbnNmb3JtPSJyb3RhdGUoMCwgMzAsIDMwKSI+PC9wYXRoPgo8cGF0aCBkPSJNMzAgNTAgQzE3IDE1IDEwIDAgMTAgMCBMNDAgMCBDNDAgMCA1MCAxNSAzMCA1MFoiIGZpbGw9InJnYmEoMTQwLCA4NSwgMjQ3LCAwLjAzKSIgdHJhbnNmb3JtPSJyb3RhdGUoMTIwLCAzMCwgMzApIj48L3BhdGg+CjxwYXRoIGQ9Ik0zMCA1MCBDMTcgMTUgMTAgMCAxMCAwIEw0MCAwIEM0MCAwIDUwIDE1IDMwIDUwWiIgZmlsbD0icmdiYSgyMCwgMjEwLCAxOTAsIDAuMDMpIiB0cmFuc2Zvcm09InJvdGF0ZSgyNDAsIDMwLCAzMCkiPjwvcGF0aD4KPC9zdmc+')]" />
       </div>
 
       {/* Floating Decorative Elements */}
@@ -90,7 +94,7 @@ const HeroSection = () => {
           {/* Main Title */}
           <h1 className="mb-6 text-5xl font-bold tracking-tight md:text-6xl lg:text-7xl">
             <span className="block">Elevate Your Research.</span> 
-            <span className="bg-gradient-primary bg-clip-text text-transparent">Perfect Your Manuscript.</span>
+            <span className="bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">Perfect Your Manuscript.</span>
           </h1>
           
           <motion.p 
@@ -111,10 +115,13 @@ const HeroSection = () => {
           >
             <Button 
               size="lg" 
-              className="group bg-gradient-primary px-6 py-6 text-base font-medium transition-all hover:shadow-lg hover:shadow-primary/20"
+              className="group bg-gradient-to-r from-primary to-primary/90 px-6 py-6 text-base font-medium transition-all hover:shadow-lg hover:shadow-primary/20"
+              asChild
             >
-              Get Started Today
-              <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+              <Link to="/services">
+                Get Started Today
+                <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+              </Link>
             </Button>
             <Button 
               variant="outline" 

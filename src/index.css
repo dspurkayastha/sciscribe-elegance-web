@@ -47,6 +47,9 @@
     /* Hover state color */
     --hover: 175 84% 42%;
 
+    /* Cursor glow color for light theme */
+    --cursor-glow: rgba(20, 184, 166, 0.3);
+
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5.3% 26.1%;
     --sidebar-primary: 240 5.9% 10%;
@@ -94,6 +97,9 @@
     /* Darker hover shade for dark mode */
     --hover: 175 84% 25%;
 
+    /* Cursor glow color for dark theme */
+    --cursor-glow: rgba(120, 80, 240, 0.35);
+
     --sidebar-background: 217 28% 10%;
     --sidebar-foreground: 0 0% 98%;
     --sidebar-primary: 214 90% 52%;
@@ -113,6 +119,60 @@
   body {
     @apply bg-background text-foreground font-sans antialiased;
     scroll-behavior: smooth;
+    cursor: none;
+  }
+  
+  /* Custom cursor */
+  .cursor-dot {
+    pointer-events: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    width: 8px;
+    height: 8px;
+    background-color: hsl(var(--primary));
+    z-index: 9999;
+    transition: opacity, width, height, background-color;
+    transition-duration: 200ms;
+    transition-timing-function: ease-out;
+  }
+  
+  .cursor-outline {
+    pointer-events: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    background-color: var(--cursor-glow);
+    z-index: 9998;
+    transition: transform, width, height, background-color;
+    transition-duration: 300ms;
+    transition-timing-function: cubic-bezier(0.25, 1, 0.5, 1);
+    filter: blur(15px);
+  }
+  
+  a, button, [role="button"], input, label, textarea, select {
+    cursor: none;
+  }
+  
+  /* Show default cursor for small screens where custom cursor might be intrusive */
+  @media (max-width: 768px) {
+    body {
+      cursor: auto;
+    }
+    
+    .cursor-dot, .cursor-outline {
+      display: none;
+    }
+    
+    a, button, [role="button"], input, label, textarea, select {
+      cursor: pointer;
+    }
   }
 }
 
@@ -177,7 +237,7 @@
     @apply rounded-xl border border-sciscribe-mist/50 dark:border-white/5 bg-white dark:bg-sciscribe-navy/30 p-6 
     shadow-[0_4px_20px_rgba(0,0,0,0.05)] dark:shadow-[0_4px_20px_rgba(0,0,0,0.2)] 
     transition-all duration-500 hover:shadow-[0_15px_30px_rgba(0,0,0,0.08)] dark:hover:shadow-[0_15px_30px_rgba(0,0,0,0.3)] 
-    hover:-translate-y-1 hover:shadow-sciscribe-gold/10 hover:border-sciscribe-gold/30;
+    hover:-translate-y-1 hover:shadow-sciscribe-gold/10 hover:border-sciscribe-gold/30 hover:bg-gradient-to-b hover:from-white hover:to-sciscribe-light/10 dark:hover:from-sciscribe-navy/40 dark:hover:to-sciscribe-navy/20;
   }
 
   /* Fixed: Removed 'group' from @apply, it should be used directly in HTML */

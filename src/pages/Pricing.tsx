@@ -271,8 +271,7 @@ const Pricing = () => {
                 <p className="text-muted-foreground text-sm mb-4">
                   Thorough similarity checks with precise rewriting suggestions to ensure originality without compromising scientific clarity.
                 </p>
-                <div className="flex items-center justify-between mt-auto">
-                  <span className="font-bold">₹2,500</span>
+                <div className="flex items-center justify-end mt-auto">
                   <Link to="/contact">
                     <Button variant="outline" size="sm">Add to Order</Button>
                   </Link>
@@ -296,8 +295,7 @@ const Pricing = () => {
                 <p className="text-muted-foreground text-sm mb-4">
                   We format your manuscript to match your target journal's specifications—citations, layout, figures, and all.
                 </p>
-                <div className="flex items-center justify-between mt-auto">
-                  <span className="font-bold">₹3,000</span>
+                <div className="flex items-center justify-end mt-auto">
                   <Link to="/contact">
                     <Button variant="outline" size="sm">Add to Order</Button>
                   </Link>
@@ -321,8 +319,7 @@ const Pricing = () => {
                 <p className="text-muted-foreground text-sm mb-4">
                   Polished, impactful abstracts and cover letters tailored for clarity, tone, and submission success.
                 </p>
-                <div className="flex items-center justify-between mt-auto">
-                  <span className="font-bold">₹1,800</span>
+                <div className="flex items-center justify-end mt-auto">
                   <Link to="/contact">
                     <Button variant="outline" size="sm">Add to Order</Button>
                   </Link>
@@ -346,8 +343,7 @@ const Pricing = () => {
                 <p className="text-muted-foreground text-sm mb-4">
                   Accurate, publication-ready analysis—from basic stats to advanced models—delivered with full methodological transparency.
                 </p>
-                <div className="flex items-center justify-between mt-auto">
-                  <span className="font-bold">₹4,500+</span>
+                <div className="flex items-center justify-end mt-auto">
                   <Link to="/contact">
                     <Button variant="outline" size="sm">Add to Order</Button>
                   </Link>
@@ -371,8 +367,7 @@ const Pricing = () => {
                 <p className="text-muted-foreground text-sm mb-4">
                   Clean, professional visuals including data figures, flowcharts, and study diagrams built to meet publication standards.
                 </p>
-                <div className="flex items-center justify-between mt-auto">
-                  <span className="font-bold">₹3,500+</span>
+                <div className="flex items-center justify-end mt-auto">
                   <Link to="/contact">
                     <Button variant="outline" size="sm">Add to Order</Button>
                   </Link>
@@ -396,13 +391,19 @@ const Pricing = () => {
                 <p className="text-muted-foreground text-sm mb-4">
                   Priority editing or formatting delivered within 3 – 5 business days—ideal for urgent submissions.
                 </p>
-                <div className="flex items-center justify-between mt-auto">
-                  <span className="font-bold">+50% of base</span>
+                <div className="flex items-center justify-end mt-auto">
                   <Link to="/contact">
                     <Button variant="outline" size="sm">Add to Order</Button>
                   </Link>
                 </div>
               </motion.div>
+            </div>
+            
+            {/* Add-on pricing note */}
+            <div className="mt-8 text-center">
+              <p className="text-muted-foreground italic">
+                Add-on service prices are customized based on your specific requirements. Please contact us for a detailed quote.
+              </p>
             </div>
             
             {/* "Can't find what you're looking for?" section */}
