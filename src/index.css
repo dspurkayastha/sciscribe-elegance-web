@@ -180,16 +180,26 @@
     hover:-translate-y-1 hover:shadow-sciscribe-gold/10 hover:border-sciscribe-gold/30;
   }
 
+  /* Fixed: Removed 'group' from @apply, it should be used directly in HTML */
   .premium-card-hover {
-    @apply rounded-xl overflow-hidden cursor-pointer group;
+    @apply rounded-xl overflow-hidden cursor-pointer;
+  }
+
+  /* Updated selectors to use direct :hover instead of group-hover */
+  .premium-card-hover:hover .card-content {
+    @apply transition-all duration-700 ease-in-out transform translate-y-[-30%];
   }
 
   .premium-card-hover .card-content {
-    @apply transition-all duration-700 ease-in-out transform translate-y-0 group-hover:translate-y-[-30%];
+    @apply transition-all duration-700 ease-in-out transform translate-y-0;
+  }
+
+  .premium-card-hover:hover .card-reveal {
+    @apply transition-all duration-700 ease-in-out transform translate-y-0 opacity-100;
   }
 
   .premium-card-hover .card-reveal {
-    @apply transition-all duration-700 ease-in-out transform translate-y-full opacity-0 group-hover:translate-y-0 group-hover:opacity-100;
+    @apply transition-all duration-700 ease-in-out transform translate-y-full opacity-0;
   }
 
   /* Portfolio Card Style with Glow */
