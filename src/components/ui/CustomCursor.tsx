@@ -1,117 +1,146 @@
 
 import { useEffect, useState } from "react";
 import { useTheme } from "../theme/ThemeProvider";
-import { Pen } from "lucide-react";
+import { Pen, MousePointer } from "lucide-react";
+import gsap from "gsap";
 
 const CustomCursor = () => {
-  const [position, setPosition] = useState({ x: 0, y: 0 });
-  const [hidden, setHidden] = useState(false);
-  const [clicked, setClicked] = useState(false);
-  const [linkHovered, setLinkHovered] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
+  const [isActive, setIsActive] = useState(false);
   const { theme } = useTheme();
 
+  // Use effect to initialize the custom cursor
   useEffect(() => {
-    const updatePosition = (e: MouseEvent) => {
-      setPosition({ x: e.clientX, y: e.clientY });
+    // Create cursor elements if they don't exist
+    const cursor = document.createElement("div");
+    cursor.classList.add("custom-cursor");
+    
+    const follower = document.createElement("div");
+    follower.classList.add("custom-cursor-follower");
+    
+    document.body.appendChild(cursor);
+    document.body.appendChild(follower);
+    
+    let mouseX = 0;
+    let mouseY = 0;
+    let posX = 0;
+    let posY = 0;
+    
+    // GSAP animation for smooth cursor movement
+    const animation = gsap.to({}, {
+      duration: 0.016,
+      repeat: -1,
+      onRepeat: () => {
+        posX += (mouseX - posX) / 9;
+        posY += (mouseY - posY) / 9;
+        
+        gsap.set(follower, {
+          x: posX - 12,
+          y: posY - 12
+        });
+        
+        gsap.set(cursor, {
+          x: mouseX - 3, // Center the cursor (half of width)
+          y: mouseY - 3  // Center the cursor (half of height)
+        });
+      }
+    });
+    
+    // Track mouse movement
+    const handleMouseMove = (e: MouseEvent) => {
+      setIsVisible(true);
+      mouseX = e.clientX;
+      mouseY = e.clientY;
     };
-
-    const handleMouseDown = () => setClicked(true);
-    const handleMouseUp = () => setClicked(false);
     
-    const handleMouseEnter = () => setHidden(false);
-    const handleMouseLeave = () => setHidden(true);
+    // Handle mouse enter/leave for the document
+    const handleMouseEnter = () => setIsVisible(true);
+    const handleMouseLeave = () => setIsVisible(false);
     
-    const handleLinkHoverStart = () => setLinkHovered(true);
-    const handleLinkHoverEnd = () => setLinkHovered(false);
+    // Handle interactive elements
+    const handleLinkHoverStart = () => {
+      setIsHovered(true);
+      cursor.classList.add("active");
+      follower.classList.add("active");
+    };
     
-    document.addEventListener("mousemove", updatePosition);
-    document.addEventListener("mousedown", handleMouseDown);
-    document.addEventListener("mouseup", handleMouseUp);
+    const handleLinkHoverEnd = () => {
+      setIsHovered(false);
+      cursor.classList.remove("active");
+      follower.classList.remove("active");
+    };
+    
+    const handleMouseDown = () => {
+      setIsActive(true);
+      cursor.classList.add("clicked");
+      follower.classList.add("clicked");
+    };
+    
+    const handleMouseUp = () => {
+      setIsActive(false);
+      cursor.classList.remove("clicked");
+      follower.classList.remove("clicked");
+    };
+    
+    // Add event listeners
+    document.addEventListener("mousemove", handleMouseMove);
     document.addEventListener("mouseenter", handleMouseEnter);
     document.addEventListener("mouseleave", handleMouseLeave);
+    document.addEventListener("mousedown", handleMouseDown);
+    document.addEventListener("mouseup", handleMouseUp);
     
-    // Track hover state for interactive elements
-    const interactiveElements = document.querySelectorAll('a, button, [role="button"], input, label, textarea, select');
+    // Apply to all interactive elements
+    const interactiveElements = document.querySelectorAll(
+      'a, button, [role="button"], input, label, textarea, select, .link'
+    );
     
     interactiveElements.forEach((el) => {
       el.addEventListener("mouseenter", handleLinkHoverStart);
       el.addEventListener("mouseleave", handleLinkHoverEnd);
     });
     
+    // Set theme colors for cursor
+    const updateCursorTheme = () => {
+      const isDark = theme === "dark";
+      document.documentElement.style.setProperty(
+        "--cursor-color", 
+        isDark ? "#ffffff" : "#000000"
+      );
+      document.documentElement.style.setProperty(
+        "--cursor-follower-color", 
+        isDark ? "rgba(255, 255, 255, 0.3)" : "rgba(0, 0, 0, 0.3)"
+      );
+    };
+    
+    updateCursorTheme();
+    
+    // Clean up
     return () => {
-      document.removeEventListener("mousemove", updatePosition);
-      document.removeEventListener("mousedown", handleMouseDown);
-      document.removeEventListener("mouseup", handleMouseUp);
+      animation.kill();
+      document.removeEventListener("mousemove", handleMouseMove);
       document.removeEventListener("mouseenter", handleMouseEnter);
       document.removeEventListener("mouseleave", handleMouseLeave);
+      document.removeEventListener("mousedown", handleMouseDown);
+      document.removeEventListener("mouseup", handleMouseUp);
       
       interactiveElements.forEach((el) => {
         el.removeEventListener("mouseenter", handleLinkHoverStart);
         el.removeEventListener("mouseleave", handleLinkHoverEnd);
       });
+      
+      if (cursor.parentNode) {
+        cursor.parentNode.removeChild(cursor);
+      }
+      
+      if (follower.parentNode) {
+        follower.parentNode.removeChild(follower);
+      }
     };
-  }, []);
+  }, [theme]);
 
-  // Get cursor styles based on theme
-  const getCursorGlowColor = () => {
-    return theme === 'dark' ? 'var(--cursor-glow-dark)' : 'var(--cursor-glow-light)';
-  };
-
-  const cursorOutlineStyle = {
-    left: `${position.x}px`,
-    top: `${position.y}px`,
-    width: linkHovered ? '60px' : '40px',
-    height: linkHovered ? '60px' : '40px',
-    opacity: hidden ? 0 : 0.7,
-    transform: `translate(-50%, -50%) scale(${clicked ? 0.5 : 1})`,
-    backgroundColor: getCursorGlowColor(),
-  };
-
-  const cursorIconStyle = {
-    left: `${position.x}px`,
-    top: `${position.y}px`,
-    opacity: hidden ? 0 : 1,
-    transform: `translate(-50%, -50%) rotate(45deg) scale(${clicked ? 0.8 : 1})`,
-    visibility: linkHovered ? 'hidden' : 'visible',
-  };
-
-  const cursorPointerStyle = {
-    left: `${position.x}px`,
-    top: `${position.y}px`,
-    opacity: hidden ? 0 : (linkHovered ? 1 : 0),
-    transform: `translate(-50%, -50%)`,
-  };
-
-  // Only render on non-touch devices
-  if ('ontouchstart' in window) {
-    return null;
-  }
-
-  return (
-    <>
-      {/* Outer glow */}
-      <div className="cursor-outline" style={cursorOutlineStyle}></div>
-      
-      {/* Pen cursor for normal state */}
-      <div className="cursor-pen" style={cursorIconStyle}>
-        <Pen size={16} strokeWidth={2} className="text-primary" />
-      </div>
-      
-      {/* Pointer cursor for clickable elements */}
-      <div className="cursor-pointer" style={cursorPointerStyle}>
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path 
-            d="M7 2L17 12L11 12L8 18L4.5 8L7 2Z" 
-            fill="currentColor" 
-            stroke="currentColor" 
-            strokeWidth="1.5" 
-            strokeLinecap="round" 
-            strokeLinejoin="round"
-          />
-        </svg>
-      </div>
-    </>
-  );
+  // Don't render anything as we're appending directly to the body
+  return null;
 };
 
 export default CustomCursor;
