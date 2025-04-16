@@ -48,7 +48,8 @@
     --hover: 175 84% 42%;
 
     /* Cursor glow color for light theme */
-    --cursor-glow: rgba(20, 184, 166, 0.3);
+    --cursor-glow-light: rgba(20, 184, 166, 0.3);
+    --cursor-glow-dark: rgba(120, 80, 240, 0.35);
 
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5.3% 26.1%;
@@ -97,8 +98,9 @@
     /* Darker hover shade for dark mode */
     --hover: 175 84% 25%;
 
-    /* Cursor glow color for dark theme */
-    --cursor-glow: rgba(120, 80, 240, 0.35);
+    /* Cursor glow colors */
+    --cursor-glow-light: rgba(20, 184, 166, 0.3);
+    --cursor-glow-dark: rgba(120, 80, 240, 0.35);
 
     --sidebar-background: 217 28% 10%;
     --sidebar-foreground: 0 0% 98%;
@@ -123,22 +125,6 @@
   }
   
   /* Custom cursor */
-  .cursor-dot {
-    pointer-events: none;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    border-radius: 50%;
-    width: 8px;
-    height: 8px;
-    background-color: hsl(var(--primary));
-    z-index: 9999;
-    transition: opacity, width, height, background-color;
-    transition-duration: 200ms;
-    transition-timing-function: ease-out;
-  }
-  
   .cursor-outline {
     pointer-events: none;
     position: fixed;
@@ -148,12 +134,33 @@
     border-radius: 50%;
     width: 40px;
     height: 40px;
-    background-color: var(--cursor-glow);
     z-index: 9998;
     transition: transform, width, height, background-color;
     transition-duration: 300ms;
     transition-timing-function: cubic-bezier(0.25, 1, 0.5, 1);
     filter: blur(15px);
+  }
+  
+  .cursor-pen {
+    pointer-events: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    z-index: 9999;
+    transition: opacity, transform;
+    transition-duration: 200ms;
+    transition-timing-function: ease-out;
+  }
+  
+  .cursor-pointer {
+    pointer-events: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    z-index: 9999;
+    transition: opacity, transform;
+    transition-duration: 200ms;
+    transition-timing-function: ease-out;
   }
   
   a, button, [role="button"], input, label, textarea, select {
@@ -166,7 +173,7 @@
       cursor: auto;
     }
     
-    .cursor-dot, .cursor-outline {
+    .cursor-outline, .cursor-pen, .cursor-pointer {
       display: none;
     }
     
