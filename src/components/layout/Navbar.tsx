@@ -73,6 +73,11 @@ const Navbar = () => {
               Payment
             </Link>
             <Link 
+              to="/feedback" 
+              className={`nav-link dark:text-white text-sciscribe-navy ${isActive('/feedback') ? 'after:w-full' : ''}`}>
+              Feedback
+            </Link>
+            <Link 
               to="/contact" 
               className={`nav-link dark:text-white text-sciscribe-navy ${isActive('/contact') ? 'after:w-full' : ''}`}>
               Contact
@@ -129,6 +134,13 @@ const Navbar = () => {
               onClick={() => setIsMenuOpen(false)}
             >
               Payment
+            </Link>
+            <Link
+              to="/feedback"
+              className="border-b border-gray-100 dark:border-gray-700 py-2 text-sciscribe-navy dark:text-white"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Feedback
             </Link>
             <Link
               to="/contact"

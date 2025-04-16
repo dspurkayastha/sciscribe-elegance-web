@@ -177,13 +177,12 @@
     @apply rounded-xl border border-sciscribe-mist/50 dark:border-white/5 bg-white dark:bg-sciscribe-navy/30 p-6 
     shadow-[0_4px_20px_rgba(0,0,0,0.05)] dark:shadow-[0_4px_20px_rgba(0,0,0,0.2)] 
     transition-all duration-500 hover:shadow-[0_15px_30px_rgba(0,0,0,0.08)] dark:hover:shadow-[0_15px_30px_rgba(0,0,0,0.3)] 
-    hover:-translate-y-1;
+    hover:-translate-y-1 hover:shadow-sciscribe-gold/10 hover:border-sciscribe-gold/30;
   }
 
   .premium-card-hover {
-    @apply rounded-xl overflow-hidden cursor-pointer;
+    @apply rounded-xl overflow-hidden cursor-pointer group;
   }
-  /* The 'group' class should be added directly in HTML markup */
 
   .premium-card-hover .card-content {
     @apply transition-all duration-700 ease-in-out transform translate-y-0 group-hover:translate-y-[-30%];
@@ -193,85 +192,30 @@
     @apply transition-all duration-700 ease-in-out transform translate-y-full opacity-0 group-hover:translate-y-0 group-hover:opacity-100;
   }
 
+  /* Portfolio Card Style with Glow */
+  .portfolio-card {
+    @apply relative overflow-hidden rounded-xl transition-all duration-500;
+  }
+  
+  .portfolio-card:hover {
+    @apply shadow-[0_0_25px_rgba(245,158,11,0.3)] border-sciscribe-gold;
+  }
+
   /* Special Effects */
   .shimmer-effect {
-    @apply relative overflow-hidden before:absolute before:inset-0 before:-translate-x-full before:animate-shimmer before:bg-gradient-shimmer;
+    @apply relative overflow-hidden before:absolute before:inset-0 before:translate-x-[-100%] before:bg-gradient-shimmer before:animate-shimmer;
+  }
+
+  /* Pulse animation for button */
+  .pulse-btn {
+    @apply relative after:absolute after:inset-0 after:rounded-lg after:shadow-[0_0_0_0_rgba(14,165,233,0.7)] after:animate-[pulse_2s_infinite];
+  }
+  
+  .text-gradient {
+    @apply bg-gradient-to-r from-sciscribe-blue to-sciscribe-teal bg-clip-text text-transparent;
   }
   
   .text-gradient-gold {
     @apply bg-gradient-to-r from-sciscribe-gold to-sciscribe-amber bg-clip-text text-transparent;
-  }
-  
-  .text-gradient-blue {
-    @apply bg-gradient-to-r from-sciscribe-blue to-sciscribe-teal bg-clip-text text-transparent;
-  }
-  
-  .animated-border {
-    @apply border border-transparent bg-gradient-to-r from-sciscribe-gold via-sciscribe-blue to-sciscribe-purple bg-[length:400%_400%] p-[1px] animate-rotate-gradient;
-  }
-  
-  .hover-scale {
-    @apply transition-transform duration-300 hover:scale-105;
-  }
-
-  .hover-glow {
-    @apply transition-all duration-300 hover:shadow-[0_0_20px_rgba(251,191,36,0.6)] dark:hover:shadow-[0_0_25px_rgba(251,191,36,0.4)];
-  }
-
-  .interactive-gradient {
-    @apply bg-gradient-gold hover:bg-gradient-blue transition-[background] duration-700;
-  }
-  
-  /* 3D Card Effect */
-  .card-3d {
-    @apply transition-transform duration-300 ease-out transform perspective-[1000px];
-  }
-  
-  /* Scroll Animations */
-  .scroll-fade-up {
-    @apply opacity-0 translate-y-10 transition-all duration-1000 ease-out;
-  }
-  
-  .scroll-fade-up.in-view {
-    @apply opacity-100 translate-y-0;
-  }
-  
-  .scroll-fade-in {
-    @apply opacity-0 transition-opacity duration-1000 ease-out;
-  }
-  
-  .scroll-fade-in.in-view {
-    @apply opacity-100;
-  }
-  
-  /* Aceternity-inspired bright accent glow */
-  .accent-glow {
-    @apply relative;
-  }
-  
-  .accent-glow::before {
-    @apply absolute content-[''] -z-10 -inset-[10px] rounded-[inherit] opacity-0 blur-xl
-    bg-gradient-to-r from-primary via-sciscribe-blue to-accent
-    transition-opacity duration-500;
-  }
-  
-  .accent-glow:hover::before {
-    @apply opacity-70;
-  }
-  
-  /* Button Pulse Animation */
-  .pulse-btn {
-    @apply relative overflow-hidden;
-  }
-  
-  .pulse-btn::after {
-    @apply absolute inset-0 rounded-[inherit] opacity-0
-    border-2 border-primary scale-110
-    animate-[pulse_2s_cubic-bezier(0.4,0,0.6,1)_infinite];
-    content: '';
-  }
-  
-  .pulse-btn:hover::after {
-    @apply opacity-100;
   }
 }

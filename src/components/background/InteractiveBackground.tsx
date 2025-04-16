@@ -12,6 +12,8 @@ interface Particle {
   hue: number;
   pulse: number;
   pulseSpeed: number;
+  originalSpeedX: number;
+  originalSpeedY: number;
 }
 
 interface InteractiveBackgroundProps {
@@ -21,7 +23,7 @@ interface InteractiveBackgroundProps {
 export const InteractiveBackground = ({ className }: InteractiveBackgroundProps) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const particlesRef = useRef<Particle[]>([]);
-  const mouseRef = useRef({ x: 0, y: 0 });
+  const mouseRef = useRef({ x: 0, y: 0, isActive: false });
   const rafRef = useRef<number>();
   const hueRef = useRef(0);
   const cursorGlowRef = useRef<HTMLDivElement>(null);
@@ -47,11 +49,25 @@ export const InteractiveBackground = ({ className }: InteractiveBackgroundProps)
     const handleMouseMove = (e: MouseEvent) => {
       mouseRef.current.x = e.clientX;
       mouseRef.current.y = e.clientY;
+      mouseRef.current.isActive = true;
+      
+      // Reset the active state after some time of no movement
+      setTimeout(() => {
+        mouseRef.current.isActive = false;
+      }, 2000);
       
       // Update cursor glow position
       if (cursorGlowRef.current) {
         cursorGlowRef.current.style.left = `${e.clientX}px`;
         cursorGlowRef.current.style.top = `${e.clientY}px`;
+        cursorGlowRef.current.style.opacity = "1";
+        
+        // Fade out the glow after 2 seconds
+        setTimeout(() => {
+          if (cursorGlowRef.current) {
+            cursorGlowRef.current.style.opacity = "0.5";
+          }
+        }, 2000);
       }
     };
 
@@ -80,12 +96,17 @@ export const InteractiveBackground = ({ className }: InteractiveBackgroundProps)
 
     const createParticles = () => {
       for (let i = 0; i < particleCount; i++) {
+        const speedX = Math.random() * 0.5 - 0.25;
+        const speedY = Math.random() * 0.5 - 0.25;
+        
         particles.push({
           x: Math.random() * canvas.width,
           y: Math.random() * canvas.height,
           size: Math.random() * 3 + 0.5,
-          speedX: Math.random() * 0.5 - 0.25,
-          speedY: Math.random() * 0.5 - 0.25,
+          speedX: speedX,
+          speedY: speedY,
+          originalSpeedX: speedX, // Store original speed for returning to natural motion
+          originalSpeedY: speedY,
           opacity: Math.random() * 0.5 + 0.1,
           color: getRandomColor(),
           hue: Math.random() * 360,
@@ -161,7 +182,7 @@ export const InteractiveBackground = ({ className }: InteractiveBackgroundProps)
         const distance = Math.sqrt(dx * dx + dy * dy);
         const maxDistance = 250;
         
-        if (distance < maxDistance) {
+        if (distance < maxDistance && mouseRef.current.isActive) {
           const force = (maxDistance - distance) / maxDistance;
           const angle = Math.atan2(dy, dx);
           const attraction = 0.03;
@@ -173,6 +194,10 @@ export const InteractiveBackground = ({ className }: InteractiveBackgroundProps)
           p.opacity = Math.min(0.8, p.opacity + force * 0.1);
           p.hue = (p.hue + 0.5) % 360;
         } else {
+          // Gradually return to original speed when not near the mouse
+          p.speedX = p.speedX * 0.98 + p.originalSpeedX * 0.02;
+          p.speedY = p.speedY * 0.98 + p.originalSpeedY * 0.02;
+          
           // Gradually return to original opacity
           p.opacity = Math.max(0.1, p.opacity * 0.995);
         }
@@ -181,27 +206,33 @@ export const InteractiveBackground = ({ className }: InteractiveBackgroundProps)
         p.x += p.speedX;
         p.y += p.speedY;
         
-        // Add friction and randomness for more organic movement
-        p.speedX *= 0.98;
-        p.speedY *= 0.98;
+        // Add small random movement for more natural flow
         p.speedX += (Math.random() - 0.5) * 0.01;
         p.speedY += (Math.random() - 0.5) * 0.01;
         
-        // Edge boundaries with bounce effect
+        // Edge boundaries with bounce effect and repositioning to prevent clumping
         if (p.x <= 0 || p.x >= canvas.width) {
-          p.speedX *= -0.8;
-          p.x = p.x <= 0 ? 1 : canvas.width - 1;
+          p.speedX *= -1;
+          // Move slightly away from edge to prevent sticking
+          p.x = p.x <= 0 ? 5 : canvas.width - 5;
         }
         if (p.y <= 0 || p.y >= canvas.height) {
-          p.speedY *= -0.8;
-          p.y = p.y <= 0 ? 1 : canvas.height - 1;
+          p.speedY *= -1;
+          // Move slightly away from edge to prevent sticking
+          p.y = p.y <= 0 ? 5 : canvas.height - 5;
+        }
+        
+        // Occasionally reposition particles that get stuck
+        if (Math.random() < 0.001) {
+          p.x = Math.random() * canvas.width;
+          p.y = Math.random() * canvas.height;
         }
         
         // Draw particle with glow effect
         const isDark = document.documentElement.classList.contains('dark');
         let fillStyle;
         
-        if (distance < maxDistance) {
+        if (distance < maxDistance && mouseRef.current.isActive) {
           // Particles near cursor get special colors
           const intensity = (maxDistance - distance) / maxDistance;
           fillStyle = isDark
@@ -253,7 +284,7 @@ export const InteractiveBackground = ({ className }: InteractiveBackgroundProps)
       />
       <div 
         ref={cursorGlowRef}
-        className="pointer-events-none fixed z-10 h-40 w-40 -translate-x-1/2 -translate-y-1/2 rounded-full bg-gradient-radial from-sciscribe-gold/20 to-transparent opacity-70 blur-xl dark:from-sciscribe-gold/30"
+        className="pointer-events-none fixed z-10 h-40 w-40 -translate-x-1/2 -translate-y-1/2 rounded-full bg-gradient-radial from-sciscribe-gold/20 to-transparent opacity-70 blur-xl dark:from-sciscribe-gold/30 transition-opacity duration-700"
       />
     </>
   );

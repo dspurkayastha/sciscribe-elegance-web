@@ -1,6 +1,9 @@
 
 import { useState } from "react";
 import { Star } from "lucide-react";
+import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { motion } from "framer-motion";
 
 const TestimonialsSection = () => {
   const testimonials = [
@@ -75,7 +78,7 @@ const TestimonialsSection = () => {
                 }`}
                 style={{ display: index >= activeIndex && index < activeIndex + 2 ? "block" : "none" }}
               >
-                <div className="h-full rounded-lg bg-white p-8 shadow-md">
+                <div className="h-full rounded-lg bg-white p-8 shadow-md hover:shadow-lg hover:shadow-sciscribe-gold/10 dark:shadow-sciscribe-gold/5 transition-all duration-300">
                   <div className="mb-4 flex">
                     {[...Array(testimonial.stars)].map((_, i) => (
                       <Star key={i} size={18} fill="#FFC107" className="text-sciscribe-gold" />
@@ -106,6 +109,21 @@ const TestimonialsSection = () => {
               ></button>
             ))}
           </div>
+          
+          {/* Leave Feedback Button */}
+          <motion.div 
+            className="mt-12 flex justify-center"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.3 }}
+          >
+            <Link to="/feedback">
+              <Button className="btn-premium px-8">
+                Leave Feedback
+              </Button>
+            </Link>
+          </motion.div>
         </div>
       </div>
     </section>
