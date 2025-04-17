@@ -20,6 +20,7 @@ import {
 import { Checkbox } from "@/components/ui/checkbox";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
+import { Form } from "@/components/ui/form";
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -43,6 +44,7 @@ const Contact = () => {
     gdprConsent1: false,
     gdprConsent2: false
   });
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
   const { toast } = useToast();
@@ -50,6 +52,12 @@ const Contact = () => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      setSelectedFile(e.target.files[0]);
+    }
   };
 
   const handleSelectChange = (name: string, value: string) => {
@@ -206,6 +214,7 @@ const Contact = () => {
                 method="POST"
                 data-netlify="true"
                 netlify-honeypot="bot-field"
+                encType="multipart/form-data"
               >
                 <input type="hidden" name="form-name" value="contact-full" />
                 <p className="hidden">
@@ -364,6 +373,23 @@ const Contact = () => {
                   </div>
                 </div>
                 
+                {/* File Upload */}
+                <div>
+                  <label htmlFor="fileUpload" className="text-sm font-medium block mb-1">
+                    Upload a File (Optional)
+                  </label>
+                  <Input 
+                    id="fileUpload"
+                    name="fileUpload"
+                    type="file" 
+                    onChange={handleFileChange}
+                    className="bg-white/70 dark:bg-sciscribe-navy/30"
+                  />
+                  <p className="text-xs text-muted-foreground mt-1">
+                    Accepted formats: DOC, PDF, XLS, TXT, JPG, etc.
+                  </p>
+                </div>
+
                 {/* Deadline */}
                 <div>
                   <label htmlFor="deadline" className="text-sm font-medium block mb-1">

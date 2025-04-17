@@ -9,10 +9,17 @@ const ContactSection = () => {
     email: "",
     message: "",
   });
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      setSelectedFile(e.target.files[0]);
+    }
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -77,6 +84,7 @@ const ContactSection = () => {
               method="POST" 
               data-netlify="true"
               netlify-honeypot="bot-field"
+              encType="multipart/form-data"
             >
               <input type="hidden" name="form-name" value="contact" />
               <p className="hidden">
@@ -113,6 +121,20 @@ const ContactSection = () => {
                   className="w-full rounded-lg border border-gray-200 p-3 focus:border-sciscribe-gold focus:outline-none focus:ring-2 focus:ring-sciscribe-gold/20 dark:bg-sciscribe-navy/30 dark:border-sciscribe-navy/50"
                   placeholder="john@example.com"
                 />
+              </div>
+
+              <div>
+                <label htmlFor="file" className="mb-2 block text-sm font-medium text-foreground">
+                  Upload File (Optional)
+                </label>
+                <input
+                  id="file"
+                  name="file"
+                  type="file"
+                  onChange={handleFileChange}
+                  className="w-full rounded-lg border border-gray-200 p-3 focus:border-sciscribe-gold focus:outline-none focus:ring-2 focus:ring-sciscribe-gold/20 dark:bg-sciscribe-navy/30 dark:border-sciscribe-navy/50"
+                />
+                <p className="mt-1 text-xs text-foreground/70">Upload any relevant documents (PDF, DOCX, etc.)</p>
               </div>
 
               <div>
