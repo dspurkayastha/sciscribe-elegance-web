@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -120,12 +121,12 @@
   body {
     @apply bg-background text-foreground font-sans antialiased;
     scroll-behavior: smooth;
-    cursor: none;
+    cursor: none !important;
   }
   
   /* Custom cursor */
   .cursor {
-    position: absolute;
+    position: fixed;
     width: 6px;
     height: 6px;
     border-radius: 100%;
@@ -154,7 +155,7 @@
   }
   
   .cursor-follower {
-    position: absolute;
+    position: fixed;
     width: 20px;
     height: 20px;
     border-radius: 100%;
@@ -184,21 +185,21 @@
   }
   
   a, button, [role="button"], input, label, textarea, select, .link {
-    cursor: none;
+    cursor: none !important;
   }
   
   /* Show default cursor for small screens where custom cursor might be intrusive */
   @media (max-width: 768px) {
     body {
-      cursor: auto;
+      cursor: auto !important;
     }
     
     .cursor, .cursor-follower {
-      display: none;
+      display: none !important;
     }
     
     a, button, [role="button"], input, label, textarea, select, .link {
-      cursor: pointer;
+      cursor: pointer !important;
     }
   }
 }
