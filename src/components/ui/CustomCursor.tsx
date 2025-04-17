@@ -27,22 +27,25 @@ const CustomCursor = () => {
     let posX = 0;
     let posY = 0;
     
-    // GSAP animation for smooth cursor movement
+    // GSAP animation for smooth cursor movement with adjusted easing
     const animation = gsap.to({}, {
-      duration: 0.016,
+      duration: 0.016, // Higher framerate for smoother movement
       repeat: -1,
       onRepeat: () => {
-        posX += (mouseX - posX) / 9;
-        posY += (mouseY - posY) / 9;
+        // Adjust damping factor for smoother following (closer to 1 = more direct tracking)
+        posX += (mouseX - posX) / 5;
+        posY += (mouseY - posY) / 5;
         
+        // Position the follower (larger element)
         gsap.set(follower, {
-          x: posX - 12,
-          y: posY - 12
+          x: posX - 10, // Center the follower
+          y: posY - 10
         });
         
+        // Position the cursor (small dot) directly at mouse position
         gsap.set(cursor, {
-          x: mouseX - 3, // Center the cursor (half of width)
-          y: mouseY - 3  // Center the cursor (half of height)
+          x: mouseX - 3, // Center the cursor
+          y: mouseY - 3
         });
       }
     });
