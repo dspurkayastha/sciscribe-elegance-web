@@ -79,7 +79,7 @@ const Contact = () => {
     setIsSubmitting(true);
 
     try {
-      // Here you would normally send this data to your backend
+      // Form submission is handled by Netlify
       console.log("Contact form submitted:", formData);
       
       // Simulate API call
@@ -199,7 +199,19 @@ const Contact = () => {
             >
               <h2 className="text-2xl font-bold mb-6">Send us a Message</h2>
               
-              <form onSubmit={handleSubmit} className="space-y-6">
+              <form 
+                onSubmit={handleSubmit} 
+                className="space-y-6"
+                name="contact-full"
+                method="POST"
+                data-netlify="true"
+                netlify-honeypot="bot-field"
+              >
+                <input type="hidden" name="form-name" value="contact-full" />
+                <p className="hidden">
+                  <label>Don't fill this out if you're human: <input name="bot-field" /></label>
+                </p>
+                
                 {/* Full Name - Two columns */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
@@ -298,6 +310,7 @@ const Contact = () => {
                     <div className="flex items-center space-x-2">
                       <Checkbox 
                         id="plagiarism" 
+                        name="addon-plagiarism"
                         checked={formData.addOns.plagiarism}
                         onCheckedChange={() => handleCheckboxChange("plagiarism")}
                       />
@@ -306,6 +319,7 @@ const Contact = () => {
                     <div className="flex items-center space-x-2">
                       <Checkbox 
                         id="statistical" 
+                        name="addon-statistical"
                         checked={formData.addOns.statistical}
                         onCheckedChange={() => handleCheckboxChange("statistical")}
                       />
@@ -314,6 +328,7 @@ const Contact = () => {
                     <div className="flex items-center space-x-2">
                       <Checkbox 
                         id="figures" 
+                        name="addon-figures"
                         checked={formData.addOns.figures}
                         onCheckedChange={() => handleCheckboxChange("figures")}
                       />
@@ -322,6 +337,7 @@ const Contact = () => {
                     <div className="flex items-center space-x-2">
                       <Checkbox 
                         id="journal" 
+                        name="addon-journal"
                         checked={formData.addOns.journal}
                         onCheckedChange={() => handleCheckboxChange("journal")}
                       />
@@ -330,6 +346,7 @@ const Contact = () => {
                     <div className="flex items-center space-x-2">
                       <Checkbox 
                         id="cover" 
+                        name="addon-cover"
                         checked={formData.addOns.cover}
                         onCheckedChange={() => handleCheckboxChange("cover")}
                       />
@@ -338,6 +355,7 @@ const Contact = () => {
                     <div className="flex items-center space-x-2">
                       <Checkbox 
                         id="fastTrack" 
+                        name="addon-fastTrack"
                         checked={formData.addOns.fastTrack}
                         onCheckedChange={() => handleCheckboxChange("fastTrack")}
                       />
@@ -369,6 +387,7 @@ const Contact = () => {
                     value={formData.contactMethod}
                     onValueChange={handleContactMethodChange}
                     className="flex flex-col space-y-1"
+                    name="contactMethod"
                   >
                     <div className="flex items-center space-x-2">
                       <RadioGroupItem value="email" id="contact-email" />
@@ -396,6 +415,7 @@ const Contact = () => {
                   >
                     <SelectTrigger 
                       id="source" 
+                      name="source"
                       className="bg-white/70 dark:bg-sciscribe-navy/30"
                     >
                       <SelectValue placeholder="Select an option" />
@@ -435,6 +455,7 @@ const Contact = () => {
                     <div className="flex items-start space-x-2">
                       <Checkbox 
                         id="gdprConsent1" 
+                        name="gdprConsent1"
                         checked={formData.gdprConsent1}
                         onCheckedChange={(checked) => 
                           handleGdprChange("gdprConsent1", checked as boolean)
@@ -450,6 +471,7 @@ const Contact = () => {
                     <div className="flex items-start space-x-2">
                       <Checkbox 
                         id="gdprConsent2" 
+                        name="gdprConsent2"
                         checked={formData.gdprConsent2}
                         onCheckedChange={(checked) => 
                           handleGdprChange("gdprConsent2", checked as boolean)
