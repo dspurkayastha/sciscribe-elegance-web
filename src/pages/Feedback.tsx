@@ -33,40 +33,34 @@ const Feedback = () => {
     setIsSubmitting(true);
 
     try {
-      // Simulating API call
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      
-      console.log("Feedback submitted:", {
-        name,
-        email,
-        serviceUsed,
-        rating,
-        feedbackText
-      });
-      
-      toast({
-        title: "Thank you for your feedback!",
-        description: "We appreciate your time and will use your insights to improve our services.",
-      });
-      
-      // Reset form
-      setName("");
-      setEmail("");
-      setServiceUsed("");
-      setRating(null);
-      setFeedbackText("");
-      
-      // Redirect
+      // Form submission is handled by Netlify
+      // Show toast for user feedback
       setTimeout(() => {
-        navigate("/");
-      }, 2000);
+        toast({
+          title: "Thank you for your feedback!",
+          description: "We appreciate your time and will use your insights to improve our services.",
+        });
+        
+        // Reset form
+        setName("");
+        setEmail("");
+        setServiceUsed("");
+        setRating(null);
+        setFeedbackText("");
+        
+        // Redirect
+        setTimeout(() => {
+          navigate("/");
+        }, 2000);
+        
+        setIsSubmitting(false);
+      }, 1000);
     } catch (error) {
       toast({
         title: "Submission failed",
         description: "Please try again later or contact us directly.",
         variant: "destructive",
       });
-    } finally {
       setIsSubmitting(false);
     }
   };
@@ -87,7 +81,7 @@ const Feedback = () => {
               <h1 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-sciscribe-purple to-sciscribe-blue bg-clip-text text-transparent">
                 Share Your Experience
               </h1>
-              <p className="text-lg dark:text-white/80">
+              <p className="text-lg text-foreground/80">
                 Your feedback helps us improve and serve the scientific community better.
               </p>
             </motion.div>
@@ -98,7 +92,19 @@ const Feedback = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.2 }}
             >
-              <form onSubmit={handleSubmit} className="space-y-6">
+              <form 
+                onSubmit={handleSubmit} 
+                className="space-y-6" 
+                name="feedback"
+                method="POST"
+                data-netlify="true"
+                netlify-honeypot="bot-field"
+              >
+                <input type="hidden" name="form-name" value="feedback" />
+                <p className="hidden">
+                  <label>Don't fill this out if you're human: <input name="bot-field" /></label>
+                </p>
+                
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
                     <label htmlFor="name" className="text-sm font-medium block mb-1">
@@ -106,6 +112,7 @@ const Feedback = () => {
                     </label>
                     <Input 
                       id="name"
+                      name="name"
                       placeholder="Full name" 
                       value={name} 
                       onChange={(e) => setName(e.target.value)}
@@ -120,6 +127,7 @@ const Feedback = () => {
                     </label>
                     <Input 
                       id="email" 
+                      name="email"
                       type="email" 
                       placeholder="your.email@example.com" 
                       value={email} 
@@ -135,7 +143,7 @@ const Feedback = () => {
                     Service Used
                   </label>
                   <Select value={serviceUsed} onValueChange={setServiceUsed} required>
-                    <SelectTrigger id="service" className="w-full bg-white/70 dark:bg-sciscribe-navy/30">
+                    <SelectTrigger id="service" name="service" className="w-full bg-white/70 dark:bg-sciscribe-navy/30">
                       <SelectValue placeholder="Select the service you used" />
                     </SelectTrigger>
                     <SelectContent>
@@ -155,6 +163,7 @@ const Feedback = () => {
                   <label className="text-sm font-medium block mb-3">
                     How would you rate your experience?
                   </label>
+                  <input type="hidden" name="rating" value={rating?.toString() || ""} />
                   <div className="flex justify-center space-x-2">
                     {[1, 2, 3, 4, 5].map((star) => (
                       <button
@@ -179,6 +188,7 @@ const Feedback = () => {
                   </label>
                   <Textarea 
                     id="feedback"
+                    name="feedbackText"
                     placeholder="Please share your experience with our services..." 
                     value={feedbackText} 
                     onChange={(e) => setFeedbackText(e.target.value)}

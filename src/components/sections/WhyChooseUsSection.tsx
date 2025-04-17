@@ -63,8 +63,8 @@ const WhyChooseUsSection = () => {
           transition={{ duration: 0.5 }}
           className="mx-auto max-w-3xl text-center mb-16"
         >
-          <h2 className="mb-4 text-4xl font-bold dark:text-white text-sciscribe-navy">Why Choose Us?</h2>
-          <p className="text-lg dark:text-white/80 text-sciscribe-navy/80">
+          <h2 className="mb-4 text-4xl font-bold text-foreground">Why Choose Us?</h2>
+          <p className="text-lg text-foreground/80">
             What sets SciScribe Solutions apart from other scientific editing services
           </p>
         </motion.div>
@@ -85,8 +85,8 @@ const WhyChooseUsSection = () => {
               <div className="mb-4 inline-flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-sciscribe-gold/20 to-sciscribe-amber/20 text-sciscribe-gold">
                 {reason.icon}
               </div>
-              <h3 className="text-xl font-bold mb-3 text-sciscribe-navy dark:text-white">{reason.title}</h3>
-              <p className="text-sciscribe-navy/80 dark:text-white/70">{reason.description}</p>
+              <h3 className="text-xl font-bold mb-3 text-foreground">{reason.title}</h3>
+              <p className="text-foreground/70">{reason.description}</p>
             </motion.div>
           ))}
         </motion.div>

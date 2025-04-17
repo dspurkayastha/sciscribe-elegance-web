@@ -11,9 +11,9 @@ const AboutSection = () => {
       
       <div className="container mx-auto px-6">
         <div className="mx-auto max-w-4xl text-center">
-          <h2 className="mb-6 text-4xl font-bold text-sciscribe-navy dark:text-white">About SciScribe Solutions</h2>
+          <h2 className="mb-6 text-4xl font-bold text-foreground">About SciScribe Solutions</h2>
           <motion.p 
-            className="mb-12 text-lg text-sciscribe-navy/80 dark:text-white/80"
+            className="mb-12 text-lg text-foreground/80"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7 }}
@@ -35,7 +35,7 @@ const AboutSection = () => {
             <div className="relative">
               <div className="absolute -right-16 -top-16 h-32 w-32 rounded-full bg-gradient-to-br from-sciscribe-blue/30 to-transparent blur-xl"></div>
               <h3 className="mb-4 text-2xl font-bold text-sciscribe-blue">Mission</h3>
-              <p className="text-sciscribe-navy/80 dark:text-white/80">
+              <p className="text-foreground/80">
                 To provide high-quality scientific writing, editing, visualization, and data support services tailored to the needs of academics, students, and research institutions—ensuring ethical, accurate, and impactful research dissemination.
               </p>
             </div>
@@ -52,7 +52,7 @@ const AboutSection = () => {
             <div className="relative">
               <div className="absolute -right-16 -top-16 h-32 w-32 rounded-full bg-gradient-to-br from-sciscribe-gold/30 to-transparent blur-xl"></div>
               <h3 className="mb-4 text-2xl font-bold text-sciscribe-gold">Vision</h3>
-              <p className="text-sciscribe-navy/80 dark:text-white/80">
+              <p className="text-foreground/80">
                 To become a global leader in scientific communication—empowering researchers to share their discoveries with confidence, credibility, and clarity.
               </p>
             </div>

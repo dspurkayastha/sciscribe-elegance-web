@@ -2,7 +2,6 @@
 import { useEffect, useState } from "react";
 import { useTheme } from "../theme/ThemeProvider";
 import gsap from "gsap";
-import { Pen, MousePointer } from "lucide-react";
 
 const CustomCursor = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -103,9 +102,11 @@ const CustomCursor = () => {
       el.addEventListener("mouseleave", handleLinkHoverEnd);
     });
     
-    // Set theme colors for cursor based on theme
+    // Set initial cursor color based on system or user preference
     const updateCursorTheme = () => {
-      const isDark = theme === "dark";
+      const systemDarkMode = window.matchMedia("(prefers-color-scheme: dark)").matches;
+      const isDark = theme === "dark" || (theme === "system" && systemDarkMode);
+      
       document.documentElement.style.setProperty(
         "--cursor-color", 
         isDark ? "#ffffff" : "#000000"
@@ -116,6 +117,7 @@ const CustomCursor = () => {
       );
     };
     
+    // Set cursor color immediately when component mounts
     updateCursorTheme();
     
     // Clean up
