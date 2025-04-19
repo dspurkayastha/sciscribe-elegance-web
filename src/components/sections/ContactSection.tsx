@@ -1,6 +1,6 @@
 
 import { useState } from "react";
-import { Mail, MapPin, Phone } from "lucide-react";
+import { Mail, MapPin, Phone, MessageCircleMore } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const ContactSection = () => {
@@ -49,6 +49,7 @@ const ContactSection = () => {
                 </div>
                 <div>
                   <p className="font-medium text-foreground">Email</p>
+                  <p className="text-foreground/70">contact@sciscribesolutions.com</p>
                   <p className="text-foreground/70">support@sciscribesolutions.com</p>
                 </div>
               </div>
@@ -59,7 +60,16 @@ const ContactSection = () => {
                 </div>
                 <div>
                   <p className="font-medium text-foreground">Phone</p>
-                  <p className="text-foreground/70">+1 (555) 123-4567</p>
+                  <p className="text-foreground/70">+91 9395582679</p>
+                  <a 
+                    href="https://api.whatsapp.com/message/XMKZUS2MJHUBG1" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="flex items-center text-foreground/70 hover:text-sciscribe-gold transition-colors mt-1"
+                  >
+                    <MessageCircleMore size={16} className="mr-1" />
+                    <span>WhatsApp</span>
+                  </a>
                 </div>
               </div>
 
@@ -69,7 +79,8 @@ const ContactSection = () => {
                 </div>
                 <div>
                   <p className="font-medium text-foreground">Location</p>
-                  <p className="text-foreground/70">Boston, MA 02199, United States</p>
+                  <p className="text-foreground/70">Hazra Road</p>
+                  <p className="text-foreground/70">Kolkata, India</p>
                 </div>
               </div>
             </div>

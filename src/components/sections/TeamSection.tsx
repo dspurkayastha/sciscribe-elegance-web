@@ -5,21 +5,21 @@ import { Linkedin, Twitter } from "lucide-react";
 const TeamSection = () => {
   const teamMembers = [
     {
-      name: "Dr. Sarah Chen",
-      role: "Scientific Director",
-      bio: "Ph.D in Molecular Biology with over 15 years of research and editing experience. Specializes in life sciences and medical manuscripts.",
-      image: "/placeholder.svg"
-    },
-    {
-      name: "Prof. James Wilson",
-      role: "Senior Editor",
-      bio: "Former journal editor with expertise in physical sciences and engineering. Helps researchers navigate the publication process effectively.",
+      name: "Wayne Kumar",
+      role: "Chief Executive Officer",
+      bio: "Wayne leads SciScribe Solutions with extensive expertise in scientific communication and research publication. His vision drives our commitment to excellence in academic editing and consulting.",
       image: "/placeholder.svg"
     },
     {
       name: "Dr. Maria Rodriguez",
+      role: "Senior Editor",
+      bio: "With a background in research methodology and data analysis, Maria ensures the highest standards of scientific accuracy in our editing services.",
+      image: "/placeholder.svg"
+    },
+    {
+      name: "Dr. James Wilson",
       role: "Statistical Consultant",
-      bio: "Biostatistician with extensive experience in clinical trials and epidemiological studies. Expert in data visualization and analysis.",
+      bio: "Specializing in research design and statistical analysis, James helps researchers optimize their methodology and data presentation.",
       image: "/placeholder.svg"
     }
   ];
