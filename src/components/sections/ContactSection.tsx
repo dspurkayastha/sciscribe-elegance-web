@@ -89,13 +89,13 @@ const ContactSection = () => {
           <div className="animate-slide-in rounded-lg bg-white dark:bg-card p-8 shadow-md">
             <h3 className="mb-6 text-2xl font-bold text-foreground">Send us a Message</h3>
             <form 
-              onSubmit={handleSubmit} 
-              className="space-y-6"
               name="contact" 
               method="POST" 
+              netlify
               data-netlify="true"
               netlify-honeypot="bot-field"
               encType="multipart/form-data"
+              className="space-y-6"
             >
               <input type="hidden" name="form-name" value="contact" />
               <p className="hidden">

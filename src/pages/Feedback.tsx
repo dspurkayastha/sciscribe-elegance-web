@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { InteractiveBackground } from "@/components/background/InteractiveBackground";
 import Footer from "@/components/layout/Footer";
@@ -93,12 +92,12 @@ const Feedback = () => {
               transition={{ duration: 0.7, delay: 0.2 }}
             >
               <form 
-                onSubmit={handleSubmit} 
-                className="space-y-6" 
-                name="feedback"
-                method="POST"
+                name="feedback" 
+                method="POST" 
+                netlify
                 data-netlify="true"
                 netlify-honeypot="bot-field"
+                className="space-y-6"
               >
                 <input type="hidden" name="form-name" value="feedback" />
                 <p className="hidden">

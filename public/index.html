@@ -1,0 +1,55 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SciScribe Solutions</title>
+    <!-- Netlify Form Pre-renders -->
+  </head>
+  <body>
+    <!-- Contact form -->
+    <form name="contact" netlify netlify-honeypot="bot-field" hidden>
+      <input type="text" name="name" />
+      <input type="email" name="email" />
+      <input type="file" name="file" />
+      <textarea name="message"></textarea>
+    </form>
+    
+    <!-- Contact Full form -->
+    <form name="contact-full" netlify netlify-honeypot="bot-field" hidden>
+      <input type="text" name="firstName" />
+      <input type="text" name="lastName" />
+      <input type="email" name="email" />
+      <input type="text" name="phone" />
+      <input type="text" name="service" />
+      <input type="checkbox" name="addon-plagiarism" />
+      <input type="checkbox" name="addon-statistical" />
+      <input type="checkbox" name="addon-figures" />
+      <input type="checkbox" name="addon-journal" />
+      <input type="checkbox" name="addon-cover" />
+      <input type="checkbox" name="addon-fastTrack" />
+      <input type="file" name="fileUpload" />
+      <input type="date" name="deadline" />
+      <input type="radio" name="contactMethod" value="email" />
+      <input type="radio" name="contactMethod" value="phone" />
+      <input type="radio" name="contactMethod" value="whatsapp" />
+      <input type="text" name="source" />
+      <textarea name="message"></textarea>
+      <input type="checkbox" name="gdprConsent1" />
+      <input type="checkbox" name="gdprConsent2" />
+    </form>
+    
+    <!-- Feedback form -->
+    <form name="feedback" netlify netlify-honeypot="bot-field" hidden>
+      <input type="text" name="name" />
+      <input type="email" name="email" />
+      <input type="text" name="service" />
+      <input type="number" name="rating" />
+      <textarea name="feedbackText"></textarea>
+    </form>
+    
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
