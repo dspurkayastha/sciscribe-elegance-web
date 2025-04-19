@@ -1,23 +1,67 @@
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>sciscribe-elegance-web</title>
-    <meta name="description" content="Lovable Generated Project" />
-    <meta name="author" content="Lovable" />
+    <title>SciScribe Solutions</title>
+    <meta name="description" content="SciScribe Solutions - Expert Scientific Editing Services" />
+    <meta name="author" content="SciScribe Solutions" />
 
-    <meta property="og:title" content="sciscribe-elegance-web" />
-    <meta property="og:description" content="Lovable Generated Project" />
+    <meta property="og:title" content="SciScribe Solutions" />
+    <meta property="og:description" content="Expert Scientific Editing Services" />
     <meta property="og:type" content="website" />
     <meta property="og:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
 
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:site" content="@lovable_dev" />
+    <meta name="twitter:site" content="@sciscribe" />
     <meta name="twitter:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
+    
+    <!-- Netlify Form Pre-renders -->
   </head>
 
   <body>
+    <!-- A little help for the Netlify post-processing bots -->
+    <form name="contact" netlify netlify-honeypot="bot-field" hidden>
+      <input type="text" name="name" />
+      <input type="email" name="email" />
+      <input type="file" name="file" />
+      <textarea name="message"></textarea>
+    </form>
+    
+    <!-- Contact Full form -->
+    <form name="contact-full" netlify netlify-honeypot="bot-field" hidden>
+      <input type="text" name="firstName" />
+      <input type="text" name="lastName" />
+      <input type="email" name="email" />
+      <input type="text" name="phone" />
+      <input type="text" name="service" />
+      <input type="checkbox" name="addon-plagiarism" />
+      <input type="checkbox" name="addon-statistical" />
+      <input type="checkbox" name="addon-figures" />
+      <input type="checkbox" name="addon-journal" />
+      <input type="checkbox" name="addon-cover" />
+      <input type="checkbox" name="addon-fastTrack" />
+      <input type="file" name="fileUpload" />
+      <input type="date" name="deadline" />
+      <input type="radio" name="contactMethod" value="email" />
+      <input type="radio" name="contactMethod" value="phone" />
+      <input type="radio" name="contactMethod" value="whatsapp" />
+      <input type="text" name="source" />
+      <textarea name="message"></textarea>
+      <input type="checkbox" name="gdprConsent1" />
+      <input type="checkbox" name="gdprConsent2" />
+    </form>
+    
+    <!-- Feedback form -->
+    <form name="feedback" netlify netlify-honeypot="bot-field" hidden>
+      <input type="text" name="name" />
+      <input type="email" name="email" />
+      <input type="text" name="service" />
+      <input type="number" name="rating" />
+      <textarea name="feedbackText"></textarea>
+    </form>
+    
     <div id="root"></div>
     <!-- IMPORTANT: DO NOT REMOVE THIS SCRIPT TAG OR THIS VERY COMMENT! -->
     <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>

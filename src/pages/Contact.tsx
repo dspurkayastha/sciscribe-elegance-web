@@ -211,6 +211,7 @@ const Contact = () => {
                 data-netlify="true"
                 data-netlify-honeypot="bot-field"
                 encType="multipart/form-data"
+                onSubmit={handleSubmit}
                 className="space-y-6"
               >
                 <input type="hidden" name="form-name" value="contact-full" />
