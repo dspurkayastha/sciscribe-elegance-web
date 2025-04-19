@@ -1,9 +1,8 @@
-
 import { InteractiveBackground } from "@/components/background/InteractiveBackground";
 import Footer from "@/components/layout/Footer";
 import Navbar from "@/components/layout/Navbar";
 import { motion } from "framer-motion";
-import { Mail, MapPin, Phone } from "lucide-react";
+import { Mail, MapPin, Phone, MessageCircleMore } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -87,10 +86,8 @@ const Contact = () => {
     setIsSubmitting(true);
 
     try {
-      // Form submission is handled by Netlify
       console.log("Contact form submitted:", formData);
       
-      // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 1000));
       
       toast({
@@ -99,7 +96,6 @@ const Contact = () => {
         variant: "default",
       });
 
-      // Redirect to thank you page
       navigate("/thank-you", { 
         state: { 
           source: "contact",
@@ -122,7 +118,6 @@ const Contact = () => {
       <InteractiveBackground />
       <Navbar />
       <main className="dark:bg-sciscribe-navy/5 pt-24">
-        {/* Hero Section */}
         <section className="section-container">
           <div className="max-w-4xl mx-auto text-center">
             <motion.h1 
@@ -144,10 +139,8 @@ const Contact = () => {
           </div>
         </section>
 
-        {/* Contact Info & Form */}
         <section className="section-container">
           <div className="grid md:grid-cols-3 gap-12">
-            {/* Contact Information */}
             <motion.div
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
@@ -163,7 +156,7 @@ const Contact = () => {
                   </div>
                   <div>
                     <h3 className="text-lg font-semibold mb-1">Email</h3>
-                    <p className="text-muted-foreground">info@sciscribesolutions.com</p>
+                    <p className="text-muted-foreground">contact@sciscribesolutions.com</p>
                     <p className="text-muted-foreground">support@sciscribesolutions.com</p>
                   </div>
                 </div>
@@ -174,8 +167,16 @@ const Contact = () => {
                   </div>
                   <div>
                     <h3 className="text-lg font-semibold mb-1">Phone</h3>
-                    <p className="text-muted-foreground">+91 98765 43210</p>
-                    <p className="text-muted-foreground">Monday to Friday, 9am to 6pm IST</p>
+                    <p className="text-muted-foreground">+91 9395582679</p>
+                    <a 
+                      href="https://api.whatsapp.com/message/XMKZUS2MJHUBG1" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="flex items-center text-muted-foreground hover:text-sciscribe-blue transition-colors mt-1"
+                    >
+                      <MessageCircleMore size={16} className="mr-1" />
+                      <span>WhatsApp</span>
+                    </a>
                   </div>
                 </div>
                 
@@ -185,20 +186,17 @@ const Contact = () => {
                   </div>
                   <div>
                     <h3 className="text-lg font-semibold mb-1">Office</h3>
-                    <p className="text-muted-foreground">123 Science Park</p>
-                    <p className="text-muted-foreground">Research Avenue, Tech City</p>
-                    <p className="text-muted-foreground">Bengaluru, Karnataka 560001</p>
+                    <p className="text-muted-foreground">Hazra Road</p>
+                    <p className="text-muted-foreground">Kolkata, India</p>
                   </div>
                 </div>
               </div>
 
-              {/* Decorative Map/Image */}
               <div className="mt-12 rounded-lg overflow-hidden h-[200px] bg-gradient-to-br from-sciscribe-mist/70 to-sciscribe-sky/30 dark:from-sciscribe-navy/70 dark:to-sciscribe-blue/20 flex items-center justify-center">
                 <MapPin className="h-12 w-12 text-sciscribe-blue opacity-60" />
               </div>
             </motion.div>
             
-            {/* Contact Form */}
             <motion.div
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
@@ -221,7 +219,6 @@ const Contact = () => {
                   <label>Don't fill this out if you're human: <input name="bot-field" /></label>
                 </p>
                 
-                {/* Full Name - Two columns */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
                     <label htmlFor="firstName" className="text-sm font-medium block mb-1">
@@ -256,7 +253,6 @@ const Contact = () => {
                   </div>
                 </div>
                 
-                {/* Email & Phone */}
                 <div>
                   <label htmlFor="email" className="text-sm font-medium block mb-1">
                     Email Address*
@@ -288,7 +284,6 @@ const Contact = () => {
                   />
                 </div>
                 
-                {/* Service Selection */}
                 <div>
                   <label htmlFor="service" className="text-sm font-medium block mb-1">
                     What service are you interested in?*
@@ -312,7 +307,6 @@ const Contact = () => {
                   </Select>
                 </div>
                 
-                {/* Add-on Services */}
                 <div>
                   <p className="text-sm font-medium mb-2">Add-on Services</p>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -373,7 +367,6 @@ const Contact = () => {
                   </div>
                 </div>
                 
-                {/* File Upload */}
                 <div>
                   <label htmlFor="fileUpload" className="text-sm font-medium block mb-1">
                     Upload a File (Optional)
@@ -390,7 +383,6 @@ const Contact = () => {
                   </p>
                 </div>
 
-                {/* Deadline */}
                 <div>
                   <label htmlFor="deadline" className="text-sm font-medium block mb-1">
                     Deadline
@@ -406,7 +398,6 @@ const Contact = () => {
                   <p className="text-xs text-muted-foreground mt-1">What is the tentative deadline (in days)?</p>
                 </div>
                 
-                {/* Contact Method */}
                 <div>
                   <p className="text-sm font-medium mb-2">How would you like us to contact you?</p>
                   <RadioGroup 
@@ -430,7 +421,6 @@ const Contact = () => {
                   </RadioGroup>
                 </div>
                 
-                {/* How did you hear about us */}
                 <div>
                   <label htmlFor="source" className="text-sm font-medium block mb-1">
                     How did you hear about us?
@@ -457,7 +447,6 @@ const Contact = () => {
                   </Select>
                 </div>
                 
-                {/* Message */}
                 <div>
                   <label htmlFor="message" className="text-sm font-medium block mb-1">
                     Message / Project Details*
@@ -474,7 +463,6 @@ const Contact = () => {
                   />
                 </div>
                 
-                {/* GDPR Agreement */}
                 <div>
                   <p className="text-sm font-medium mb-2">GDPR Agreement*</p>
                   <div className="space-y-3">
@@ -523,7 +511,6 @@ const Contact = () => {
           </div>
         </section>
 
-        {/* FAQ Section */}
         <section className="bg-white/50 dark:bg-sciscribe-navy/20 py-16 mt-16">
           <div className="container mx-auto px-6">
             <h2 className="text-2xl font-bold mb-8 text-center">Frequently Asked Questions</h2>
