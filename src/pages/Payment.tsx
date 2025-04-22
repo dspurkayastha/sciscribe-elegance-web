@@ -5,12 +5,14 @@ import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
+import { InteractiveBackground } from "@/components/background/InteractiveBackground";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import Seo from "@/components/ui/Seo";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -41,8 +43,12 @@ const Payment = () => {
 
   return (
     <>
+      <Seo
+        title="Payment | SciScribe Solutions"
+        description="Make a secure payment for your SciScribe Solutions project via our trusted Razorpay gateway. Read about payment security, invoice process, and frequently asked questions."
+      />
+      <InteractiveBackground />
       <Navbar />
-      
       <main className="pt-20">
         <section className="section-container">
           <div className="max-w-4xl mx-auto">
@@ -206,7 +212,6 @@ const Payment = () => {
           </div>
         </section>
       </main>
-      
       <Footer />
     </>
   );

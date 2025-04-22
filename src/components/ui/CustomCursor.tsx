@@ -1,131 +1,100 @@
-import { useEffect, useState } from "react";
+
+import { useEffect, useRef } from "react";
 import { useTheme } from "../theme/ThemeProvider";
 import gsap from "gsap";
 
 const CustomCursor = () => {
-  const [isVisible, setIsVisible] = useState(false);
-  const [isHovered, setIsHovered] = useState(false);
-  const [isActive, setIsActive] = useState(false);
   const { theme } = useTheme();
+  const yellowGlowRef = useRef<HTMLDivElement | null>(null);
+  const whiteGlowRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    const cursor = document.createElement("div");
-    cursor.classList.add("cursor");
-    
-    const follower = document.createElement("div");
-    follower.classList.add("cursor-follower");
-    
-    document.body.appendChild(cursor);
-    document.body.appendChild(follower);
-    
+    // Yellow Glow
+    let yellowGlow = document.getElementById("cursor-yellow-glow") as HTMLDivElement | null;
+    if (!yellowGlow) {
+      yellowGlow = document.createElement("div");
+      yellowGlow.id = "cursor-yellow-glow";
+      yellowGlow.className =
+        "pointer-events-none fixed z-50 h-40 w-40 -translate-x-1/2 -translate-y-1/2 rounded-full bg-gradient-radial from-sciscribe-gold/20 to-transparent opacity-70 blur-xl dark:from-sciscribe-gold/30 transition-opacity duration-700";
+      document.body.appendChild(yellowGlow);
+    }
+    yellowGlowRef.current = yellowGlow;
+
+    // White Glow
+    let whiteGlow = document.getElementById("cursor-white-glow") as HTMLDivElement | null;
+    if (!whiteGlow) {
+      whiteGlow = document.createElement("div");
+      whiteGlow.id = "cursor-white-glow";
+      whiteGlow.className =
+        "pointer-events-none fixed z-50 h-16 w-16 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white/60 dark:bg-white/20 blur-lg opacity-70 transition-opacity duration-300";
+      document.body.appendChild(whiteGlow);
+    }
+    whiteGlowRef.current = whiteGlow;
+
+    // Set cursor: pointer always
+    document.body.style.cursor = "pointer";
+
     let mouseX = 0;
     let mouseY = 0;
-    let posX = 0;
-    let posY = 0;
-    
-    const animation = gsap.to({}, {
-      duration: 0.008,
-      repeat: -1,
-      onRepeat: () => {
-        posX += (mouseX - posX) / 1.5;
-        posY += (mouseY - posY) / 1.5;
-        
-        gsap.set(follower, {
-          x: posX - 10,
-          y: posY - 10
-        });
-        
-        gsap.set(cursor, {
-          x: mouseX - 3,
-          y: mouseY - 3
-        });
+    let yellowX = 0;
+    let yellowY = 0;
+    let whiteX = 0;
+    let whiteY = 0;
+
+    const update = () => {
+      // Animate the glow positions towards the real pointer (less inertia = more responsive)
+      yellowX += (mouseX - yellowX) * 0.25; // more responsive
+      yellowY += (mouseY - yellowY) * 0.25;
+      whiteX += (mouseX - whiteX) * 0.33;
+      whiteY += (mouseY - whiteY) * 0.33;
+
+      if (yellowGlowRef.current) {
+        yellowGlowRef.current.style.left = `${yellowX}px`;
+        yellowGlowRef.current.style.top = `${yellowY}px`;
+        yellowGlowRef.current.style.opacity = "1";
       }
-    });
-    
-    const handleMouseMove = (e) => {
-      setIsVisible(true);
+      if (whiteGlowRef.current) {
+        whiteGlowRef.current.style.left = `${whiteX}px`;
+        whiteGlowRef.current.style.top = `${whiteY}px`;
+        whiteGlowRef.current.style.opacity = "0.7";
+      }
+      requestAnimationFrame(update);
+    };
+
+    const handleMouseMove = (e: MouseEvent) => {
       mouseX = e.clientX;
       mouseY = e.clientY;
     };
-    
-    const handleMouseEnter = () => setIsVisible(true);
-    const handleMouseLeave = () => setIsVisible(false);
-    
-    const handleLinkHoverStart = () => {
-      setIsHovered(true);
-      cursor.classList.add("active");
-      follower.classList.add("active");
+
+    window.addEventListener("mousemove", handleMouseMove);
+    update();
+
+    // Theme update for dark/light mode, just adjusts class (optional)
+    const updateGlowColors = () => {
+      const isDark =
+        theme === "dark" ||
+        (theme === "system" &&
+          window.matchMedia("(prefers-color-scheme: dark)").matches);
+      if (yellowGlowRef.current)
+        yellowGlowRef.current.className =
+          isDark
+            ? "pointer-events-none fixed z-50 h-40 w-40 -translate-x-1/2 -translate-y-1/2 rounded-full bg-gradient-radial from-sciscribe-gold/30 to-transparent opacity-70 blur-xl transition-opacity duration-700"
+            : "pointer-events-none fixed z-50 h-40 w-40 -translate-x-1/2 -translate-y-1/2 rounded-full bg-gradient-radial from-sciscribe-gold/20 to-transparent opacity-70 blur-xl transition-opacity duration-700";
+      if (whiteGlowRef.current)
+        whiteGlowRef.current.className =
+          isDark
+            ? "pointer-events-none fixed z-50 h-16 w-16 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white/20 blur-lg opacity-70 transition-opacity duration-300"
+            : "pointer-events-none fixed z-50 h-16 w-16 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white/60 blur-lg opacity-70 transition-opacity duration-300";
     };
-    
-    const handleLinkHoverEnd = () => {
-      setIsHovered(false);
-      cursor.classList.remove("active");
-      follower.classList.remove("active");
-    };
-    
-    const handleMouseDown = () => {
-      setIsActive(true);
-      cursor.classList.add("clicked");
-      follower.classList.add("clicked");
-    };
-    
-    const handleMouseUp = () => {
-      setIsActive(false);
-      cursor.classList.remove("clicked");
-      follower.classList.remove("clicked");
-    };
-    
-    document.addEventListener("mousemove", handleMouseMove);
-    document.addEventListener("mouseenter", handleMouseEnter);
-    document.addEventListener("mouseleave", handleMouseLeave);
-    document.addEventListener("mousedown", handleMouseDown);
-    document.addEventListener("mouseup", handleMouseUp);
-    
-    const interactiveElements = document.querySelectorAll(
-      'a, button, [role="button"], input, label, textarea, select, .link'
-    );
-    
-    interactiveElements.forEach((el) => {
-      el.addEventListener("mouseenter", handleLinkHoverStart);
-      el.addEventListener("mouseleave", handleLinkHoverEnd);
-    });
-    
-    const updateCursorTheme = () => {
-      const systemDarkMode = window.matchMedia("(prefers-color-scheme: dark)").matches;
-      const isDark = theme === "dark" || (theme === "system" && systemDarkMode);
-      
-      document.documentElement.style.setProperty(
-        "--cursor-color", 
-        isDark ? "#ffffff" : "#000000"
-      );
-      document.documentElement.style.setProperty(
-        "--cursor-follower-color", 
-        isDark ? "rgba(255, 255, 255, 0.3)" : "rgba(0, 0, 0, 0.3)"
-      );
-    };
-    
-    updateCursorTheme();
-    
+    updateGlowColors();
+
     return () => {
-      animation.kill();
-      document.removeEventListener("mousemove", handleMouseMove);
-      document.removeEventListener("mouseenter", handleMouseEnter);
-      document.removeEventListener("mouseleave", handleMouseLeave);
-      document.removeEventListener("mousedown", handleMouseDown);
-      document.removeEventListener("mouseup", handleMouseUp);
-      
-      interactiveElements.forEach((el) => {
-        el.removeEventListener("mouseenter", handleLinkHoverStart);
-        el.removeEventListener("mouseleave", handleLinkHoverEnd);
-      });
-      
-      if (cursor.parentNode) {
-        cursor.parentNode.removeChild(cursor);
-      }
-      
-      if (follower.parentNode) {
-        follower.parentNode.removeChild(follower);
-      }
+      window.removeEventListener("mousemove", handleMouseMove);
+      if (yellowGlowRef.current && yellowGlowRef.current.parentNode)
+        yellowGlowRef.current.parentNode.removeChild(yellowGlowRef.current);
+      if (whiteGlowRef.current && whiteGlowRef.current.parentNode)
+        whiteGlowRef.current.parentNode.removeChild(whiteGlowRef.current);
+      document.body.style.cursor = "";
     };
   }, [theme]);
 

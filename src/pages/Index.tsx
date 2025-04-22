@@ -14,10 +14,15 @@ import AcademicPartnersSection from "@/components/sections/AcademicPartnersSecti
 import WhyChooseUsSection from "@/components/sections/WhyChooseUsSection";
 import ServicesCarouselSection from "@/components/sections/ServicesCarouselSection";
 import TeamSection from "@/components/sections/TeamSection";
+import Seo from "@/components/ui/Seo";
 
 const Index = () => {
   return (
     <div className="flex min-h-screen flex-col">
+      <Seo
+        title="SciScribe Solutions | Scientific Editing, Research Consulting & Publication Support"
+        description="Professional academic editing, research consulting, journal submission support, and publication services for scientists, researchers, and students worldwide. Accelerate your research with our expert team."
+      />
       <InteractiveBackground />
       <Navbar />
       <main className="dark:bg-sciscribe-navy/5">
