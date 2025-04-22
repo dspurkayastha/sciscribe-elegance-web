@@ -1,6 +1,7 @@
 
 import { FileText, FileCheck, FileSearch, BarChart2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { motion } from "framer-motion";
 
 const ServicesSection = () => {
   const services = [
@@ -8,37 +9,25 @@ const ServicesSection = () => {
       title: "Scientific Editing",
       description:
         "Comprehensive language editing, structural improvement, and clarity enhancement for research manuscripts.",
-      icon: FileText,
-      color: "from-blue-500/20 to-cyan-500/20 dark:from-blue-500/40 dark:to-cyan-500/40",
-      borderColor: "border-blue-300 dark:border-blue-400/30",
-      iconBg: "bg-gradient-to-br from-blue-100 to-cyan-100 dark:from-blue-900/60 dark:to-cyan-800/40"
+      icon: <FileText size={28} className="text-sciscribe-blue" />,
     },
     {
       title: "Journal Submission Support",
       description:
         "Formatting assistance, cover letter creation, and response to reviewers to maximize publication success.",
-      icon: FileCheck,
-      color: "from-purple-500/20 to-pink-500/20 dark:from-purple-500/40 dark:to-pink-500/40",
-      borderColor: "border-purple-300 dark:border-purple-400/30",
-      iconBg: "bg-gradient-to-br from-purple-100 to-pink-100 dark:from-purple-900/60 dark:to-pink-800/40"
+      icon: <FileCheck size={28} className="text-sciscribe-blue" />,
     },
     {
       title: "Research Manuscript Assistance",
       description:
         "Expert guidance on manuscript structure, data presentation, and narrative development.",
-      icon: FileSearch,
-      color: "from-green-500/20 to-teal-500/20 dark:from-green-500/40 dark:to-teal-500/40",
-      borderColor: "border-green-300 dark:border-green-400/30",
-      iconBg: "bg-gradient-to-br from-green-100 to-teal-100 dark:from-green-900/60 dark:to-teal-800/40"
+      icon: <FileSearch size={28} className="text-sciscribe-blue" />,
     },
     {
       title: "Clinical Study Writing",
       description:
         "Specialized editing and writing support for clinical trials, medical case reports, and health research.",
-      icon: BarChart2,
-      color: "from-amber-500/20 to-orange-500/20 dark:from-amber-500/40 dark:to-orange-500/40",
-      borderColor: "border-amber-300 dark:border-amber-400/30",
-      iconBg: "bg-gradient-to-br from-amber-100 to-orange-100 dark:from-amber-900/60 dark:to-orange-800/40"
+      icon: <BarChart2 size={28} className="text-sciscribe-blue" />,
     },
   ];
 
@@ -52,29 +41,39 @@ const ServicesSection = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
+        <div className="grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-4">
           {services.map((service, index) => (
-            <div
+            <motion.div
               key={index}
-              className={`animate-fade-in flex h-full flex-col rounded-xl 
-                border ${service.borderColor} bg-gradient-to-br ${service.color}
-                shadow-[0_4px_24px_-6px_rgba(139,92,246,0.12),_0_1.5px_0_0_#F59E0B] 
-                hover:shadow-xl hover:-translate-y-1 transition-all duration-300 
-                backdrop-blur-md ring-1 ring-inset ring-sciscribe-gold/5`}
-              style={{ animationDelay: `${index * 0.15}s` }}
+              className={`
+                relative flex flex-col h-full rounded-xl
+                border border-sciscribe-blue/20 dark:border-sciscribe-blue/10
+                bg-white/70 dark:bg-sciscribe-navy/60
+                backdrop-blur-xl shadow-[0_4px_18px_-3px_rgba(14,165,233,0.14)]
+                transition-transform duration-300 hover:scale-105 hover:shadow-xl
+                overflow-hidden glassmorphism`}
+              style={{ zIndex: 1 }}
+              whileHover={{ scale: 1.045 }}
+              transition={{ type: "spring", stiffness: 440, damping: 24 }}
             >
-              <div className={`mb-4 inline-flex h-12 w-12 items-center justify-center rounded-lg ${service.iconBg} text-sciscribe-navy dark:text-white shadow-md border border-sciscribe-mist/40 dark:border-white/5`}>
-                <service.icon size={24} />
+              <div className="absolute -right-10 -top-10 h-20 w-20 rounded-full bg-gradient-to-br from-sciscribe-blue/20 to-transparent blur-xl pointer-events-none" />
+              <div className="absolute -left-10 -bottom-10 h-16 w-16 rounded-full bg-gradient-to-br from-sciscribe-gold/20 to-transparent blur-xl pointer-events-none" />
+              <div className="mb-4 mt-8 flex items-center justify-center">
+                <div className="p-3 rounded-full bg-white/80 dark:bg-sciscribe-navy/50 border border-sciscribe-mist/30 dark:border-white/10 shadow">
+                  {service.icon}
+                </div>
               </div>
-              <h3 className="mb-3 text-xl font-bold text-sciscribe-navy dark:text-white">{service.title}</h3>
+              <h3 className="mb-3 text-xl font-bold text-sciscribe-blue">{service.title}</h3>
               <p className="mb-6 flex-grow text-sciscribe-navy/90 dark:text-white/80">{service.description}</p>
-              <Button
-                variant="ghost"
-                className="mt-auto w-full justify-start p-0 text-sciscribe-gold hover:bg-transparent hover:text-sciscribe-gold/80"
-              >
-                Learn more &rarr;
-              </Button>
-            </div>
+              <div className="px-4 pb-8">
+                <Button
+                  variant="ghost"
+                  className="mt-auto w-full justify-start p-0 text-sciscribe-gold hover:bg-transparent hover:text-sciscribe-gold/80 font-medium"
+                >
+                  Learn more &rarr;
+                </Button>
+              </div>
+            </motion.div>
           ))}
         </div>
       </div>
@@ -83,3 +82,4 @@ const ServicesSection = () => {
 };
 
 export default ServicesSection;
+
