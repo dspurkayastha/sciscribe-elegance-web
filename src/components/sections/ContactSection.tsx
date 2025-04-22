@@ -1,7 +1,7 @@
-
 import { useState } from "react";
-import { Mail, MapPin, Phone, MessageCircleMore } from "lucide-react";
+import { Mail, MapPin, Phone, MessageCircleMore, Send } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useToast } from "@/hooks/use-toast";
 
 const ContactSection = () => {
   const [formData, setFormData] = useState({
@@ -10,6 +10,9 @@ const ContactSection = () => {
     message: "",
   });
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
+  const { toast } = useToast();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -22,11 +25,68 @@ const ContactSection = () => {
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // Form submission is handled by Netlify
-    // This function remains for any client-side validation if needed
+  const resetForm = () => {
+    setFormData({
+      name: "",
+      email: "",
+      message: "",
+    });
+    setSelectedFile(null);
   };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+
+    try {
+      const form = e.target as HTMLFormElement;
+      await fetch("/", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams({
+          "form-name": "contact",
+          ...formData,
+        }).toString(),
+      });
+
+      toast({
+        title: "Message Sent!",
+        description: "We'll get back to you as soon as possible.",
+      });
+      
+      setIsSuccess(true);
+      resetForm();
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "There was a problem sending your message. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  if (isSuccess) {
+    return (
+      <section id="contact" className="py-20">
+        <div className="container mx-auto px-6">
+          <div className="mx-auto max-w-3xl text-center">
+            <h2 className="mb-2 text-4xl font-bold text-foreground">Thank You!</h2>
+            <p className="mb-8 text-lg text-foreground/80">
+              We've received your message and will get back to you shortly.
+            </p>
+            <button
+              onClick={() => setIsSuccess(false)}
+              className="btn-hover rounded-lg bg-sciscribe-navy dark:bg-primary px-6 py-3 font-medium text-white transition-all hover:bg-sciscribe-navy/90 dark:hover:bg-primary/90"
+            >
+              Send Another Message
+            </button>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section id="contact" className="py-20">
