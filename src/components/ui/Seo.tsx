@@ -83,8 +83,12 @@ const Seo = ({
       let tag = document.querySelector(`meta[property='${property}'],meta[name='${property}']`) as HTMLMetaElement | null;
       if (!tag) {
         tag = document.createElement("meta");
-        if (property.startsWith("og:") || property.startsWith("article:")) tag.setAttribute("property", property);
-        else tag.setAttribute("name", property);
+        // Fix for the error: Use setAttribute instead of directly setting the property
+        if (property.startsWith("og:") || property.startsWith("article:")) {
+          tag.setAttribute("property", property);
+        } else {
+          tag.setAttribute("name", property);
+        }
         document.head.appendChild(tag);
       }
       tag.content = content;
