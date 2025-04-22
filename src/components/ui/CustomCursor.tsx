@@ -1,7 +1,6 @@
 
 import { useEffect, useRef } from "react";
 import { useTheme } from "../theme/ThemeProvider";
-import gsap from "gsap";
 
 const CustomCursor = () => {
   const { theme } = useTheme();
@@ -31,8 +30,8 @@ const CustomCursor = () => {
     }
     whiteGlowRef.current = whiteGlow;
 
-    // Set cursor: pointer always
-    document.body.style.cursor = "pointer";
+    // Don't set cursor style - let the default cursor show
+    // document.body.style.cursor = "pointer";
 
     let mouseX = 0;
     let mouseY = 0;
@@ -42,11 +41,11 @@ const CustomCursor = () => {
     let whiteY = 0;
 
     const update = () => {
-      // Animate the glow positions towards the real pointer (less inertia = more responsive)
-      yellowX += (mouseX - yellowX) * 0.25; // more responsive
-      yellowY += (mouseY - yellowY) * 0.25;
-      whiteX += (mouseX - whiteX) * 0.33;
-      whiteY += (mouseY - whiteY) * 0.33;
+      // Animate the glow positions towards the real pointer (increased responsiveness)
+      yellowX += (mouseX - yellowX) * 0.35; // more responsive
+      yellowY += (mouseY - yellowY) * 0.35;
+      whiteX += (mouseX - whiteX) * 0.45; // even more responsive
+      whiteY += (mouseY - whiteY) * 0.45;
 
       if (yellowGlowRef.current) {
         yellowGlowRef.current.style.left = `${yellowX}px`;
@@ -94,7 +93,6 @@ const CustomCursor = () => {
         yellowGlowRef.current.parentNode.removeChild(yellowGlowRef.current);
       if (whiteGlowRef.current && whiteGlowRef.current.parentNode)
         whiteGlowRef.current.parentNode.removeChild(whiteGlowRef.current);
-      document.body.style.cursor = "";
     };
   }, [theme]);
 

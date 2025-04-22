@@ -121,10 +121,10 @@
   body {
     @apply bg-background text-foreground font-sans antialiased;
     scroll-behavior: smooth;
-    cursor: none !important;
+    /* Removed cursor: none !important */
   }
   
-  /* Custom cursor */
+  /* Custom cursor - we retain the styles but remove the !important cursor: none */
   .cursor {
     position: fixed;
     width: 6px;
@@ -184,14 +184,15 @@
     opacity: 0.08;
   }
   
+  /* Show default cursor by removing cursor: none !important from elements */
   a, button, [role="button"], input, label, textarea, select, .link {
-    cursor: none !important;
+    /* cursor styling removed */
   }
   
   /* Show default cursor for small screens where custom cursor might be intrusive */
   @media (max-width: 768px) {
     body {
-      cursor: auto !important;
+      /* already has default cursor */
     }
     
     .cursor, .cursor-follower {
