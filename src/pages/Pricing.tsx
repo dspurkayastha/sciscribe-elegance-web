@@ -207,87 +207,95 @@ const Pricing = () => {
         {/* Feature Comparison Table */}
         <section className="section-container py-12">
           <div className="max-w-5xl mx-auto">
-            <h2 className="text-3xl font-bold mb-8 text-center">Compare Our Plans</h2>
+            <h2 className="text-3xl font-bold mb-8 text-center">Compare Our Packages</h2>
             <div className="overflow-x-auto rounded-xl shadow-lg ring-1 ring-sciscribe-blue/10">
               <Table className="bg-white dark:bg-sciscribe-navy/70 border border-sciscribe-blue/10 text-base">
                 <TableHeader>
                   <TableRow className="bg-gradient-to-r from-sciscribe-blue/10 to-sciscribe-gold/10 sticky top-0 z-10">
-                    <TableHead className="py-4 px-6 text-left text-lg font-semibold text-sciscribe-blue">Features</TableHead>
-                    <TableHead className="py-4 px-6 text-center text-lg font-semibold">Insight</TableHead>
-                    <TableHead className="py-4 px-6 text-center text-lg font-semibold">Enhance</TableHead>
-                    <TableHead className="py-4 px-6 text-center text-lg font-semibold">Complete</TableHead>
+                    <TableHead className="py-4 px-6 text-left text-lg font-semibold text-sciscribe-blue">Feature / Service</TableHead>
+                    <TableHead className="py-4 px-6 text-center text-lg font-semibold">Clarity Package<br/><span className='font-normal'>(₹5,000+)</span></TableHead>
+                    <TableHead className="py-4 px-6 text-center text-lg font-semibold">Insight Package<br/><span className='font-normal'>(₹10,000+)</span></TableHead>
+                    <TableHead className="py-4 px-6 text-center text-lg font-semibold">Impact Package<br/><span className='font-normal'>(₹15,000+)</span></TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {/* Row 1 */}
-                  <TableRow className="transition duration-200 hover:bg-sciscribe-blue/5 group">
-                    <TableCell className="py-3 px-6 font-medium group-hover:text-sciscribe-blue">Grammar & Spelling Corrections</TableCell>
-                    <TableCell className="text-center"><Check className="inline h-5 w-5 text-sciscribe-gold align-middle transition group-hover:scale-110" /></TableCell>
-                    <TableCell className="text-center"><Check className="inline h-5 w-5 text-sciscribe-blue align-middle transition group-hover:scale-110" /></TableCell>
-                    <TableCell className="text-center"><Check className="inline h-5 w-5 text-sciscribe-gold align-middle transition group-hover:scale-110" /></TableCell>
+                  <TableRow>
+                    <TableCell className="font-medium">Ideal For</TableCell>
+                    <TableCell className="text-center">Light corrections & cleanup</TableCell>
+                    <TableCell className="text-center">Structural improvement & style polishing</TableCell>
+                    <TableCell className="text-center">Final-stage submission, journal-ready</TableCell>
                   </TableRow>
-                  {/* Row 2 */}
-                  <TableRow className="transition duration-200 hover:bg-sciscribe-blue/5 group">
-                    <TableCell className="py-3 px-6 font-medium group-hover:text-sciscribe-blue">Advanced Language Enhancement</TableCell>
-                    <TableCell className="text-center text-muted-foreground">—</TableCell>
-                    <TableCell className="text-center"><Check className="inline h-5 w-5 text-sciscribe-blue align-middle transition group-hover:scale-110" /></TableCell>
-                    <TableCell className="text-center"><Check className="inline h-5 w-5 text-sciscribe-gold align-middle transition group-hover:scale-110" /></TableCell>
+                  <TableRow>
+                    <TableCell className="font-medium">Grammar & Spell Check</TableCell>
+                    <TableCell className="text-center">✅</TableCell>
+                    <TableCell className="text-center">✅</TableCell>
+                    <TableCell className="text-center">✅</TableCell>
                   </TableRow>
-                  {/* Row 3 */}
-                  <TableRow className="transition duration-200 hover:bg-sciscribe-blue/5 group">
-                    <TableCell className="py-3 px-6 font-medium group-hover:text-sciscribe-blue">Structure & Flow Improvements</TableCell>
-                    <TableCell className="text-center text-muted-foreground">—</TableCell>
-                    <TableCell className="text-center"><Check className="inline h-5 w-5 text-sciscribe-blue align-middle transition group-hover:scale-110" /></TableCell>
-                    <TableCell className="text-center"><Check className="inline h-5 w-5 text-sciscribe-gold align-middle transition group-hover:scale-110" /></TableCell>
+                  <TableRow>
+                    <TableCell className="font-medium">Basic Language Correction & Readability</TableCell>
+                    <TableCell className="text-center">✅</TableCell>
+                    <TableCell className="text-center">✅</TableCell>
+                    <TableCell className="text-center">✅</TableCell>
                   </TableRow>
-                  {/* Row 4 */}
-                  <TableRow className="transition duration-200 hover:bg-sciscribe-blue/5 group">
-                    <TableCell className="py-3 px-6 font-medium group-hover:text-sciscribe-blue">Scientific Clarity Optimization</TableCell>
-                    <TableCell className="text-center text-muted-foreground">—</TableCell>
-                    <TableCell className="text-center"><Check className="inline h-5 w-5 text-sciscribe-blue align-middle transition group-hover:scale-110" /></TableCell>
-                    <TableCell className="text-center"><Check className="inline h-5 w-5 text-sciscribe-gold align-middle transition group-hover:scale-110" /></TableCell>
+                  <TableRow>
+                    <TableCell className="font-medium">Formatting to General Academic Structure</TableCell>
+                    <TableCell className="text-center">✅</TableCell>
+                    <TableCell className="text-center">✅</TableCell>
+                    <TableCell className="text-center">✅</TableCell>
                   </TableRow>
-                  {/* Row 5 */}
-                  <TableRow className="transition duration-200 hover:bg-sciscribe-blue/5 group">
-                    <TableCell className="py-3 px-6 font-medium group-hover:text-sciscribe-blue">References Formatting</TableCell>
-                    <TableCell className="text-center text-muted-foreground">—</TableCell>
-                    <TableCell className="text-center"><Check className="inline h-5 w-5 text-sciscribe-blue align-middle transition group-hover:scale-110" /></TableCell>
-                    <TableCell className="text-center"><Check className="inline h-5 w-5 text-sciscribe-gold align-middle transition group-hover:scale-110" /></TableCell>
+                  <TableRow>
+                    <TableCell className="font-medium">Citation Alignment (APA/MLA/Vancouver)</TableCell>
+                    <TableCell className="text-center">✅</TableCell>
+                    <TableCell className="text-center">✅</TableCell>
+                    <TableCell className="text-center">✅</TableCell>
                   </TableRow>
-                  {/* Row 6 */}
-                  <TableRow className="transition duration-200 hover:bg-sciscribe-blue/5 group">
-                    <TableCell className="py-3 px-6 font-medium group-hover:text-sciscribe-blue">Cover Letter Writing</TableCell>
-                    <TableCell className="text-center text-muted-foreground">—</TableCell>
-                    <TableCell className="text-center text-muted-foreground">—</TableCell>
-                    <TableCell className="text-center"><Check className="inline h-5 w-5 text-sciscribe-gold align-middle transition group-hover:scale-110" /></TableCell>
+                  <TableRow>
+                    <TableCell className="font-medium">Paragraph Restructuring</TableCell>
+                    <TableCell className="text-center">❌</TableCell>
+                    <TableCell className="text-center">✅</TableCell>
+                    <TableCell className="text-center">✅</TableCell>
                   </TableRow>
-                  {/* Row 7 */}
-                  <TableRow className="transition duration-200 hover:bg-sciscribe-blue/5 group">
-                    <TableCell className="py-3 px-6 font-medium group-hover:text-sciscribe-blue">Journal Formatting</TableCell>
-                    <TableCell className="text-center text-muted-foreground">—</TableCell>
-                    <TableCell className="text-center text-muted-foreground">—</TableCell>
-                    <TableCell className="text-center"><Check className="inline h-5 w-5 text-sciscribe-gold align-middle transition group-hover:scale-110" /></TableCell>
+                  <TableRow>
+                    <TableCell className="font-medium">Tone, Style, and Transition Refinement</TableCell>
+                    <TableCell className="text-center">❌</TableCell>
+                    <TableCell className="text-center">✅</TableCell>
+                    <TableCell className="text-center">✅</TableCell>
                   </TableRow>
-                  {/* Row 8 */}
-                  <TableRow className="transition duration-200 hover:bg-sciscribe-blue/5 group">
-                    <TableCell className="py-3 px-6 font-medium group-hover:text-sciscribe-blue">Reviewer Response Support</TableCell>
-                    <TableCell className="text-center text-muted-foreground">—</TableCell>
-                    <TableCell className="text-center text-muted-foreground">—</TableCell>
-                    <TableCell className="text-center"><Check className="inline h-5 w-5 text-sciscribe-gold align-middle transition group-hover:scale-110" /></TableCell>
+                  <TableRow>
+                    <TableCell className="font-medium">Bibliography Cleanup</TableCell>
+                    <TableCell className="text-center">❌</TableCell>
+                    <TableCell className="text-center">✅</TableCell>
+                    <TableCell className="text-center">✅</TableCell>
                   </TableRow>
-                  {/* Row 9 */}
-                  <TableRow className="transition duration-200 hover:bg-sciscribe-blue/5 group">
-                    <TableCell className="py-3 px-6 font-medium group-hover:text-sciscribe-blue">Journal Selection Guidance</TableCell>
-                    <TableCell className="text-center text-muted-foreground">—</TableCell>
-                    <TableCell className="text-center text-muted-foreground">—</TableCell>
-                    <TableCell className="text-center"><Check className="inline h-5 w-5 text-sciscribe-gold align-middle transition group-hover:scale-110" /></TableCell>
+                  <TableRow>
+                    <TableCell className="font-medium">Editorial Feedback & Comments</TableCell>
+                    <TableCell className="text-center">❌</TableCell>
+                    <TableCell className="text-center">✅</TableCell>
+                    <TableCell className="text-center">✅</TableCell>
                   </TableRow>
-                  {/* Row 10 */}
-                  <TableRow className="transition duration-200 hover:bg-sciscribe-blue/5 group">
-                    <TableCell className="py-3 px-6 font-medium group-hover:text-sciscribe-blue">Delivery Time</TableCell>
-                    <TableCell className="text-center">7 days</TableCell>
-                    <TableCell className="text-center">5 days</TableCell>
-                    <TableCell className="text-center">5 days (priority)</TableCell>
+                  <TableRow>
+                    <TableCell className="font-medium">Revision Cycles Included</TableCell>
+                    <TableCell className="text-center">1 revision</TableCell>
+                    <TableCell className="text-center">2 revisions (15-day window)</TableCell>
+                    <TableCell className="text-center">2 revisions (15-day window)</TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell className="font-medium">Priority Support</TableCell>
+                    <TableCell className="text-center">❌</TableCell>
+                    <TableCell className="text-center">❌</TableCell>
+                    <TableCell className="text-center">✅</TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell className="font-medium">Fast-Track Delivery (48–72 hrs)</TableCell>
+                    <TableCell className="text-center">❌</TableCell>
+                    <TableCell className="text-center">❌</TableCell>
+                    <TableCell className="text-center">Optional (Add-On)</TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell className="font-medium">Editing Certificate</TableCell>
+                    <TableCell className="text-center">❌</TableCell>
+                    <TableCell className="text-center">❌</TableCell>
+                    <TableCell className="text-center">✅</TableCell>
                   </TableRow>
                 </TableBody>
               </Table>
@@ -747,7 +755,7 @@ const Pricing = () => {
 export default Pricing;
 
 <style jsx>{`
-@keyframes particle {
+:global(@keyframes particle) {
   0% { transform: translateY(0) scale(1); opacity: 0.7; }
   50% { transform: translateY(-8px) scale(1.1); opacity: 1; }
   100% { transform: translateY(0) scale(1); opacity: 0.7; }
