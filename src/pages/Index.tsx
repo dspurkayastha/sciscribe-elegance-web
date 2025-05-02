@@ -1,4 +1,3 @@
-
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import HeroSection from "@/components/sections/HeroSection";
@@ -15,6 +14,7 @@ import WhyChooseUsSection from "@/components/sections/WhyChooseUsSection";
 import ServicesCarouselSection from "@/components/sections/ServicesCarouselSection";
 import TeamSection from "@/components/sections/TeamSection";
 import Seo from "@/components/ui/Seo";
+import LightningSeparator from "@/components/ui/lightningseparator";
 
 const Index = () => {
   return (
@@ -29,14 +29,17 @@ const Index = () => {
         <HeroSection />
         <AboutSection />
         <CoreValuesSection />
+        <LightningSeparator />
         <ServicesSection />
         <AddOnServicesSection />
+        <LightningSeparator />
         <AcademicPartnersSection />
         <WhyChooseUsSection />
         <ServicesCarouselSection />
         <TeamSection />
         <PortfolioSection />
         <TestimonialsSection />
+        <LightningSeparator />
         <ContactSection />
       </main>
       <Footer />
