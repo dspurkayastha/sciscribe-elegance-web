@@ -32,6 +32,7 @@ import {
 } from "@/components/ui/table";
 import TestimonialsSection from "@/components/sections/TestimonialsSection";
 import { Linkedin, Twitter } from "lucide-react";
+import LightningSeparator from "@/components/ui/lightningseparator";
 
 const Pricing = () => {
   const [name, setName] = useState("");
@@ -62,39 +63,6 @@ const Pricing = () => {
   const itemVariants = {
     hidden: { opacity: 0, y: 20 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.5 } }
-  };
-
-  const LightSeparator = () => {
-    const ref = useRef<HTMLDivElement>(null);
-    const [center, setCenter] = useState(50); // percent
-
-    useEffect(() => {
-      const handleMove = (e: MouseEvent) => {
-        if (!ref.current) return;
-        const rect = ref.current.getBoundingClientRect();
-        let x = e.clientX;
-        if (x < rect.left) x = rect.left;
-        if (x > rect.right) x = rect.right;
-        const percent = Math.max(0, Math.min(100, ((x - rect.left) / rect.width) * 100));
-        setCenter(percent);
-      };
-      window.addEventListener("mousemove", handleMove);
-      return () => {
-        window.removeEventListener("mousemove", handleMove);
-      };
-    }, []);
-
-    return (
-      <div ref={ref} className="relative flex justify-center items-center my-10 select-none">
-        <div className="w-full h-1 bg-gradient-to-r from-transparent via-sciscribe-gold/60 to-transparent blur-[2px] opacity-70 transition-all duration-300" />
-        <div
-          className="absolute top-1/2 -translate-y-1/2 h-6 w-24 pointer-events-none z-20"
-          style={{ left: `calc(${center}% - 3rem)` }}
-        >
-          <div className="glint w-full h-full" />
-        </div>
-      </div>
-    );
   };
 
   return (
@@ -335,7 +303,7 @@ const Pricing = () => {
             </div>
           </div>
         </section>
-        <LightSeparator />
+        <LightningSeparator />
         {/* Service Comparison Section */}
         <section className="section-container py-16">
           <div className="max-w-6xl mx-auto">
@@ -609,7 +577,7 @@ const Pricing = () => {
         </section>
 
         {/* TESTIMONIALS SECTION */}
-        <LightSeparator />
+        <LightningSeparator />
         <section className="section-container pt-10">
           <TestimonialsSection />
         </section>
@@ -714,7 +682,7 @@ const Pricing = () => {
         </div>
 
         {/* FAQ Section */}
-        <LightSeparator />
+        <LightningSeparator />
         <section className="section-container">
           <div className="max-w-3xl mx-auto">
             <h2 className="text-3xl font-bold mb-8 text-center">Frequently Asked Questions</h2>
