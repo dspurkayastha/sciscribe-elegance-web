@@ -19,7 +19,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { useState } from "react";
+import { useRef, useEffect, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import {
@@ -62,6 +62,39 @@ const Pricing = () => {
   const itemVariants = {
     hidden: { opacity: 0, y: 20 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.5 } }
+  };
+
+  const LightSeparator = () => {
+    const ref = useRef<HTMLDivElement>(null);
+    const [center, setCenter] = useState(50); // percent
+
+    useEffect(() => {
+      const handleMove = (e: MouseEvent) => {
+        if (!ref.current) return;
+        const rect = ref.current.getBoundingClientRect();
+        let x = e.clientX;
+        if (x < rect.left) x = rect.left;
+        if (x > rect.right) x = rect.right;
+        const percent = Math.max(0, Math.min(100, ((x - rect.left) / rect.width) * 100));
+        setCenter(percent);
+      };
+      window.addEventListener("mousemove", handleMove);
+      return () => {
+        window.removeEventListener("mousemove", handleMove);
+      };
+    }, []);
+
+    return (
+      <div ref={ref} className="relative flex justify-center items-center my-10 select-none">
+        <div className="w-full h-1 bg-gradient-to-r from-transparent via-sciscribe-gold/60 to-transparent blur-[2px] opacity-70 transition-all duration-300" />
+        <div
+          className="absolute top-1/2 -translate-y-1/2 h-6 w-24 pointer-events-none z-20"
+          style={{ left: `calc(${center}% - 3rem)` }}
+        >
+          <div className="glint w-full h-full" />
+        </div>
+      </div>
+    );
   };
 
   return (
@@ -302,7 +335,7 @@ const Pricing = () => {
             </div>
           </div>
         </section>
-
+        <LightSeparator />
         {/* Service Comparison Section */}
         <section className="section-container py-16">
           <div className="max-w-6xl mx-auto">
@@ -576,25 +609,25 @@ const Pricing = () => {
         </section>
 
         {/* TESTIMONIALS SECTION */}
-        <section className="section-container py-24">
+        <LightSeparator />
+        <section className="section-container pt-10">
           <TestimonialsSection />
         </section>
 
         {/* Custom Quote */}
-        <section className="bg-gradient-to-r from-sciscribe-blue/10 to-sciscribe-teal/10 dark:from-sciscribe-blue/20 dark:to-sciscribe-teal/20 py-16">
-          <div className="container mx-auto px-6 text-center">
+        <section className="relative bg-gradient-to-r from-sciscribe-blue/10 to-sciscribe-teal/10 dark:from-sciscribe-blue/20 dark:to-sciscribe-teal/20 pt-0 pb-18 overflow-visible">
+          <div className="container mx-auto px-6 text-center relative z-10">
             <motion.div
-              className="max-w-2xl mx-auto"
+              className="max-w-2xl mx-auto rounded-xl shadow-xl px-8 py-10 backdrop-blur-none"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5 }}
             >
-              <h2 className="text-3xl font-bold mb-4">Need a Custom Quote?</h2>
-              <p className="mb-8">
+              <h2 className="text-3xl font-bold mb-4 text-sciscribe-navy dark:text-white">Need a Custom Quote?</h2>
+              <p className="mb-8 text-base text-muted-foreground">
                 Have a unique project or specific requirements? Let us create a tailored solution just for you.
               </p>
-
               <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
                 <DialogTrigger asChild>
                   <Button className="btn-premium pulse-btn">Request Custom Quote</Button>
@@ -665,6 +698,10 @@ const Pricing = () => {
                 </DialogContent>
               </Dialog>
             </motion.div>
+            {/* Decorative gold glow behind the card for visual pop */}
+            <div className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[40rem] h-[20rem] z-0" aria-hidden>
+              <div className="w-full h-full bg-gradient-radial from-sciscribe-gold/25 via-sciscribe-gold/8 to-transparent rounded-3xl blur-[88px] opacity-70" />
+            </div>
           </div>
         </section>
 
@@ -677,6 +714,7 @@ const Pricing = () => {
         </div>
 
         {/* FAQ Section */}
+        <LightSeparator />
         <section className="section-container">
           <div className="max-w-3xl mx-auto">
             <h2 className="text-3xl font-bold mb-8 text-center">Frequently Asked Questions</h2>
@@ -761,4 +799,18 @@ export default Pricing;
   100% { transform: translateY(0) scale(1); opacity: 0.7; }
 }
 .animate-particle { animation: particle 2s infinite ease-in-out; }
+.glint {
+  background: radial-gradient(ellipse 30% 100% at 50% 50%, rgba(255, 230, 120, 0.95) 0%, rgba(255, 230, 120, 0.6) 30%, rgba(255, 230, 120, 0.15) 70%, rgba(255, 230, 120, 0) 100%);
+  filter: blur(2.5px);
+  opacity: 0.92;
+  transition: opacity 0.7s, filter 0.7s;
+  pointer-events: none;
+  z-index: 20;
+}
+.dark .glint {
+  background: radial-gradient(ellipse 30% 100% at 50% 50%, rgba(255, 230, 120, 0.85) 0%, rgba(255, 230, 120, 0.4) 30%, rgba(255, 230, 120, 0.12) 70%, rgba(255, 230, 120, 0) 100%);
+}
+@media (max-width: 600px) {
+  .my-10 { margin-top: 1.5rem !important; margin-bottom: 1.5rem !important; }
+}
 `}</style>
