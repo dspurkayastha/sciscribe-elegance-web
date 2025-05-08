@@ -36,6 +36,9 @@ const Contact = () => {
       cover: false,
       fastTrack: false
     },
+    documentType: "",
+    subjectArea: "",
+    wordCount: "",
     deadline: "",
     contactMethod: "email",
     source: "",
@@ -43,7 +46,17 @@ const Contact = () => {
     gdprConsent1: false,
     gdprConsent2: false
   });
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
+
+// Dynamic add-on services config
+const addOnOptions = [
+  { key: "plagiarism", label: "Plagiarism Check & Reduction" },
+  { key: "statistical", label: "Statistical Analysis" },
+  { key: "figures", label: "Scientific Figures & Diagrams" },
+  { key: "journal", label: "Journal Formatting" },
+  { key: "cover", label: "Cover Letter & Abstract Editing" },
+  { key: "fastTrack", label: "Fast-Track Delivery (48-72 hr)" }
+];
   const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
   const { toast } = useToast();
@@ -54,8 +67,8 @@ const Contact = () => {
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
-      setSelectedFile(e.target.files[0]);
+    if (e.target.files) {
+      setSelectedFiles(Array.from(e.target.files));
     }
   };
 
@@ -98,6 +111,9 @@ const Contact = () => {
       phone: formData.phone,
       service: formData.service,
       addOns: formData.addOns,
+      documentType: formData.documentType,
+      subjectArea: formData.subjectArea,
+      wordCount: Number(formData.wordCount),
       deadline: formData.deadline,
       contactMethod: formData.contactMethod,
       source: formData.source,
@@ -327,63 +343,76 @@ const Contact = () => {
                 </div>
                 
                 <div>
+                  <p className="text-sm font-medium mb-2">Document Details</p>
+                  <div>
+                    <label htmlFor="documentType" className="text-sm font-medium block mb-1">
+                      Document Type*
+                    </label>
+                    <Select
+                      value={formData.documentType}
+                      onValueChange={(value) => handleSelectChange("documentType", value)}
+                    >
+                      <SelectTrigger
+                        id="documentType"
+                        className="bg-white/70 dark:bg-sciscribe-navy/30"
+                      >
+                        <SelectValue placeholder="Choose document type" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="manuscript">Manuscript</SelectItem>
+                        <SelectItem value="thesis">Thesis</SelectItem>
+                        <SelectItem value="researchPaper">Research Paper</SelectItem>
+                        <SelectItem value="other">Other</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  <div>
+                    <label htmlFor="subjectArea" className="text-sm font-medium block mb-1">
+                      Subject Area / Field
+                    </label>
+                    <Input
+                      id="subjectArea"
+                      name="subjectArea"
+                      placeholder="e.g., Neuroscience"
+                      value={formData.subjectArea}
+                      onChange={handleChange}
+                      className="bg-white/70 dark:bg-sciscribe-navy/30"
+                    />
+                  </div>
+
+                  <div>
+                    <label htmlFor="wordCount" className="text-sm font-medium block mb-1">
+                      Word Count
+                    </label>
+                    <Input
+                      id="wordCount"
+                      name="wordCount"
+                      type="number"
+                      placeholder="e.g., 8500"
+                      value={formData.wordCount}
+                      onChange={handleChange}
+                      className="bg-white/70 dark:bg-sciscribe-navy/30"
+                      min={0}
+                    />
+                  </div>
+                </div>
+                
+                <div>
                   <p className="text-sm font-medium mb-2">Add-on Services</p>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                    <div className="flex items-center space-x-2">
-                      <Checkbox 
-                        id="plagiarism" 
-                        name="addon-plagiarism"
-                        checked={formData.addOns.plagiarism}
-                        onCheckedChange={() => handleCheckboxChange("plagiarism")}
-                      />
-                      <label htmlFor="plagiarism" className="text-sm">Plagiarism Check & Reduction</label>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <Checkbox 
-                        id="statistical" 
-                        name="addon-statistical"
-                        checked={formData.addOns.statistical}
-                        onCheckedChange={() => handleCheckboxChange("statistical")}
-                      />
-                      <label htmlFor="statistical" className="text-sm">Statistical Analysis</label>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <Checkbox 
-                        id="figures" 
-                        name="addon-figures"
-                        checked={formData.addOns.figures}
-                        onCheckedChange={() => handleCheckboxChange("figures")}
-                      />
-                      <label htmlFor="figures" className="text-sm">Scientific Figures & Diagrams</label>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <Checkbox 
-                        id="journal" 
-                        name="addon-journal"
-                        checked={formData.addOns.journal}
-                        onCheckedChange={() => handleCheckboxChange("journal")}
-                      />
-                      <label htmlFor="journal" className="text-sm">Journal Formatting</label>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <Checkbox 
-                        id="cover" 
-                        name="addon-cover"
-                        checked={formData.addOns.cover}
-                        onCheckedChange={() => handleCheckboxChange("cover")}
-                      />
-                      <label htmlFor="cover" className="text-sm">Cover Letter & Abstract Editing</label>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <Checkbox 
-                        id="fastTrack" 
-                        name="addon-fastTrack"
-                        checked={formData.addOns.fastTrack}
-                        onCheckedChange={() => handleCheckboxChange("fastTrack")}
-                      />
-                      <label htmlFor="fastTrack" className="text-sm">Fast-Track Delivery (48-72 hr)</label>
-                    </div>
-                  </div>
+                    {addOnOptions.map((opt) => (
+                      <div className="flex items-center space-x-2" key={opt.key}>
+                        <Checkbox
+                          id={opt.key}
+                          name={`addon-${opt.key}`}
+                          checked={formData.addOns[opt.key as keyof typeof formData.addOns]}
+                          onCheckedChange={() => handleCheckboxChange(opt.key)}
+                        />
+                        <label htmlFor={opt.key} className="text-sm">{opt.label}</label>
+                      </div>
+                    ))}
+                  </div> 
                 </div>
                 
                 <div>
@@ -394,12 +423,20 @@ const Contact = () => {
                     id="fileUpload"
                     name="fileUpload"
                     type="file" 
+                    multiple
                     onChange={handleFileChange}
                     className="bg-white/70 dark:bg-sciscribe-navy/30"
                   />
                   <p className="text-xs text-muted-foreground mt-1">
-                    Accepted formats: DOC, PDF, XLS, TXT, JPG, etc.
+                    Accepted formats: DOC, PDF, XLS, TXT, JPG, etc. You can upload multiple files.
                   </p>
+                  {selectedFiles.length > 0 && (
+                    <ul className="text-xs mt-1 list-disc ml-4">
+                      {selectedFiles.map((file, idx) => (
+                        <li key={idx}>{file.name}</li>
+                      ))}
+                    </ul>
+                  )}
                 </div>
 
                 <div>
@@ -410,11 +447,12 @@ const Contact = () => {
                     id="deadline"
                     name="deadline"
                     type="date" 
-                    value={formData.deadline} 
+                    value={formData.deadline}
                     onChange={handleChange}
                     className="bg-white/70 dark:bg-sciscribe-navy/30"
+                    min={new Date().toISOString().split("T")[0]}
                   />
-                  <p className="text-xs text-muted-foreground mt-1">What is the tentative deadline (in days)?</p>
+                  <p className="text-xs text-muted-foreground mt-1">Please select a future date for your deadline.</p>
                 </div>
                 
                 <div>
@@ -441,54 +479,12 @@ const Contact = () => {
                 </div>
                 
                 <div>
-                  <label htmlFor="source" className="text-sm font-medium block mb-1">
-                    How did you hear about us?
-                  </label>
-                  <Select 
-                    value={formData.source} 
-                    onValueChange={(value) => handleSelectChange("source", value)}
-                  >
-                    <SelectTrigger 
-                      id="source" 
-                      name="source"
-                      className="bg-white/70 dark:bg-sciscribe-navy/30"
-                    >
-                      <SelectValue placeholder="Select an option" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="referral">Referral</SelectItem>
-                      <SelectItem value="search">Search Engine</SelectItem>
-                      <SelectItem value="social">Social Media</SelectItem>
-                      <SelectItem value="conference">Conference</SelectItem>
-                      <SelectItem value="journal">Journal Advertisement</SelectItem>
-                      <SelectItem value="other">Other</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                
-                <div>
-                  <label htmlFor="message" className="text-sm font-medium block mb-1">
-                    Message / Project Details*
-                  </label>
-                  <Textarea 
-                    id="message"
-                    name="message"
-                    placeholder="Tell us about your project..." 
-                    value={formData.message} 
-                    onChange={handleChange}
-                    required
-                    rows={5}
-                    className="bg-white/70 dark:bg-sciscribe-navy/30"
-                  />
-                </div>
-                
-                <div>
                   <p className="text-sm font-medium mb-2">GDPR Agreement*</p>
                   <div className="space-y-3">
                     <div className="flex items-start space-x-2">
                       <Checkbox 
-                        id="gdprConsent1" 
-                        name="gdprConsent1"
+                        id="gdprConsent" 
+                        name="gdprConsent"
                         checked={formData.gdprConsent1}
                         onCheckedChange={(checked) => 
                           handleGdprChange("gdprConsent1", checked as boolean)
@@ -496,24 +492,10 @@ const Contact = () => {
                         className="mt-1"
                         required
                       />
-                      <label htmlFor="gdprConsent1" className="text-sm text-muted-foreground">
-                        I consent to having this website store my submitted information so they can respond to my inquiry.
+                      <label htmlFor="gdprConsent" className="text-sm text-muted-foreground">
+                        I consent to SciScribe Solutions storing and using my information for communication purposes. <a href="/privacy" target="_blank" rel="noopener noreferrer" className="underline ml-1">Privacy Policy</a>
                       </label>
-                    </div>
-                    
-                    <div className="flex items-start space-x-2">
-                      <Checkbox 
-                        id="gdprConsent2" 
-                        name="gdprConsent2"
-                        checked={formData.gdprConsent2}
-                        onCheckedChange={(checked) => 
-                          handleGdprChange("gdprConsent2", checked as boolean)
-                        }
-                        className="mt-1"
-                      />
-                      <label htmlFor="gdprConsent2" className="text-sm text-muted-foreground">
-                        I consent to SciScribe Solutions storing and using my information for communication purposes.
-                      </label>
+                      <span title="Required for us to respond to your inquiry and provide a quote." className="ml-1 cursor-help">🛈</span>
                     </div>
                   </div>
                 </div>

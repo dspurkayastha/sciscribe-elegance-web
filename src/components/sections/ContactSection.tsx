@@ -40,13 +40,15 @@ const ContactSection = () => {
 
     try {
       const form = e.target as HTMLFormElement;
-      await fetch("/", {
+      await fetch("https://asia-south1-sciscribe-main.cloudfunctions.net/submitContactForm", {
         method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: new URLSearchParams({
-          "form-name": "contact",
-          ...formData,
-        }).toString(),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          message: formData.message,
+          // TODO: add fileUrls if you implement file upload
+        }),
       });
 
       toast({
