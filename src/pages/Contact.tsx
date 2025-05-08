@@ -4,6 +4,8 @@ import Navbar from "@/components/layout/Navbar";
 import { motion } from "framer-motion";
 import { Mail, MapPin, Phone, MessageCircleMore } from "lucide-react";
 import { useState } from "react";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { app as firebaseApp } from "@/lib/firebase";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -98,6 +100,42 @@ const addOnOptions = [
     e.preventDefault();
     setIsSubmitting(true);
 
+    // File size validation (20MB per file)
+    for (const file of selectedFiles) {
+      if (file.size > 20 * 1024 * 1024) {
+        toast({
+          title: "File too large",
+          description: `Each file must be 20MB or less. '${file.name}' is too large.`,
+          variant: "destructive"
+        });
+        setIsSubmitting(false);
+        return;
+      }
+    }
+
+    // Upload files to Firebase Storage and collect URLs
+    let fileUrls: string[] = [];
+    if (selectedFiles.length > 0) {
+      try {
+        const storage = getStorage(firebaseApp);
+        const uploadPromises = selectedFiles.map(async (file) => {
+          const uniqueName = `contact_uploads/${Date.now()}_${Math.random().toString(36).substring(2,8)}_${file.name}`;
+          const storageRef = ref(storage, uniqueName);
+          await uploadBytes(storageRef, file);
+          return await getDownloadURL(storageRef);
+        });
+        fileUrls = await Promise.all(uploadPromises);
+      } catch (err) {
+        toast({
+          title: "Upload failed",
+          description: "There was a problem uploading your files. Please try again.",
+          variant: "destructive"
+        });
+        setIsSubmitting(false);
+        return;
+      }
+    }
+
     // Prepare honeypot value (from hidden input, if present)
     const honeypot = (document.querySelector('input[name="bot-field"]') as HTMLInputElement)?.value || "";
 
@@ -106,7 +144,7 @@ const addOnOptions = [
       name: `${formData.firstName} ${formData.lastName}`,
       email: formData.email,
       message: formData.message,
-      fileUrls: [], // Add file upload logic later if needed
+      fileUrls, // Now contains real uploaded file URLs
       honeypot,
       phone: formData.phone,
       service: formData.service,
