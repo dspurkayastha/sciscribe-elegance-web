@@ -4,7 +4,7 @@ import Navbar from "@/components/layout/Navbar";
 import { motion } from "framer-motion";
 import { Mail, MapPin, Phone, MessageCircleMore } from "lucide-react";
 import { useState } from "react";
-import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { app as firebaseApp } from "@/lib/firebase";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -22,6 +22,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { Form } from "@/components/ui/form";
+import { storage } from "@/lib/firebase";
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -117,7 +118,6 @@ const addOnOptions = [
     let fileUrls: string[] = [];
     if (selectedFiles.length > 0) {
       try {
-        const storage = getStorage(firebaseApp, "sciscribe-main.firebasestorage.app");
         const uploadPromises = selectedFiles.map(async (file) => {
           const uniqueName = `contact_uploads/${Date.now()}_${Math.random().toString(36).substring(2,8)}_${file.name}`;
           const storageRef = ref(storage, uniqueName);
