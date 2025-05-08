@@ -122,7 +122,7 @@ const addOnOptions = [
     };
 
     try {
-      const response = await fetch("https://asia-south1-sciscribe-main.cloudfunctions.net/submitContactForm", {
+      const response = await fetch("https://asia-south1-sciscribe-main.cloudfunctions.net/submitContactFormV2", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload)
