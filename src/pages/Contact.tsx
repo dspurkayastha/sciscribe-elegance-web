@@ -117,7 +117,7 @@ const addOnOptions = [
     let fileUrls: string[] = [];
     if (selectedFiles.length > 0) {
       try {
-        const storage = getStorage(firebaseApp);
+        const storage = getStorage(firebaseApp, "sciscribe-main.firebasestorage.app");
         const uploadPromises = selectedFiles.map(async (file) => {
           const uniqueName = `contact_uploads/${Date.now()}_${Math.random().toString(36).substring(2,8)}_${file.name}`;
           const storageRef = ref(storage, uniqueName);
