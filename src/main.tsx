@@ -2,4 +2,9 @@ import { createRoot } from 'react-dom/client'
 import App from './App.tsx'
 import './index.css'
 
+// Initialize Firebase (browser only)
+if (typeof window !== 'undefined') {
+  import('./lib/firebase');
+}
+
 createRoot(document.getElementById("root")!).render(<App />);
