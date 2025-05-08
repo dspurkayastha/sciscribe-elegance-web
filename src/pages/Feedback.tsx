@@ -31,35 +31,45 @@ const Feedback = () => {
     e.preventDefault();
     setIsSubmitting(true);
 
+    // Prepare honeypot value (from hidden input, if present)
+    const honeypot = (document.querySelector('input[name="bot-field"]') as HTMLInputElement)?.value || "";
+    const payload = {
+      name,
+      email,
+      rating: rating ?? 0,
+      feedback: feedbackText,
+      service: serviceUsed,
+      honeypot
+    };
+
     try {
-      // Form submission is handled by Netlify
-      // Show toast for user feedback
+      const response = await fetch("https://asia-south1-sciscribe-main.cloudfunctions.net/submitFeedbackForm", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
+      if (!response.ok) throw new Error("Submission failed");
+
+      toast({
+        title: "Thank you for your feedback!",
+        description: "We appreciate your time and will use your insights to improve our services.",
+      });
+      // Reset form
+      setName("");
+      setEmail("");
+      setServiceUsed("");
+      setRating(null);
+      setFeedbackText("");
       setTimeout(() => {
-        toast({
-          title: "Thank you for your feedback!",
-          description: "We appreciate your time and will use your insights to improve our services.",
-        });
-        
-        // Reset form
-        setName("");
-        setEmail("");
-        setServiceUsed("");
-        setRating(null);
-        setFeedbackText("");
-        
-        // Redirect
-        setTimeout(() => {
-          navigate("/");
-        }, 2000);
-        
-        setIsSubmitting(false);
-      }, 1000);
+        navigate("/");
+      }, 2000);
     } catch (error) {
       toast({
         title: "Submission failed",
         description: "Please try again later or contact us directly.",
         variant: "destructive",
       });
+    } finally {
       setIsSubmitting(false);
     }
   };
@@ -92,16 +102,13 @@ const Feedback = () => {
               transition={{ duration: 0.7, delay: 0.2 }}
             >
               <form 
-                name="feedback" 
-                method="POST" 
-                data-netlify="true"
-                data-netlify-honeypot="bot-field"
                 onSubmit={handleSubmit}
                 className="space-y-6"
+                autoComplete="off"
               >
-                <input type="hidden" name="form-name" value="feedback" />
-                <p className="hidden">
-                  <label>Don't fill this out if you're human: <input name="bot-field" /></label>
+                {/* Honeypot field for anti-spam */}
+                <p style={{ display: "none" }}>
+                  <label>Don't fill this out if you're human: <input name="bot-field" autoComplete="off" /></label>
                 </p>
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

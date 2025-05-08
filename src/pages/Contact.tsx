@@ -85,17 +85,39 @@ const Contact = () => {
     e.preventDefault();
     setIsSubmitting(true);
 
+    // Prepare honeypot value (from hidden input, if present)
+    const honeypot = (document.querySelector('input[name="bot-field"]') as HTMLInputElement)?.value || "";
+
+    // Prepare payload for Firebase
+    const payload = {
+      name: `${formData.firstName} ${formData.lastName}`,
+      email: formData.email,
+      message: formData.message,
+      fileUrls: [], // Add file upload logic later if needed
+      honeypot,
+      phone: formData.phone,
+      service: formData.service,
+      addOns: formData.addOns,
+      deadline: formData.deadline,
+      contactMethod: formData.contactMethod,
+      source: formData.source,
+      gdprConsent1: formData.gdprConsent1,
+      gdprConsent2: formData.gdprConsent2
+    };
+
     try {
-      console.log("Contact form submitted:", formData);
-      
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
+      const response = await fetch("https://asia-south1-sciscribe-main.cloudfunctions.net/submitContactForm", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
+      if (!response.ok) throw new Error("Submission failed");
+
       toast({
         title: "Message Sent!",
         description: "We've received your message and will get back to you soon.",
         variant: "default",
       });
-
       navigate("/thank-you", { 
         state: { 
           source: "contact",
@@ -112,6 +134,7 @@ const Contact = () => {
       setIsSubmitting(false);
     }
   };
+
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -206,17 +229,13 @@ const Contact = () => {
               <h2 className="text-2xl font-bold mb-6">Send us a Message</h2>
               
               <form 
-                name="contact-full" 
-                method="POST" 
-                data-netlify="true"
-                data-netlify-honeypot="bot-field"
-                encType="multipart/form-data"
                 onSubmit={handleSubmit}
                 className="space-y-6"
+                autoComplete="off"
               >
-                <input type="hidden" name="form-name" value="contact-full" />
-                <p className="hidden">
-                  <label>Don't fill this out if you're human: <input name="bot-field" /></label>
+                {/* Honeypot field for anti-spam */}
+                <p style={{ display: "none" }}>
+                  <label>Don't fill this out if you're human: <input name="bot-field" autoComplete="off" /></label>
                 </p>
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
