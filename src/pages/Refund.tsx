@@ -187,8 +187,8 @@ const Refund = () => {
                 please don't hesitate to contact our customer support team:
               </p>
               <p className="mt-4">
-                <strong>Email:</strong> refunds@sciscribesolutions.com<br />
-                <strong>Phone:</strong> +91 12345 67890<br />
+                <strong>Email:</strong> contact@sciscribesolutions.com<br />
+                <strong>Phone:</strong> +91 93955 82679<br />
                 Or visit our <Link to="/contact" className="text-primary hover:underline">Contact Page</Link>
               </p>
             </motion.div>

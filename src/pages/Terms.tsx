@@ -201,8 +201,8 @@ const Terms = () => {
             </motion.p>
             
             <motion.div variants={itemVariants} className="mt-4">
-              <p><strong>Email:</strong> legal@sciscribesolutions.com</p>
-              <p><strong>Phone:</strong> +91 12345 67890</p>
+              <p><strong>Email:</strong> contact@sciscribesolutions.com</p>
+              <p><strong>Phone:</strong> +91 93955 82679</p>
             </motion.div>
           </motion.div>
         </section>
