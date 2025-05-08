@@ -19,8 +19,10 @@ const db = getFirestore(app);
 const storage = getStorage(app, import.meta.env.VITE_FIREBASE_STORAGE_BUCKET); // force correct bucket
 
 let analytics: ReturnType<typeof getAnalytics> | null = null;
-if (await isAnalyticsSupported()) {
-  analytics = getAnalytics(app);
-}
+(async () => {
+  if (await isAnalyticsSupported()) {
+    analytics = getAnalytics(app);
+  }
+})();
 
 export { app, analytics, db, storage };
