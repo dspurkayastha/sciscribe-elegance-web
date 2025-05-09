@@ -5,19 +5,19 @@ import { Linkedin, Twitter } from "lucide-react";
 const TeamSection = () => {
   const teamMembers = [
     {
-      name: "Wayne Kumar",
-      role: "Chief Executive Officer",
-      bio: "Wayne leads SciScribe Solutions with extensive expertise in scientific communication and research publication. His vision drives our commitment to excellence in academic editing and consulting.",
+      name: "D S",
+      role: "Chief Executive Officer & Founder",
+      bio: "D S leads SciScribe Solutions with extensive expertise in scientific communication and research publication. His vision drives our commitment to excellence in academic editing and consulting.",
       image: "/placeholder.svg"
     },
     {
-      name: "Dr. Maria Rodriguez",
-      role: "Senior Editor",
+      name: "S S",
+      role: "Senior Editor & Co-Founder",
       bio: "With a background in research methodology and data analysis, Maria ensures the highest standards of scientific accuracy in our editing services.",
       image: "/placeholder.svg"
     },
     {
-      name: "Dr. James Wilson",
+      name: "S G",
       role: "Statistical Consultant",
       bio: "Specializing in research design and statistical analysis, James helps researchers optimize their methodology and data presentation.",
       image: "/placeholder.svg"

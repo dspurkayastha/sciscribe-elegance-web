@@ -24,7 +24,7 @@ const ServicesSection = () => {
       icon: <FileSearch size={28} className="text-sciscribe-blue" />,
     },
     {
-      title: "Clinical Study Writing",
+      title: "Clinical Article Writing",
       description:
         "Specialized editing and writing support for clinical trials, medical case reports, and health research.",
       icon: <BarChart2 size={28} className="text-sciscribe-blue" />,

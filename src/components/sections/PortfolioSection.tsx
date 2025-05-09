@@ -17,7 +17,7 @@ const PortfolioSection = () => {
     {
       id: 2,
       title: "Neuroscience Meta-Analysis",
-      journal: "Nature Neuroscience",
+      journal: "International Journal of Neuroscience",
       field: "Cognitive Science",
       image: "https://images.unsplash.com/photo-1559757175-5700dde675bc?auto=format&fit=crop&q=80",
     },
@@ -31,22 +31,22 @@ const PortfolioSection = () => {
     {
       id: 4,
       title: "Immunotherapy Clinical Trial",
-      journal: "New England Journal of Medicine",
+      journal: "Journal of ANZ Medical Research",
       field: "Immunology",
       image: "https://images.unsplash.com/photo-1579154204601-01588f351e67?auto=format&fit=crop&q=80",
     },
     {
       id: 5,
       title: "Environmental Impact Assessment",
-      journal: "Science of The Total Environment",
+      journal: "Journal of Environmental Sciences",
       field: "Environmental Science",
       image: "https://images.unsplash.com/photo-1518173946687-a4c8892bbd9f?auto=format&fit=crop&q=80",
     },
     {
       id: 6,
       title: "Pharmaceutical Development",
-      journal: "Journal of Medicinal Chemistry",
-      field: "Drug Development",
+      journal: "International Journal of Pharmaceutical Sciences",
+      field: "Drug Development & Delivery Methods",
       image: "https://images.unsplash.com/photo-1585435557343-3b092031a831?auto=format&fit=crop&q=80",
     },
   ];

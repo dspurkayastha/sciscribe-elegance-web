@@ -8,20 +8,20 @@ const TestimonialsSection = () => {
     {
       id: 1,
       quote: "SciScribe's editing service took my research paper from good to exceptional. Their nuanced feedback not only improved clarity but elevated the scientific narrative. My paper was accepted by my first-choice journal.",
-      author: "Dr. Eliana Chen",
-      position: "Associate Professor, Stanford University"
+      author: "Dr. A. Choudhury",
+      position: "Associate Professor, PGIMER"
     },
     {
       id: 2,
       quote: "We contracted SciScribe for journal selection, formatting, and submission services. Their expertise saved us weeks of time and frustration. Our manuscript was accepted with only minor revisions.",
-      author: "Dr. Marcus Walker",
-      position: "Lead Researcher, Global Health Institute"
+      author: "Dr. K. Gupta",
+      position: "Lead Researcher, UCM Ahmedabad"
     },
     {
       id: 3,
       quote: "The attention to detail in their statistical analysis service is exceptional. SciScribe helped strengthen my methodology section and visualize complex datasets in accessible ways.",
-      author: "Dr. Sarah Okoye",
-      position: "Clinical Researcher, University of Toronto"
+      author: "Dr. M. K. Swami",
+      position: "Clinical Researcher, Department of Physics, SSN College"
     }
   ];
 
