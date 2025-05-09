@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -20,7 +21,11 @@ import Feedback from "./pages/Feedback";
 import ThankYou from "./pages/ThankYou";
 import AdminLogin from "./pages/admin/Login";
 import Unauthorized from "./pages/Unauthorized";
-import AdminDashboard from "./pages/admin/Dashboard";
+import AdminDashboard from "./pages/admin/Index";
+import AdminContactPage from "./pages/admin/Contact";
+import AdminFeedbackPage from "./pages/admin/Feedback";
+import AdminNotesPage from "./pages/admin/Notes";
+import AdminSettingsPage from "./pages/admin/Settings";
 
 const queryClient = new QueryClient();
 
@@ -48,7 +53,10 @@ const App = () => (
             <Route path="/admin/login" element={<AdminLogin />} />
             <Route path="/unauthorized" element={<Unauthorized />} />
             <Route path="/admin" element={<AdminDashboard />} />
-            <Route path="*" element={<NotFound />} />
+            <Route path="/admin/contact" element={<AdminContactPage />} />
+            <Route path="/admin/feedback" element={<AdminFeedbackPage />} />
+            <Route path="/admin/notes" element={<AdminNotesPage />} />
+            <Route path="/admin/settings" element={<AdminSettingsPage />} />
           </Routes>
         </BrowserRouter>
       </TooltipProvider>
