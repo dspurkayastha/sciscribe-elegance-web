@@ -76,23 +76,7 @@ export const Seo = ({
       <meta name="author" content="SciScribe" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       
-      {/* Add meta tags dynamically */}
-      {typeof document !== 'undefined' && (() => {
-        // Fix: Use setAttribute method instead of direct property access
-        const addMetaTag = (name: string, content: string) => {
-          const meta = document.createElement('meta');
-          meta.setAttribute('name', name);
-          meta.setAttribute('content', content);
-          document.head.appendChild(meta);
-        };
-        
-        // Example of dynamic meta tag addition based on pathname
-        if (pathname.includes('pricing')) {
-          addMetaTag('pricing-tier', 'all');
-        }
-        
-        return null;
-      })()}
+      {/* Remove dynamic meta tag addition that was causing TypeScript errors */}
     </Helmet>
   );
 };
