@@ -415,6 +415,7 @@ const addOnOptions = [
                       placeholder="e.g., Neuroscience"
                       value={formData.subjectArea}
                       onChange={handleChange}
+                      required
                       className="bg-white/70 dark:bg-sciscribe-navy/30"
                     />
                   </div>
