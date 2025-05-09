@@ -517,6 +517,19 @@ const addOnOptions = [
                 </div>
                 
                 <div>
+                  <p className="text-sm font-medium mb-2">Message*</p>
+                  <Textarea
+                    id="message"
+                    name="message"
+                    placeholder="Write your message here..."
+                    value={formData.message}
+                    onChange={handleChange}
+                    required
+                    className="bg-white/70 dark:bg-sciscribe-navy/30"
+                  />
+                </div>
+                
+                <div>
                   <p className="text-sm font-medium mb-2">GDPR Agreement*</p>
                   <div className="space-y-3">
                     <div className="flex items-start space-x-2">
