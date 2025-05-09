@@ -1,7 +1,7 @@
 
 import { db } from "@/lib/firebase";
 import { collection, query, where, orderBy, limit, getDocs, doc, updateDoc, deleteDoc, startAfter, QueryDocumentSnapshot, Timestamp } from "firebase/firestore";
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useRef } from "react";
 import { Table, TableHeader, TableHead, TableRow, TableCell, TableBody } from "@/components/ui/table";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
@@ -27,7 +27,7 @@ type Submission = {
   createdAt?: Timestamp | string | Date;
   reviewed: boolean;
   notes?: string;
-  [key: string]: any;
+  [key: string]: string | number | boolean | undefined | null | Timestamp | Date;
 };
 
 type DashboardProps = {
@@ -44,7 +44,8 @@ export default function AdminDashboard({ initialTab = "all" }: DashboardProps) {
   const [selected, setSelected] = useState<Submission | null>(null);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [page, setPage] = useState(1);
-  const [lastDoc, setLastDoc] = useState<QueryDocumentSnapshot<DocumentData> | null>(null);
+  // Use a ref for lastDoc to avoid closure issues and infinite loops
+  const lastDocRef = useRef<QueryDocumentSnapshot<DocumentData> | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isActionLoading, setIsActionLoading] = useState(false);
   const [noteInput, setNoteInput] = useState("");
@@ -69,8 +70,8 @@ export default function AdminDashboard({ initialTab = "all" }: DashboardProps) {
             limit(PAGE_SIZE)
           );
 
-          if (isNextPage && lastDoc) {
-            q = query(q, startAfter(lastDoc));
+          if (isNextPage && lastDocRef.current) {
+            q = query(q, startAfter(lastDocRef.current));
           }
 
           const snapshot = await getDocs(q);
@@ -80,7 +81,7 @@ export default function AdminDashboard({ initialTab = "all" }: DashboardProps) {
             type: tab
           })) as Submission[];
 
-          newLastDoc = snapshot.docs[snapshot.docs.length - 1] || null;
+          newLastDoc = snapshot.docs[snapshot.docs.length - 1] || null; // For pagination
         } else if (tab === "all") {
           // NOTE: Firestore does not support cross-collection cursor-based pagination
           // This is a basic approximation: loads PAGE_SIZE from both, merges & shows top PAGE_SIZE
@@ -134,7 +135,7 @@ export default function AdminDashboard({ initialTab = "all" }: DashboardProps) {
           setSubmissions(docs);
         }
 
-        setLastDoc(newLastDoc);
+        lastDocRef.current = newLastDoc;
       } catch (error) {
         console.error("❌ Error fetching submissions:", error);
         toast({
@@ -146,14 +147,14 @@ export default function AdminDashboard({ initialTab = "all" }: DashboardProps) {
         setIsLoading(false);
       }
     },
-    [tab]
+    [tab] // Only depend on tab, not lastDoc
   );
 
   useEffect(() => {
-    setLastDoc(null);  // 🔁 resets pagination correctly
+    lastDocRef.current = null;  // resets pagination correctly
     setPage(1);        // optional, reset to page 1
     fetchSubmissions();
-  }, [tab]);
+  }, [tab, fetchSubmissions]);
 
   // --- Actions ---
   const markReviewed = async (id: string) => {
@@ -228,10 +229,10 @@ export default function AdminDashboard({ initialTab = "all" }: DashboardProps) {
 
   return (
     <>
-      <div className="px-4 flex flex-col gap-6">
+      <div className="px-4 flex flex-col gap-6 max-w-full overflow-x-hidden">
         {/* Stats Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-2">
-          <div className="bg-gradient-to-br from-slate-900/90 to-slate-800/80 rounded-xl p-6 border border-slate-800/50 shadow-lg">
+          <div className="bg-gradient-to-br from-slate-900/90 to-slate-800/80 rounded-xl p-6 border border-slate-800/50 shadow-lg w-full max-w-full">
             <div className="text-sciscribe-gold text-sm font-semibold mb-1">Total Submissions</div>
             <div className="text-3xl font-bold text-white">{totalSubmissions}</div>
             <div className="text-xs text-slate-400 mt-2">Across all categories</div>
@@ -269,9 +270,17 @@ export default function AdminDashboard({ initialTab = "all" }: DashboardProps) {
           </TabsList>
         </Tabs>
 
-        {/* Table Card */}
-        <div className="rounded-2xl bg-gradient-to-br from-slate-900/80 to-slate-950/90 p-6 shadow-2xl min-h-[400px] border border-slate-800">
-          <Table>
+        {/* Table and Drawer Side-by-Side */}
+        <div className="flex flex-col lg:flex-row gap-6 w-full max-w-full overflow-x-hidden !m-0 !p-0">
+
+          {/* Table Card */}
+          <div className={
+            drawerOpen && selected
+              ? "rounded-2xl bg-gradient-to-br from-slate-900/80 to-slate-950/90 p-6 shadow-2xl min-h-[400px] border border-slate-800 min-w-0 w-full max-w-full flex-[2_1_0%]"
+              : "rounded-2xl bg-gradient-to-br from-slate-900/80 to-slate-950/90 p-6 shadow-2xl min-h-[400px] border border-slate-800 min-w-0 w-full max-w-full flex-1"
+          }>
+
+            <Table>
             <TableHeader>
               <TableRow>
                 <TableHead>Type</TableHead>
@@ -378,131 +387,65 @@ export default function AdminDashboard({ initialTab = "all" }: DashboardProps) {
               )}
             </TableBody>
           </Table>
-          
-          {/* Pagination */}
-          <div className="flex justify-between items-center mt-6 text-sm">
-            <div className="text-slate-400">
-              Showing {submissions.length} of {totalSubmissions} entries
-            </div>
-            <Pagination>
-              <Button 
-                variant="outline" 
-                size="sm" 
-                onClick={handlePrevPage} 
-                disabled={page === 1 || isLoading}
-                className="text-sm"
-              >
-                Previous
-              </Button>
-              <span className="mx-2 text-white/80">Page {page}</span>
-              <Button 
-                variant="outline" 
-                size="sm" 
-                onClick={handleNextPage} 
-                disabled={!hasNextPage || isLoading}
-                className="text-sm"
-              >
-                Next
-              </Button>
-            </Pagination>
           </div>
+          {/* Drawer for details */}
+          {drawerOpen && selected && (
+            <div className="p-6 w-full max-w-full bg-gradient-to-br from-slate-900 to-slate-950 text-white rounded-l-xl shadow-2xl flex flex-col gap-4 border-l border-r border-t border-b border-slate-700 flex-[1_1_0%]">
+              <div className="flex items-center justify-between mb-2">
+                <h3 className="text-xl font-bold text-sciscribe-gold">{selected.type === "contact" ? "Contact Submission" : "Feedback Entry"}</h3>
+                <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                  selected.reviewed 
+                    ? 'bg-green-100 text-green-800' 
+                    : 'bg-blue-100 text-blue-800'
+                }`}>
+                  {selected.reviewed ? "Reviewed" : "Pending"}
+                </span>
+                <Button 
+                  variant="outline" 
+                  onClick={() => setDrawerOpen(false)} 
+                  className="ml-auto border-slate-600 hover:bg-slate-800">
+                  Close
+                </Button>
+              </div>
+              <div className="grid grid-cols-2 gap-4 mb-4">
+                <div>
+                  <div className="text-xs text-slate-400 mb-1">From</div>
+                  <div className="text-sm font-medium">{selected.name || "Anonymous"}</div>
+                  <div className="text-sm text-blue-400">{selected.email}</div>
+                </div>
+                <div>
+                  <div className="text-xs text-slate-400 mb-1">Received on</div>
+                  <div className="text-sm">{new Date(selected.date).toLocaleString()}</div>
+                </div>
+              </div>
+              {selected.subject && (
+                <div className="mb-3">
+                  <div className="text-xs text-slate-400 mb-1">Subject</div>
+                  <div className="text-base font-medium">{selected.subject}</div>
+                </div>
+              )}
+              <div className="mb-4">
+                <div className="text-xs text-slate-400 mb-1">Message</div>
+                <div className="bg-slate-800/50 p-3 rounded text-sm border border-slate-700 max-h-52 overflow-y-auto whitespace-pre-wrap">{selected.message || "No message content"}</div>
+              </div>
+              <div className="mb-2">
+                <div className="text-xs text-slate-400 mb-1">Admin Notes</div>
+                <div className="text-sm mb-2 bg-slate-800/30 p-2 rounded min-h-[40px] border border-slate-700/50">{selected.notes || <span className="text-slate-500 italic">No notes added yet</span>}</div>
+                <form className="flex gap-2" onSubmit={e => { e.preventDefault(); addNote(selected.id, noteInput); setNoteInput(""); }}>
+                  <input type="text" className="flex-1 rounded px-3 py-2 bg-slate-800 text-white border border-slate-700 text-sm focus:outline-none focus:ring-2 focus:ring-sciscribe-gold/50" placeholder="Add note..." value={noteInput} onChange={e => setNoteInput(e.target.value)} disabled={isActionLoading} />
+                  <Button type="submit" disabled={isActionLoading || !noteInput.trim()} className="bg-sciscribe-gold hover:bg-sciscribe-gold/80 text-black font-medium">Add Note</Button>
+                </form>
+              </div>
+              <div className="flex gap-2 mt-4">
+                <Button onClick={() => markReviewed(selected.id)} disabled={selected.reviewed || isActionLoading} className="bg-blue-500 hover:bg-blue-600 text-white">Mark as Reviewed</Button>
+                <Button onClick={() => deleteSubmission(selected.id)} variant="destructive" disabled={isActionLoading}>Delete</Button>
+                <Button onClick={() => { setDrawerOpen(false); setSelected(null); }} variant="outline" className="ml-auto">Close</Button>
+              </div>
+            </div>
+          )}
         </div>
       </div>
-
-      {/* Drawer for details */}
-      <Drawer open={drawerOpen} onOpenChange={setDrawerOpen}>
-        {selected && (
-          <div className="p-6 max-w-xl w-full bg-gradient-to-br from-slate-900 to-slate-950 text-white rounded-l-xl shadow-xl flex flex-col gap-4 border-l border-t border-b border-slate-700">
-            <div className="flex items-center justify-between mb-2">
-              <h3 className="text-xl font-bold text-sciscribe-gold">{selected.type === "contact" ? "Contact Submission" : "Feedback Entry"}</h3>
-              <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                selected.reviewed 
-                  ? 'bg-green-100 text-green-800' 
-                  : 'bg-blue-100 text-blue-800'
-              }`}>
-                {selected.reviewed ? "Reviewed" : "Pending"}
-              </span>
-            </div>
-            
-            <div className="grid grid-cols-2 gap-4 mb-4">
-              <div>
-                <div className="text-xs text-slate-400 mb-1">From</div>
-                <div className="text-sm font-medium">{selected.name || "Anonymous"}</div>
-                <div className="text-sm text-blue-400">{selected.email}</div>
-              </div>
-              <div>
-                <div className="text-xs text-slate-400 mb-1">Received on</div>
-                <div className="text-sm">{new Date(selected.date).toLocaleString()}</div>
-              </div>
-            </div>
-            
-            {selected.subject && (
-              <div className="mb-3">
-                <div className="text-xs text-slate-400 mb-1">Subject</div>
-                <div className="text-base font-medium">{selected.subject}</div>
-              </div>
-            )}
-            
-            <div className="mb-4">
-              <div className="text-xs text-slate-400 mb-1">Message</div>
-              <div className="bg-slate-800/50 p-3 rounded text-sm border border-slate-700 max-h-52 overflow-y-auto whitespace-pre-wrap">
-                {selected.message || "No message content"}
-              </div>
-            </div>
-            
-            <div className="mb-2">
-              <div className="text-xs text-slate-400 mb-1">Admin Notes</div>
-              <div className="text-sm mb-2 bg-slate-800/30 p-2 rounded min-h-[40px] border border-slate-700/50">
-                {selected.notes || <span className="text-slate-500 italic">No notes added yet</span>}
-              </div>
-              <form className="flex gap-2" onSubmit={e => { 
-                e.preventDefault(); 
-                addNote(selected.id, noteInput); 
-                setNoteInput(""); 
-              }}>
-                <input
-                  type="text"
-                  className="flex-1 rounded px-3 py-2 bg-slate-800 text-white border border-slate-700 text-sm focus:outline-none focus:ring-2 focus:ring-sciscribe-gold/50"
-                  placeholder="Add note..."
-                  value={noteInput}
-                  onChange={e => setNoteInput(e.target.value)}
-                  disabled={isActionLoading}
-                />
-                <Button 
-                  type="submit" 
-                  disabled={isActionLoading || !noteInput.trim()} 
-                  className="bg-sciscribe-gold hover:bg-sciscribe-gold/80 text-black font-medium">
-                  Add Note
-                </Button>
-              </form>
-            </div>
-            
-            <div className="flex gap-3 mt-4 pt-4 border-t border-slate-800">
-              {!selected.reviewed && (
-                <Button 
-                  onClick={() => markReviewed(selected.id)} 
-                  disabled={isActionLoading}
-                  className="bg-blue-500 hover:bg-blue-600 text-white">
-                  <Check className="mr-2 h-4 w-4" />
-                  Mark as Reviewed
-                </Button>
-              )}
-              <Button 
-                variant="destructive" 
-                onClick={() => deleteSubmission(selected.id)} 
-                disabled={isActionLoading}>
-                Delete
-              </Button>
-              <Button 
-                variant="outline" 
-                onClick={() => setDrawerOpen(false)} 
-                className="ml-auto border-slate-600 hover:bg-slate-800">
-                Close
-              </Button>
-            </div>
-          </div>
-        )}
-      </Drawer>
     </>
   );
 }
+
