@@ -1,19 +1,19 @@
 
 import { db } from "@/lib/firebase";
-import { collection, query, where, orderBy, limit, getDocs, doc, updateDoc, deleteDoc } from "firebase/firestore";
+import { collection, query, where, orderBy, limit, getDocs, doc, updateDoc, deleteDoc, startAfter, QueryDocumentSnapshot, Timestamp } from "firebase/firestore";
 import { useEffect, useState, useCallback } from "react";
 import { Table, TableHeader, TableHead, TableRow, TableCell, TableBody } from "@/components/ui/table";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { Drawer } from "@/components/ui/drawer";
-import { Pagination, PaginationPrevious, PaginationNext } from "@/components/ui/pagination";
+import { Pagination } from "@/components/ui/pagination";
 import { toast } from "@/components/ui/use-toast";
 import { Skeleton } from "@/components/ui/skeleton";
 import { TooltipProvider, Tooltip, TooltipTrigger, TooltipContent } from "@/components/ui/tooltip";
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from "@/components/ui/dropdown-menu";
 import { Mail, MessageCircle, Home, Check } from "lucide-react";
 
-import type { DocumentData, QueryDocumentSnapshot } from "firebase/firestore";
+import type { DocumentData } from "firebase/firestore";
 
 // --- Types ---
 type Submission = {
@@ -24,6 +24,7 @@ type Submission = {
   subject?: string;
   message?: string;
   date: string;
+  createdAt?: Timestamp | string | Date;
   reviewed: boolean;
   notes?: string;
   [key: string]: any;
@@ -55,7 +56,7 @@ export default function AdminDashboard({ initialTab = "all" }: DashboardProps) {
     async (isNextPage = false) => {
       setIsLoading(true);
       try {
-        let docs: DocumentData[] = [];
+        let docs: Submission[] = [];
         let newLastDoc: QueryDocumentSnapshot | null = null;
 
         if (tab === "contact" || tab === "feedback") {
@@ -77,7 +78,7 @@ export default function AdminDashboard({ initialTab = "all" }: DashboardProps) {
             id: doc.id,
             ...doc.data(),
             type: tab
-          }));
+          })) as Submission[];
 
           newLastDoc = snapshot.docs[snapshot.docs.length - 1] || null;
         } else if (tab === "all") {
@@ -104,13 +105,13 @@ export default function AdminDashboard({ initialTab = "all" }: DashboardProps) {
             id: doc.id,
             ...doc.data(),
             type: "contact"
-          }));
+          })) as Submission[];
 
           const feedbackDocs = feedbackSnap.docs.map((doc) => ({
             id: doc.id,
             ...doc.data(),
             type: "feedback"
-          }));
+          })) as Submission[];
 
           const merged = [...contactDocs, ...feedbackDocs].sort((a, b) => {
             const getMillis = (ts: any) => {
@@ -123,7 +124,6 @@ export default function AdminDashboard({ initialTab = "all" }: DashboardProps) {
             return getMillis(b.createdAt) - getMillis(a.createdAt);
           });
           
-
           docs = merged.slice(0, PAGE_SIZE);
           newLastDoc = null; // Pagination unsupported in merged mode
         }
@@ -385,9 +385,25 @@ export default function AdminDashboard({ initialTab = "all" }: DashboardProps) {
               Showing {submissions.length} of {totalSubmissions} entries
             </div>
             <Pagination>
-              <PaginationPrevious onClick={handlePrevPage} disabled={page === 1 || isLoading} />
+              <Button 
+                variant="outline" 
+                size="sm" 
+                onClick={handlePrevPage} 
+                disabled={page === 1 || isLoading}
+                className="text-sm"
+              >
+                Previous
+              </Button>
               <span className="mx-2 text-white/80">Page {page}</span>
-              <PaginationNext onClick={handleNextPage} disabled={!hasNextPage || isLoading} />
+              <Button 
+                variant="outline" 
+                size="sm" 
+                onClick={handleNextPage} 
+                disabled={!hasNextPage || isLoading}
+                className="text-sm"
+              >
+                Next
+              </Button>
             </Pagination>
           </div>
         </div>
