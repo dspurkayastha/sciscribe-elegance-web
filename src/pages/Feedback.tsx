@@ -16,6 +16,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Label } from "@/components/ui/label";
 
 const Feedback = () => {
   const [name, setName] = useState("");
@@ -23,6 +25,7 @@ const Feedback = () => {
   const [serviceUsed, setServiceUsed] = useState("");
   const [rating, setRating] = useState<number | null>(null);
   const [feedbackText, setFeedbackText] = useState("");
+  const [consentToShow, setConsentToShow] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
   const navigate = useNavigate();
@@ -39,6 +42,7 @@ const Feedback = () => {
       rating: rating ?? 0,
       feedback: feedbackText,
       service: serviceUsed,
+      consentToShow,
       honeypot
     };
 
@@ -202,6 +206,24 @@ const Feedback = () => {
                     rows={6}
                     className="bg-white/70 dark:bg-sciscribe-navy/30"
                   />
+                </div>
+
+                <div>
+                  <p className="text-sm font-medium mb-2">GDPR Agreement*</p>
+                  <div className="space-y-3">
+                    <div className="flex items-start space-x-2">
+                      <Checkbox 
+                        id="gdprConsent" 
+                        name="gdprConsent"
+                        checked={consentToShow}
+                        onCheckedChange={(checked) => 
+                          setConsentToShow(checked as boolean)
+                        }
+                        required
+                      />
+                      <Label htmlFor="gdprConsent">I agree to receive updates and offers from Sciscribe</Label>
+                    </div>
+                  </div>
                 </div>
                 
                 <div className="flex justify-center pt-4">
