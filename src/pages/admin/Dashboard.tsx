@@ -16,6 +16,65 @@ import { Mail, MessageCircle, Home, Check } from "lucide-react";
 import type { DocumentData } from "firebase/firestore";
 
 // --- Types ---
+
+// Utility: Format field labels for display
+function formatLabel(key: string): string {
+  // Map keys to human-friendly labels
+  const labelMap: Record<string, string> = {
+    firstName: "First Name",
+    lastName: "Last Name",
+    email: "Email",
+    phone: "Phone",
+    service: "Requested Service",
+    serviceUsed: "Service Used",
+    addOns: "Add-On Services",
+    documentType: "Document Type",
+    subjectArea: "Subject Area",
+    wordCount: "Word Count",
+    deadline: "Deadline",
+    contactMethod: "Preferred Contact Method",
+    source: "How did you find us?",
+    message: "Message",
+    gdprConsent1: "GDPR Consent 1",
+    gdprConsent2: "GDPR Consent 2",
+    feedbackText: "Feedback",
+    rating: "Rating",
+    consentToShow: "Consent to Show Publicly",
+    // fallback
+  };
+  return labelMap[key] || key.replace(/([A-Z])/g, ' $1').replace(/^./, s => s.toUpperCase());
+}
+
+// Utility: Render field values nicely
+function renderFieldValue(key: string, value: any): JSX.Element {
+  if (typeof value === 'boolean') {
+    return <span className="text-sm font-medium">{value ? 'Yes' : 'No'}</span>;
+  }
+  if (value === null || value === undefined || value === "") {
+    return <span className="italic text-slate-500">Not provided</span>;
+  }
+  if (typeof value === 'object' && !Array.isArray(value)) {
+    // Nested object (handled above for addOns)
+    return <span className="italic text-slate-500">[Object]</span>;
+  }
+  if (Array.isArray(value)) {
+    return <span className="text-sm">{value.length > 0 ? value.join(", ") : <span className="italic text-slate-500">None</span>}</span>;
+  }
+  // Format date strings
+  if (key.toLowerCase().includes('date') || key.toLowerCase().includes('deadline')) {
+    const date = new Date(value);
+    return isNaN(date.getTime())
+      ? <span className="text-sm">{value}</span>
+      : <span className="text-sm">{date.toLocaleString()}</span>;
+  }
+  // Numbers
+  if (typeof value === 'number') {
+    return <span className="text-sm font-medium">{value}</span>;
+  }
+  // Default string
+  return <span className="text-sm">{String(value)}</span>;
+}
+
 type Submission = {
   id: string;
   type: "contact" | "feedback";
@@ -391,55 +450,108 @@ export default function AdminDashboard({ initialTab = "all" }: DashboardProps) {
           {/* Drawer for details */}
           {drawerOpen && selected && (
             <div className="p-6 w-full max-w-full bg-gradient-to-br from-slate-900 to-slate-950 text-white rounded-l-xl shadow-2xl flex flex-col gap-4 border-l border-r border-t border-b border-slate-700 flex-[1_1_0%]">
-              <div className="flex items-center justify-between mb-2">
-                <h3 className="text-xl font-bold text-sciscribe-gold">{selected.type === "contact" ? "Contact Submission" : "Feedback Entry"}</h3>
-                <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                  selected.reviewed 
-                    ? 'bg-green-100 text-green-800' 
-                    : 'bg-blue-100 text-blue-800'
-                }`}>
-                  {selected.reviewed ? "Reviewed" : "Pending"}
-                </span>
-                <Button 
-                  variant="outline" 
-                  onClick={() => setDrawerOpen(false)} 
-                  className="ml-auto border-slate-600 hover:bg-slate-800">
-                  Close
-                </Button>
-              </div>
-              <div className="grid grid-cols-2 gap-4 mb-4">
-                <div>
-                  <div className="text-xs text-slate-400 mb-1">From</div>
-                  <div className="text-sm font-medium">{selected.name || "Anonymous"}</div>
-                  <div className="text-sm text-blue-400">{selected.email}</div>
-                </div>
-                <div>
-                  <div className="text-xs text-slate-400 mb-1">Received on</div>
-                  <div className="text-sm">{new Date(selected.date).toLocaleString()}</div>
-                </div>
-              </div>
-              {selected.subject && (
-                <div className="mb-3">
-                  <div className="text-xs text-slate-400 mb-1">Subject</div>
-                  <div className="text-base font-medium">{selected.subject}</div>
-                </div>
-              )}
+              {/* Dynamic Form Data Rendering */}
               <div className="mb-4">
-                <div className="text-xs text-slate-400 mb-1">Message</div>
-                <div className="bg-slate-800/50 p-3 rounded text-sm border border-slate-700 max-h-52 overflow-y-auto whitespace-pre-wrap">{selected.message || "No message content"}</div>
+                <h3 className="text-xl font-bold text-sciscribe-gold mb-2">
+                  {selected.type === "contact" ? "Contact Submission" : "Feedback Entry"}
+                </h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {/* Define logical field order for each entry type */}
+                  {(() => {
+                    const contactOrder = [
+                      "name", "email", "phone", "service", "addOns", "documentType", "subjectArea", "wordCount", "deadline", "contactMethod", "source", "message", "gdprConsent1", "gdprConsent2"
+                    ];
+                    const feedbackOrder = [
+                      "name", "email", "serviceUsed", "rating", "feedbackText", "consentToShow"
+                    ];
+                    const entryType = selected.type;
+                    const order = entryType === "contact" ? contactOrder : feedbackOrder;
+                    // Render in order, then any extras
+                    const rendered = new Set<string>();
+                    const fields = Object.entries(selected).filter(([key]) => !["id", "type", "reviewed", "notes", "createdAt", "date"].includes(key));
+                    // Strictly ordered fields (always show, even if missing)
+                    const orderedFields = order.map(key => [key, selected[key]] as [string, unknown]);
+                    orderedFields.forEach(([key]) => rendered.add(key));
+                    // Any extra fields not in order, including fileUrls
+                    const extraFields = fields.filter(([key]) => !rendered.has(key) || key === 'fileUrls');
+                    return (
+                      <>
+                        {/* Render strictly ordered fields, always in order */}
+                        {orderedFields.map(([key, value]) => (
+                          key === "addOns" && value && typeof value === "object" ? (
+                            <div key={key} className="flex flex-col gap-1 md:col-span-2">
+                              <div className="text-xs text-slate-400 font-medium">Add-On Services</div>
+                              <div className="flex flex-wrap gap-2">
+                                {Object.entries(value).map(([addon, enabled]) => (
+                                  <span key={addon} className={`px-2 py-1 rounded text-xs border ${enabled ? 'bg-sciscribe-gold/20 border-sciscribe-gold text-sciscribe-gold' : 'bg-slate-700 border-slate-600 text-slate-400'}`}>
+                                    {formatLabel(addon)}: {enabled ? 'Yes' : 'No'}
+                                  </span>
+                                ))}
+                              </div>
+                            </div>
+                          ) : (
+                            <div key={key} className="flex flex-col gap-1">
+                              <div className="text-xs text-slate-400 font-medium">{formatLabel(key)}</div>
+                              {renderFieldValue(key, value)}
+                            </div>
+                          )
+                        ))}
+                        {/* Render extra fields in a separate section if any exist */}
+                        {extraFields.length > 0 && (
+                          <div className="md:col-span-2 mt-4">
+                            <div className="text-xs text-slate-400 font-bold mb-1">Other Fields</div>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                              {extraFields.map(([key, value]) => (
+                                <div key={key} className="flex flex-col gap-1">
+                                  <div className="text-xs text-slate-400 font-medium">{formatLabel(key)}</div>
+                                  {renderFieldValue(key, value)}
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+                      </>
+                    );
+                  })()}
+
+                  {/* Special handling for nested addOns */}
+                  {selected.addOns && typeof selected.addOns === "object" && (
+                    <div className="flex flex-col gap-1 md:col-span-2">
+                      <div className="text-xs text-slate-400 font-medium">Add-On Services</div>
+                      <div className="flex flex-wrap gap-2">
+                        {Object.entries(selected.addOns).map(([addon, enabled]) => (
+                          <span key={addon} className={`px-2 py-1 rounded text-xs border ${enabled ? 'bg-sciscribe-gold/20 border-sciscribe-gold text-sciscribe-gold' : 'bg-slate-700 border-slate-600 text-slate-400'}`}>
+                            {formatLabel(addon)}: {enabled ? 'Yes' : 'No'}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
               </div>
-              <div className="mb-2">
-                <div className="text-xs text-slate-400 mb-1">Admin Notes</div>
-                <div className="text-sm mb-2 bg-slate-800/30 p-2 rounded min-h-[40px] border border-slate-700/50">{selected.notes || <span className="text-slate-500 italic">No notes added yet</span>}</div>
-                <form className="flex gap-2" onSubmit={e => { e.preventDefault(); addNote(selected.id, noteInput); setNoteInput(""); }}>
-                  <input type="text" className="flex-1 rounded px-3 py-2 bg-slate-800 text-white border border-slate-700 text-sm focus:outline-none focus:ring-2 focus:ring-sciscribe-gold/50" placeholder="Add note..." value={noteInput} onChange={e => setNoteInput(e.target.value)} disabled={isActionLoading} />
-                  <Button type="submit" disabled={isActionLoading || !noteInput.trim()} className="bg-sciscribe-gold hover:bg-sciscribe-gold/80 text-black font-medium">Add Note</Button>
-                </form>
-              </div>
-              <div className="flex gap-2 mt-4">
-                <Button onClick={() => markReviewed(selected.id)} disabled={selected.reviewed || isActionLoading} className="bg-blue-500 hover:bg-blue-600 text-white">Mark as Reviewed</Button>
-                <Button onClick={() => deleteSubmission(selected.id)} variant="destructive" disabled={isActionLoading}>Delete</Button>
-                <Button onClick={() => { setDrawerOpen(false); setSelected(null); }} variant="outline" className="ml-auto">Close</Button>
+
+              {/* Admin/Status Section */}
+              <div className="border-t border-slate-700 pt-4 mt-2">
+                <div className="flex items-center gap-4 mb-2">
+                  <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${selected.reviewed ? 'bg-green-100 text-green-800' : 'bg-blue-100 text-blue-800'}`}>
+                    {selected.reviewed ? "Reviewed" : "Pending"}
+                  </span>
+                  <span className="text-xs text-slate-400">Received on</span>
+                  <span className="text-xs font-medium">{selected.date ? new Date(selected.date).toLocaleString() : <span className="italic text-slate-500">Unknown</span>}</span>
+                </div>
+                <div className="mb-2">
+                  <div className="text-xs text-slate-400 mb-1">Admin Notes</div>
+                  <div className="text-sm mb-2 bg-slate-800/30 p-2 rounded min-h-[40px] border border-slate-700/50">{selected.notes || <span className="text-slate-500 italic">No notes added yet</span>}</div>
+                  <form className="flex gap-2" onSubmit={e => { e.preventDefault(); addNote(selected.id, noteInput); setNoteInput(""); }}>
+                    <input type="text" className="flex-1 rounded px-3 py-2 bg-slate-800 text-white border border-slate-700 text-sm focus:outline-none focus:ring-2 focus:ring-sciscribe-gold/50" placeholder="Add note..." value={noteInput} onChange={e => setNoteInput(e.target.value)} disabled={isActionLoading} />
+                    <Button type="submit" disabled={isActionLoading || !noteInput.trim()} className="bg-sciscribe-gold hover:bg-sciscribe-gold/80 text-black font-medium">Add Note</Button>
+                  </form>
+                </div>
+                <div className="flex gap-2 mt-4">
+                  <Button onClick={() => markReviewed(selected.id)} disabled={selected.reviewed || isActionLoading} className="bg-blue-500 hover:bg-blue-600 text-white">Mark as Reviewed</Button>
+                  <Button onClick={() => deleteSubmission(selected.id)} variant="destructive" disabled={isActionLoading}>Delete</Button>
+                  <Button onClick={() => { setDrawerOpen(false); setSelected(null); }} variant="outline" className="ml-auto">Close</Button>
+                </div>
               </div>
             </div>
           )}
