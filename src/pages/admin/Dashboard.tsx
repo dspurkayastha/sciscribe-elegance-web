@@ -51,54 +51,109 @@ export default function AdminDashboard({ initialTab = "all" }: DashboardProps) {
   const [hasNextPage, setHasNextPage] = useState(false);
 
   // --- Fetch submissions from Firestore ---
-  const fetchSubmissions = useCallback(async (isNextPage = false) => {
-    setIsLoading(true);
-    try {
-      let q = collection(db, "submissions");
-      
-      if (tab !== "all") {
-        q = query(q, where("type", "==", tab));
+  const fetchSubmissions = useCallback(
+    async (isNextPage = false) => {
+      setIsLoading(true);
+      try {
+        let docs: DocumentData[] = [];
+        let newLastDoc: QueryDocumentSnapshot | null = null;
+
+        if (tab === "contact" || tab === "feedback") {
+          const collectionName =
+            tab === "contact" ? "contact_submissions" : "feedback_entries";
+
+          let q = query(
+            collection(db, collectionName),
+            orderBy("createdAt", "desc"),
+            limit(PAGE_SIZE)
+          );
+
+          if (isNextPage && lastDoc) {
+            q = query(q, startAfter(lastDoc));
+          }
+
+          const snapshot = await getDocs(q);
+          docs = snapshot.docs.map((doc) => ({
+            id: doc.id,
+            ...doc.data(),
+            type: tab
+          }));
+
+          newLastDoc = snapshot.docs[snapshot.docs.length - 1] || null;
+        } else if (tab === "all") {
+          // NOTE: Firestore does not support cross-collection cursor-based pagination
+          // This is a basic approximation: loads PAGE_SIZE from both, merges & shows top PAGE_SIZE
+          const [contactSnap, feedbackSnap] = await Promise.all([
+            getDocs(
+              query(
+                collection(db, "contact_submissions"),
+                orderBy("createdAt", "desc"),
+                limit(PAGE_SIZE)
+              )
+            ),
+            getDocs(
+              query(
+                collection(db, "feedback_entries"),
+                orderBy("createdAt", "desc"),
+                limit(PAGE_SIZE)
+              )
+            )
+          ]);
+
+          const contactDocs = contactSnap.docs.map((doc) => ({
+            id: doc.id,
+            ...doc.data(),
+            type: "contact"
+          }));
+
+          const feedbackDocs = feedbackSnap.docs.map((doc) => ({
+            id: doc.id,
+            ...doc.data(),
+            type: "feedback"
+          }));
+
+          const merged = [...contactDocs, ...feedbackDocs].sort((a, b) => {
+            const getMillis = (ts: any) => {
+              if (!ts) return 0;
+              if (typeof ts.toMillis === "function") return ts.toMillis();
+              const parsed = Date.parse(ts);
+              return isNaN(parsed) ? 0 : parsed;
+            };
+          
+            return getMillis(b.createdAt) - getMillis(a.createdAt);
+          });
+          
+
+          docs = merged.slice(0, PAGE_SIZE);
+          newLastDoc = null; // Pagination unsupported in merged mode
+        }
+
+        if (isNextPage) {
+          setSubmissions((prev) => [...prev, ...docs]);
+        } else {
+          setSubmissions(docs);
+        }
+
+        setLastDoc(newLastDoc);
+      } catch (error) {
+        console.error("❌ Error fetching submissions:", error);
+        toast({
+          title: "Error fetching data",
+          description: "There was a problem loading submissions.",
+          variant: "destructive"
+        });
+      } finally {
+        setIsLoading(false);
       }
-      
-      q = query(q, orderBy("date", "desc"));
-      
-      // If fetching next page and we have a last document
-      if (isNextPage && lastDoc) {
-        q = query(q, limit(PAGE_SIZE));
-      } else {
-        q = query(q, limit(PAGE_SIZE));
-      }
-      
-      const snapshot = await getDocs(q);
-      const docs = snapshot.docs.map(docSnap => ({ id: docSnap.id, ...docSnap.data() } as Submission));
-      
-      setSubmissions(docs);
-      setLastDoc(snapshot.docs.length > 0 ? snapshot.docs[snapshot.docs.length - 1] : null);
-      setHasNextPage(snapshot.docs.length === PAGE_SIZE);
-      
-      // Get total count for pagination
-      const countQuery = tab !== "all" 
-        ? query(collection(db, "submissions"), where("type", "==", tab))
-        : collection(db, "submissions");
-      
-      const countSnapshot = await getDocs(countQuery);
-      setTotalSubmissions(countSnapshot.size);
-      
-    } catch (error) {
-      console.error("Error fetching submissions:", error);
-      toast({ 
-        title: "Error fetching data", 
-        description: "There was a problem loading submissions.",
-        variant: "destructive" 
-      });
-    } finally {
-      setIsLoading(false);
-    }
-  }, [tab, lastDoc]);
+    },
+    [tab]
+  );
 
   useEffect(() => {
+    setLastDoc(null);  // 🔁 resets pagination correctly
+    setPage(1);        // optional, reset to page 1
     fetchSubmissions();
-  }, [tab, fetchSubmissions]);
+  }, [tab]);
 
   // --- Actions ---
   const markReviewed = async (id: string) => {
