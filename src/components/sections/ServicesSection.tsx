@@ -44,36 +44,45 @@ const ServicesSection = () => {
         <div className="grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-4">
           {services.map((service, index) => (
             <motion.div
-              key={index}
-              className={`
-                relative flex flex-col h-full rounded-xl
-                border border-sciscribe-blue/20 dark:border-sciscribe-blue/10
-                bg-white/70 dark:bg-sciscribe-navy/60
-                backdrop-blur-xl shadow-[0_4px_18px_-3px_rgba(14,165,233,0.14)]
-                transition-transform duration-300 hover:scale-105 hover:shadow-xl
-                overflow-hidden glassmorphism`}
-              style={{ zIndex: 1 }}
-              whileHover={{ scale: 1.045 }}
-              transition={{ type: "spring", stiffness: 440, damping: 24 }}
-            >
-              <div className="absolute -right-10 -top-10 h-20 w-20 rounded-full bg-gradient-to-br from-sciscribe-blue/20 to-transparent blur-xl pointer-events-none" />
-              <div className="absolute -left-10 -bottom-10 h-16 w-16 rounded-full bg-gradient-to-br from-sciscribe-gold/20 to-transparent blur-xl pointer-events-none" />
-              <div className="mb-4 mt-8 flex items-center justify-center">
-                <div className="p-3 rounded-full bg-white/80 dark:bg-sciscribe-navy/50 border border-sciscribe-mist/30 dark:border-white/10 shadow">
-                  {service.icon}
+            key={index}
+            className={`
+              relative flex flex-col h-full rounded-xl
+              border border-sciscribe-blue/20 dark:border-sciscribe-blue/10
+              bg-white/70 dark:bg-sciscribe-navy/60
+              backdrop-blur-xl shadow-[0_4px_18px_-3px_rgba(14,165,233,0.14)]
+              transition-transform duration-300 hover:scale-105 hover:shadow-xl
+              overflow-hidden glassmorphism
+              p-6
+            `}
+            style={{ zIndex: 1 }}
+            whileHover={{ scale: 1.045 }}
+            transition={{ type: "spring", stiffness: 440, damping: 24 }}
+          >
+            <div className="absolute -right-10 -top-10 h-20 w-20 rounded-full bg-gradient-to-br from-sciscribe-blue/20 to-transparent blur-xl pointer-events-none" />
+            <div className="absolute -left-10 -bottom-10 h-16 w-16 rounded-full bg-gradient-to-br from-sciscribe-gold/20 to-transparent blur-xl pointer-events-none" />
+          
+            {/* Content Wrapper */}
+            <div className="flex flex-col justify-between h-full">
+              <div>
+                <div className="mb-4 flex items-center justify-center">
+                  <div className="p-3 rounded-full bg-white/80 dark:bg-sciscribe-navy/50 border border-sciscribe-mist/30 dark:border-white/10 shadow">
+                    {service.icon}
+                  </div>
                 </div>
+                <h3 className="mb-3 text-xl font-bold text-sciscribe-blue text-center">{service.title}</h3>
+                <p className="text-sciscribe-navy/90 dark:text-white/80 text-center">{service.description}</p>
               </div>
-              <h3 className="mb-3 text-xl font-bold text-sciscribe-blue">{service.title}</h3>
-              <p className="mb-6 flex-grow text-sciscribe-navy/90 dark:text-white/80">{service.description}</p>
-              <div className="px-4 pb-8">
+          
+              <div className="mt-6 flex justify-center">
                 <Button
                   variant="ghost"
-                  className="mt-auto w-full justify-start p-0 text-sciscribe-gold hover:bg-transparent hover:text-sciscribe-gold/80 font-medium"
+                  className="text-sciscribe-gold hover:bg-transparent hover:text-sciscribe-gold/80 font-medium"
                 >
-                  Learn more &rarr;
+                  Learn more →
                 </Button>
               </div>
-            </motion.div>
+            </div>
+          </motion.div>          
           ))}
         </div>
       </div>

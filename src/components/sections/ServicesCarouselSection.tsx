@@ -11,31 +11,31 @@ const ServicesCarouselSection = () => {
       id: 1,
       title: "Scientific Manuscript Editing",
       description: "We enhance clarity, structure, and language while preserving your scientific voice. Our editors ensure your manuscript meets journal standards and effectively communicates your research findings.",
-      image: "/lovable-uploads/c96f9876-a2ee-4661-857d-89eefc8bdd2c.png"
+      image: "https://s3.ap-south-1.amazonaws.com/client-deliverables.sciscribesolutions/website_imges/cman.webp?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4TV37PKLV5CX6OMV%2F20250509%2Fap-south-1%2Fs3%2Faws4_request&X-Amz-Date=20250509T205814Z&X-Amz-Expires=604800&X-Amz-SignedHeaders=host&X-Amz-Signature=c0d31cafc8d6d4bd08c107f884411f9f1473af8ae2f19c9d6c2218e0c14ad70c"
     },
     {
       id: 2,
       title: "Statistical Analysis & Data Visualization",
       description: "We create impactful figures, tables, and visuals, and offer guidance on study design, statistical analysis, and presenting your findings with confidence.",
-      image: "/lovable-uploads/c96f9876-a2ee-4661-857d-89eefc8bdd2c.png"
+      image: "https://s3.ap-south-1.amazonaws.com/client-deliverables.sciscribesolutions/website_imges/cstats.webp?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4TV37PKLV5CX6OMV%2F20250509%2Fap-south-1%2Fs3%2Faws4_request&X-Amz-Date=20250509T205814Z&X-Amz-Expires=604800&X-Amz-SignedHeaders=host&X-Amz-Signature=508235210079c5016c24045a188fe4722bae5519ccaad9101cb7914bab14aae5"
     },
     {
       id: 3,
       title: "Thesis & Dissertation Support",
       description: "Comprehensive editing support for graduate students, ensuring your thesis meets academic standards for clarity, structure, and formatting requirements.",
-      image: "/lovable-uploads/c96f9876-a2ee-4661-857d-89eefc8bdd2c.png"
+      image: "https://s3.ap-south-1.amazonaws.com/client-deliverables.sciscribesolutions/website_imges/cthesis.webp?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4TV37PKLV5CX6OMV%2F20250509%2Fap-south-1%2Fs3%2Faws4_request&X-Amz-Date=20250509T205814Z&X-Amz-Expires=604800&X-Amz-SignedHeaders=host&X-Amz-Signature=d668398a648913eda3ea6e44005723e47690adb46e60f424b384346c9cc6a26d"
     },
     {
       id: 4,
       title: "Scientific Publication Services",
       description: "End-to-end publication support, including journal selection, cover letter creation, response to reviewers, and formatting according to journal guidelines.",
-      image: "/lovable-uploads/c96f9876-a2ee-4661-857d-89eefc8bdd2c.png"
+      image: "https://s3.ap-south-1.amazonaws.com/client-deliverables.sciscribesolutions/website_imges/cjournal.webp?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4TV37PKLV5CX6OMV%2F20250509%2Fap-south-1%2Fs3%2Faws4_request&X-Amz-Date=20250509T205814Z&X-Amz-Expires=604800&X-Amz-SignedHeaders=host&X-Amz-Signature=5c3e33c453218d4cde11ce67546244d5dc81e3632737fc24e5581a2c901313eb"
     },
     {
       id: 5,
       title: "Grant Writing & Peer Review",
       description: "Professional editing and peer review of grant proposals and research papers to increase your chances of funding and acceptance.",
-      image: "/lovable-uploads/c96f9876-a2ee-4661-857d-89eefc8bdd2c.png"
+      image: "https://s3.ap-south-1.amazonaws.com/client-deliverables.sciscribesolutions/website_imges/cgrant.webp?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4TV37PKLV5CX6OMV%2F20250509%2Fap-south-1%2Fs3%2Faws4_request&X-Amz-Date=20250509T205814Z&X-Amz-Expires=604800&X-Amz-SignedHeaders=host&X-Amz-Signature=93f56a11e93f4c9fbbad8912c144ce7eed8a7cbfa252300639d57e98695c7a76"
     }
   ];
 
