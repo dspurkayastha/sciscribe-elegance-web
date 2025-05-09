@@ -18,6 +18,9 @@ import Portfolio from "./pages/Portfolio";
 import NotFound from "./pages/NotFound";
 import Feedback from "./pages/Feedback";
 import ThankYou from "./pages/ThankYou";
+import AdminLogin from "./pages/admin/Login";
+import Unauthorized from "./pages/Unauthorized";
+import AdminDashboard from "./pages/admin/Dashboard";
 
 const queryClient = new QueryClient();
 
@@ -42,6 +45,9 @@ const App = () => (
             <Route path="/portfolio" element={<Portfolio />} />
             <Route path="/feedback" element={<Feedback />} />
             <Route path="/thank-you" element={<ThankYou />} />
+            <Route path="/admin/login" element={<AdminLogin />} />
+            <Route path="/unauthorized" element={<Unauthorized />} />
+            <Route path="/admin" element={<AdminDashboard />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>

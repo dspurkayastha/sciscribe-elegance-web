@@ -3,6 +3,7 @@ import { initializeApp } from "firebase/app";
 import { getAnalytics, isSupported as isAnalyticsSupported } from "firebase/analytics";
 import { getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
+import { getAuth, GoogleAuthProvider } from "firebase/auth";
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
@@ -25,4 +26,7 @@ let analytics: ReturnType<typeof getAnalytics> | null = null;
   }
 })();
 
-export { app, analytics, db, storage };
+const auth = getAuth(app);
+const googleProvider = new GoogleAuthProvider();
+
+export { app, analytics, db, storage, auth, googleProvider };

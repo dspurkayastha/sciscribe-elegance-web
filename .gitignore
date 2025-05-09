@@ -15,6 +15,10 @@ dist-ssr
 # Environment variables
 .env
 
+# Firebase admin claim and service account
+setAdminClaim.ts
+serviceAccountKey.json
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
