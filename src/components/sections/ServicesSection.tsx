@@ -2,6 +2,7 @@
 import { FileText, FileCheck, FileSearch, BarChart2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 
 const ServicesSection = () => {
   const services = [
@@ -74,12 +75,14 @@ const ServicesSection = () => {
               </div>
           
               <div className="mt-6 flex justify-center">
+                <Link to="/services">
                 <Button
                   variant="ghost"
                   className="text-sciscribe-gold hover:bg-transparent hover:text-sciscribe-gold/80 font-medium"
                 >
                   Learn more →
                 </Button>
+              </Link>
               </div>
             </div>
           </motion.div>          
