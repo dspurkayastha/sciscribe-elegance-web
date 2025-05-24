@@ -754,13 +754,9 @@ const Pricing = () => {
 
       </main>
       <Footer />
-    </div>
-  );
-};
-
-export default Pricing;
-
-<style jsx>{`
+      
+      <style>
+        {`
 :global(@keyframes particle) {
   0% { transform: translateY(0) scale(1); opacity: 0.7; }
   50% { transform: translateY(-8px) scale(1.1); opacity: 1; }
@@ -781,4 +777,10 @@ export default Pricing;
 @media (max-width: 600px) {
   .my-10 { margin-top: 1.5rem !important; margin-bottom: 1.5rem !important; }
 }
-`}</style>
+`}
+      </style>
+    </div>
+  );
+};
+
+export default Pricing;
