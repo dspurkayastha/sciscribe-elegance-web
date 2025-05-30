@@ -1,6 +1,8 @@
 
 import { motion } from "framer-motion";
-import { Linkedin, Twitter } from "lucide-react";
+import { Linkedin, Facebook, Instagram } from "lucide-react";
+import styles from "./TeamSection.module.css";
+import { useState } from "react";
 
 const TeamSection = () => {
   const teamMembers = [
@@ -13,13 +15,13 @@ const TeamSection = () => {
     {
       name: "S S",
       role: "Senior Editor & Co-Founder",
-      bio: "With a background in research methodology and data analysis, Maria ensures the highest standards of scientific accuracy in our editing services.",
+      bio: "With a background in research methodology and data analysis, S ensures the highest standards of scientific accuracy in our editing services.",
       image: "https://sciscribe-website-images.s3.ap-south-1.amazonaws.com/website_imges/2.webp",
     },
     {
       name: "S G",
       role: "Statistical Consultant",
-      bio: "Specializing in research design and statistical analysis, James helps researchers optimize their methodology and data presentation.",
+      bio: "Specializing in research design and statistical analysis, S G helps researchers optimize their methodology and data presentation.",
       image: "https://sciscribe-website-images.s3.ap-south-1.amazonaws.com/website_imges/3.webp",
     }
   ];
@@ -66,29 +68,66 @@ const TeamSection = () => {
           whileInView="visible"
           viewport={{ once: true }}
         >
-          {teamMembers.map((member, index) => (
-            <motion.div 
-              key={index}
-              variants={itemVariants}
-              className="premium-card group"
-            >
-              <div className="mb-6 relative">
-                <div className="aspect-square rounded-full overflow-hidden border-4 border-white dark:border-sciscribe-navy shadow-md mx-auto w-48 h-48">
-                  <img 
-                    src={member.image} 
-                    alt={member.name} 
-                    className="object-cover w-full h-full"
-                  />
+          {teamMembers.map((member, index) => {
+            const [isGlow, setGlow] = useState(false);
+            return (
+              <motion.div 
+                key={index}
+                variants={itemVariants}
+                className="premium-card group"
+              >
+                <div className="mb-6 relative">
+                  <div
+                    className={`aspect-square rounded-full overflow-hidden border-4 border-white dark:border-sciscribe-navy shadow-md mx-auto w-48 h-48 team-profile-img transition-shadow duration-300 ${isGlow ? styles.glow : ""}`}
+                  >
+                    <img 
+                      src={member.image} 
+                      alt={member.name} 
+                      className="object-cover w-full h-full"
+                    />
+                  </div>
+                  <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-3 flex space-x-2 z-10">
+                    <a
+                      href="https://www.linkedin.com/company/sciscribe-solutions/?viewAsMember=true"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label="LinkedIn"
+                      className="bg-white p-2 rounded-full shadow-md text-cyan-600 hover:text-white hover:bg-cyan-500 social-icon transition-all duration-300"
+                      onMouseEnter={() => setGlow(true)}
+                      onMouseLeave={() => setGlow(false)}
+                      onFocus={() => setGlow(true)}
+                      onBlur={() => setGlow(false)}
+                    >
+                      <Linkedin size={18} />
+                    </a>
+                    <a
+                      href="https://www.facebook.com/profile.php?id=61576386514296"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label="Facebook"
+                      className="bg-white p-2 rounded-full shadow-md text-cyan-600 hover:text-white hover:bg-cyan-500 social-icon transition-all duration-300"
+                      onMouseEnter={() => setGlow(true)}
+                      onMouseLeave={() => setGlow(false)}
+                      onFocus={() => setGlow(true)}
+                      onBlur={() => setGlow(false)}
+                    >
+                      <Facebook size={18} />
+                    </a>
+                    <a
+                      href="https://www.instagram.com/sciscribesolutions_ig/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label="Instagram"
+                      className="bg-white p-2 rounded-full shadow-md text-cyan-600 hover:text-white hover:bg-cyan-500 social-icon transition-all duration-300"
+                      onMouseEnter={() => setGlow(true)}
+                      onMouseLeave={() => setGlow(false)}
+                      onFocus={() => setGlow(true)}
+                      onBlur={() => setGlow(false)}
+                    >
+                      <Instagram size={18} />
+                    </a>
+                  </div>
                 </div>
-                <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-3 flex space-x-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <a href="#" className="bg-white p-2 rounded-full shadow-md hover:bg-sciscribe-blue hover:text-white transition-colors">
-                    <Linkedin size={16} />
-                  </a>
-                  <a href="#" className="bg-white p-2 rounded-full shadow-md hover:bg-sciscribe-blue hover:text-white transition-colors">
-                    <Twitter size={16} />
-                  </a>
-                </div>
-              </div>
               <div className="text-center">
                 <h3 className="text-xl font-bold mb-1 text-sciscribe-navy dark:text-white">{member.name}</h3>
                 <p className="text-sciscribe-gold font-medium mb-3">{member.role}</p>
