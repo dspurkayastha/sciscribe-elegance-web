@@ -1,10 +1,10 @@
-
 import { motion } from "framer-motion";
 import { Linkedin, Facebook, Instagram } from "lucide-react";
 import styles from "./TeamSection.module.css";
 import { useState } from "react";
 
 const TeamSection = () => {
+  const [glowIndex, setGlowIndex] = useState<number | null>(null);
   const teamMembers = [
     {
       name: "D S",
@@ -68,66 +68,64 @@ const TeamSection = () => {
           whileInView="visible"
           viewport={{ once: true }}
         >
-          {teamMembers.map((member, index) => {
-            const [isGlow, setGlow] = useState(false);
-            return (
-              <motion.div 
-                key={index}
-                variants={itemVariants}
-                className="premium-card group"
-              >
-                <div className="mb-6 relative">
-                  <div
-                    className={`aspect-square rounded-full overflow-hidden border-4 border-white dark:border-sciscribe-navy shadow-md mx-auto w-48 h-48 team-profile-img transition-shadow duration-300 ${isGlow ? styles.glow : ""}`}
-                  >
-                    <img 
-                      src={member.image} 
-                      alt={member.name} 
-                      className="object-cover w-full h-full"
-                    />
-                  </div>
-                  <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-3 flex space-x-2 z-10">
-                    <a
-                      href="https://www.linkedin.com/company/sciscribe-solutions/?viewAsMember=true"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label="LinkedIn"
-                      className="bg-white p-2 rounded-full shadow-md text-cyan-600 hover:text-white hover:bg-cyan-500 social-icon transition-all duration-300"
-                      onMouseEnter={() => setGlow(true)}
-                      onMouseLeave={() => setGlow(false)}
-                      onFocus={() => setGlow(true)}
-                      onBlur={() => setGlow(false)}
-                    >
-                      <Linkedin size={18} />
-                    </a>
-                    <a
-                      href="https://www.facebook.com/profile.php?id=61576386514296"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label="Facebook"
-                      className="bg-white p-2 rounded-full shadow-md text-cyan-600 hover:text-white hover:bg-cyan-500 social-icon transition-all duration-300"
-                      onMouseEnter={() => setGlow(true)}
-                      onMouseLeave={() => setGlow(false)}
-                      onFocus={() => setGlow(true)}
-                      onBlur={() => setGlow(false)}
-                    >
-                      <Facebook size={18} />
-                    </a>
-                    <a
-                      href="https://www.instagram.com/sciscribesolutions_ig/"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label="Instagram"
-                      className="bg-white p-2 rounded-full shadow-md text-cyan-600 hover:text-white hover:bg-cyan-500 social-icon transition-all duration-300"
-                      onMouseEnter={() => setGlow(true)}
-                      onMouseLeave={() => setGlow(false)}
-                      onFocus={() => setGlow(true)}
-                      onBlur={() => setGlow(false)}
-                    >
-                      <Instagram size={18} />
-                    </a>
-                  </div>
+          {teamMembers.map((member, index) => (
+            <motion.div 
+              key={index}
+              variants={itemVariants}
+              className="premium-card group"
+            >
+              <div className="mb-6 relative">
+                <div
+                  className={`aspect-square rounded-full overflow-hidden border-4 border-white dark:border-sciscribe-navy shadow-md mx-auto w-48 h-48 team-profile-img transition-shadow duration-300 ${glowIndex === index ? styles.glow : ""}`}
+                >
+                  <img 
+                    src={member.image} 
+                    alt={member.name} 
+                    className="object-cover w-full h-full"
+                  />
                 </div>
+                <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-3 flex space-x-2 z-10">
+                  <a
+                    href="https://www.linkedin.com/company/sciscribe-solutions/?viewAsMember=true"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="LinkedIn"
+                    className="bg-white p-2 rounded-full shadow-md text-cyan-600 hover:text-white hover:bg-cyan-500 social-icon transition-all duration-300"
+                    onMouseEnter={() => setGlowIndex(index)}
+                    onMouseLeave={() => setGlowIndex(null)}
+                    onFocus={() => setGlowIndex(index)}
+                    onBlur={() => setGlowIndex(null)}
+                  >
+                    <Linkedin size={18} />
+                  </a>
+                  <a
+                    href="https://www.facebook.com/profile.php?id=61576386514296"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Facebook"
+                    className="bg-white p-2 rounded-full shadow-md text-cyan-600 hover:text-white hover:bg-cyan-500 social-icon transition-all duration-300"
+                    onMouseEnter={() => setGlowIndex(index)}
+                    onMouseLeave={() => setGlowIndex(null)}
+                    onFocus={() => setGlowIndex(index)}
+                    onBlur={() => setGlowIndex(null)}
+                  >
+                    <Facebook size={18} />
+                  </a>
+                  <a
+                    href="https://www.instagram.com/sciscribesolutions_ig/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Instagram"
+                    className="bg-white p-2 rounded-full shadow-md text-cyan-600 hover:text-white hover:bg-cyan-500 social-icon transition-all duration-300"
+                    onMouseEnter={() => setGlowIndex(index)}
+                    onMouseLeave={() => setGlowIndex(null)}
+                    onFocus={() => setGlowIndex(index)}
+                    onBlur={() => setGlowIndex(null)}
+                  >
+                    <Instagram size={18} />
+                  </a>
+                </div>
+              </div>
               <div className="text-center">
                 <h3 className="text-xl font-bold mb-1 text-sciscribe-navy dark:text-white">{member.name}</h3>
                 <p className="text-sciscribe-gold font-medium mb-3">{member.role}</p>
