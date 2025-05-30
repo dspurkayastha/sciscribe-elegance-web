@@ -158,7 +158,7 @@ const Pricing = () => {
                 </span>
               </div>
               <div className="mb-6 mt-8">
-                <h3 className="text-xl font-bold mb-2">Insight Package</h3>
+                <h3 className="text-xl font-bold mb-2">Impact Package</h3>
                 <div className="flex items-end mb-4">
                   <span className="text-4xl font-bold">₹10,000</span>
                   <span className="text-lg text-muted-foreground ml-1 mb-1">($120)</span>
@@ -284,7 +284,7 @@ const Pricing = () => {
                   <TableRow>
                     <TableCell className="font-medium">Editorial Feedback & Comments</TableCell>
                     <TableCell className="text-center">❌</TableCell>
-                    <TableCell className="text-center">✅</TableCell>
+                    <TableCell className="text-center">❌</TableCell>
                     <TableCell className="text-center">✅</TableCell>
                   </TableRow>
                   <TableRow>

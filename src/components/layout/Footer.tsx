@@ -1,5 +1,5 @@
 
-import { Linkedin, Twitter } from "lucide-react";
+import { Linkedin, Facebook, Instagram } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const Footer = () => {
@@ -47,7 +47,7 @@ const Footer = () => {
           {/* Social Media */}
           <div className="flex space-x-4">
             <a
-              href="https://linkedin.com"
+              href="https://www.linkedin.com/company/sciscribe-solutions/?viewAsMember=true"
               target="_blank"
               rel="noopener noreferrer"
               className="rounded-full bg-white/10 p-2 transition-colors hover:bg-sciscribe-gold"
@@ -56,13 +56,22 @@ const Footer = () => {
               <Linkedin size={18} />
             </a>
             <a
-              href="https://twitter.com"
+              href="https://www.facebook.com/profile.php?id=61576386514296"
               target="_blank"
               rel="noopener noreferrer"
               className="rounded-full bg-white/10 p-2 transition-colors hover:bg-sciscribe-gold"
-              aria-label="Twitter"
+              aria-label="Facebook"
             >
-              <Twitter size={18} />
+              <Facebook size={18} />
+            </a>
+            <a
+              href="https://www.instagram.com/sciscribesolutions_ig/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="rounded-full bg-white/10 p-2 transition-colors hover:bg-sciscribe-gold"
+              aria-label="Instagram"
+            >
+              <Instagram size={18} />
             </a>
           </div>
         </div>
