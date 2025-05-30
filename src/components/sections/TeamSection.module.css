@@ -2,10 +2,7 @@
   transition: box-shadow 0.3s;
 }
 .social-icon:hover ~ .team-profile-img,
-.social-icon:focus ~ .team-profile-img {
-  /* fallback for sibling selector limitation, handled in JS below */
-}
-
+.social-icon:focus ~ .team-profile-img 
 /* Utility for JS hover/focus state */
 .glow {
   box-shadow: 0 0 0 8px rgba(34,211,238,0.35), 0 0 32px 10px rgba(34,211,238,0.18);
