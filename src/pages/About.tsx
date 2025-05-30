@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import { Separator } from "@/components/ui/separator";
 import { Award, CheckCircle, Heart, Target } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import LightningSeparator from "@/components/ui/lightningseparator";
 
 const About = () => {
   const containerVariants = {
@@ -159,11 +160,11 @@ const About = () => {
 
         {/* Our Socials Section */}
         <div className="relative my-16">
-          <Separator className="my-8" />
+          <LightningSeparator />
           <section className="bg-white/70 dark:bg-sciscribe-navy/40 py-10 rounded-xl shadow-lg max-w-2xl mx-auto">
             <h2 className="text-2xl md:text-3xl font-bold mb-4 text-center text-sciscribe-blue">Our Socials</h2>
             <p className="text-center text-base md:text-lg mb-6 text-gray-700 dark:text-white/80">
-              Follow SciScribe Solutions on social media for exclusive offers, expert tips, and the latest updates in scientific editing and research support.
+              Follow Us on social media for exclusive offers, expert tips, and the latest updates in scientific editing and research support.
             </p>
             <div className="flex justify-center space-x-6">
               <a href="https://www.linkedin.com/company/sciscribe-solutions/?viewAsMember=true" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="rounded-full bg-white/10 p-3 transition-colors hover:bg-sciscribe-gold">
@@ -177,7 +178,7 @@ const About = () => {
               </a>
             </div>
           </section>
-          <Separator className="my-8" />
+          <LightningSeparator />
         </div>
 
         {/* Company Journey - Timeline (Optional) */}
