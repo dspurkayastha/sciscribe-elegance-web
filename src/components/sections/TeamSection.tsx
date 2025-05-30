@@ -8,19 +8,19 @@ const TeamSection = () => {
       name: "D S",
       role: "Chief Executive Officer & Founder",
       bio: "D S leads SciScribe Solutions with extensive expertise in scientific communication and research publication. His vision drives our commitment to excellence in academic editing and consulting.",
-      image: "https://s3.ap-south-1.amazonaws.com/client-deliverables.sciscribesolutions/website_imges/1.webp?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4TV37PKLV5CX6OMV%2F20250509%2Fap-south-1%2Fs3%2Faws4_request&X-Amz-Date=20250509T193847Z&X-Amz-Expires=604800&X-Amz-SignedHeaders=host&X-Amz-Signature=99babfae14845465dfb4d47a7b74a09be1697b3e5b524152cf3c7b895d47d85a"
+      image: "https://client-deliverables.sciscribesolutions.s3.ap-south-1.amazonaws.com/website_imges/1.webp",
     },
     {
       name: "S S",
       role: "Senior Editor & Co-Founder",
       bio: "With a background in research methodology and data analysis, Maria ensures the highest standards of scientific accuracy in our editing services.",
-      image: "https://s3.ap-south-1.amazonaws.com/client-deliverables.sciscribesolutions/website_imges/2.webp?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4TV37PKLV5CX6OMV%2F20250509%2Fap-south-1%2Fs3%2Faws4_request&X-Amz-Date=20250509T193847Z&X-Amz-Expires=604800&X-Amz-SignedHeaders=host&X-Amz-Signature=457e83fb1a604200faafa3e609fb935c5c46b97fa8900d82e0cf9acc4c2affae"
+      image: "https://client-deliverables.sciscribesolutions.s3.ap-south-1.amazonaws.com/website_imges/2.webp",
     },
     {
       name: "S G",
       role: "Statistical Consultant",
       bio: "Specializing in research design and statistical analysis, James helps researchers optimize their methodology and data presentation.",
-      image: "https://s3.ap-south-1.amazonaws.com/client-deliverables.sciscribesolutions/website_imges/3.webp?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4TV37PKLV5CX6OMV%2F20250509%2Fap-south-1%2Fs3%2Faws4_request&X-Amz-Date=20250509T193847Z&X-Amz-Expires=604800&X-Amz-SignedHeaders=host&X-Amz-Signature=158f513e6f2770a1e3fcedce2894b99f7a143b18de6b97b13ec7f639d2ad8f4e"
+      image: "https://client-deliverables.sciscribesolutions.s3.ap-south-1.amazonaws.com/website_imges/3.webp",
     }
   ];
 

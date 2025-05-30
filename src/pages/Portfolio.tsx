@@ -16,7 +16,7 @@ const Portfolio = () => {
       description: "Comprehensive editing and statistical analysis support for a meta-analysis examining the efficacy of various COVID-19 vaccines across different populations.",
       outcome: "Published in World Journal of Infectious Diseases with 150+ citations in the first year.",
       services: ["Statistical Analysis", "Manuscript Editing", "Figure Creation", "Journal Formatting"],
-      image: "https://s3.ap-south-1.amazonaws.com/client-deliverables.sciscribesolutions/website_imges/pC19.webp?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4TV37PKLV5CX6OMV%2F20250509%2Fap-south-1%2Fs3%2Faws4_request&X-Amz-Date=20250509T201355Z&X-Amz-Expires=604800&X-Amz-SignedHeaders=host&X-Amz-Signature=496acdc95247aae39e102e4b45a3a13633b3e0af33baee159693a3033add3943",
+      image: "https://client-deliverables.sciscribesolutions.s3.ap-south-1.amazonaws.com/website_imges/pC19.webp",
       tags: ["Medical", "Meta-Analysis", "Epidemiology"]
     },
     {
@@ -26,7 +26,7 @@ const Portfolio = () => {
       description: "Structural editing and technical clarity enhancement for a groundbreaking paper on quantum algorithm optimization for error correction.",
       outcome: "Featured as a cover article in Quantum Information Processing.",
       services: ["Technical Editing", "Visual Abstract Creation", "Response to Reviewers"],
-      image: "https://s3.ap-south-1.amazonaws.com/client-deliverables.sciscribesolutions/website_imges/pqc.webp?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4TV37PKLV5CX6OMV%2F20250509%2Fap-south-1%2Fs3%2Faws4_request&X-Amz-Date=20250509T201354Z&X-Amz-Expires=604800&X-Amz-SignedHeaders=host&X-Amz-Signature=b8c16308cf4df94e4d2c366704ab24ebb5ea4bd30205902ddfefba1060c57cc9",
+      image: "https://client-deliverables.sciscribesolutions.s3.ap-south-1.amazonaws.com/website_imges/pqc.webp",
       tags: ["Physics", "Quantum Computing", "Algorithm"]
     },
     {
@@ -36,7 +36,7 @@ const Portfolio = () => {
       description: "Comprehensive thesis editing and data visualization support for a doctoral dissertation examining sustainable farming methods in the face of climate change.",
       outcome: "Recipient of university's Outstanding Dissertation Award and later adapted into a book.",
       services: ["Thesis Editing", "Data Visualization", "Chapter Structuring"],
-      image: "https://s3.ap-south-1.amazonaws.com/client-deliverables.sciscribesolutions/website_imges/pclimch.webp?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4TV37PKLV5CX6OMV%2F20250509%2Fap-south-1%2Fs3%2Faws4_request&X-Amz-Date=20250509T201355Z&X-Amz-Expires=604800&X-Amz-SignedHeaders=host&X-Amz-Signature=ecedfb77c01380ad22700151e01abbfb4ac3c48c071eabd0be1bf0b14725b491",
+      image: "https://client-deliverables.sciscribesolutions.s3.ap-south-1.amazonaws.com/website_imges/pclimch.webp",
       tags: ["Environmental Science", "Agriculture", "Climate Change"]
     },
     {
@@ -46,7 +46,7 @@ const Portfolio = () => {
       description: "Language editing, statistical analysis, and journal submission support for research identifying new biomarkers for early-stage Alzheimer's disease.",
       outcome: "Published in Neurology and led to a follow-up research grant.",
       services: ["Statistical Analysis", "Language Polishing", "Cover Letter Writing"],
-      image: "https://s3.ap-south-1.amazonaws.com/client-deliverables.sciscribesolutions/website_imges/paz.webp?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4TV37PKLV5CX6OMV%2F20250509%2Fap-south-1%2Fs3%2Faws4_request&X-Amz-Date=20250509T201354Z&X-Amz-Expires=604800&X-Amz-SignedHeaders=host&X-Amz-Signature=37e26d7675c49041bdd758757584245278fca7c38925b503257d2e2832c9255f",
+      image: "https://client-deliverables.sciscribesolutions.s3.ap-south-1.amazonaws.com/website_imges/paz.webp",
       tags: ["Neurology", "Biomarkers", "Clinical Research"]
     },
     {
@@ -56,7 +56,7 @@ const Portfolio = () => {
       description: "Technical editing and visualization support for a complex paper on applying novel machine learning algorithms to financial risk modeling.",
       outcome: "Published in Journal of Financial Economics.",
       services: ["Technical Editing", "Figure Design", "Abstract Refinement"],
-      image: "https://s3.ap-south-1.amazonaws.com/client-deliverables.sciscribesolutions/website_imges/pML.webp?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4TV37PKLV5CX6OMV%2F20250509%2Fap-south-1%2Fs3%2Faws4_request&X-Amz-Date=20250509T201354Z&X-Amz-Expires=604800&X-Amz-SignedHeaders=host&X-Amz-Signature=40b5f59aa9e460e4edda7d7ce2d83f278b5e765505529530074b8dd0444f570c",
+      image: "https://client-deliverables.sciscribesolutions.s3.ap-south-1.amazonaws.com/website_imges/pML.webp",
       tags: ["Finance", "Machine Learning", "Risk Assessment"]
     },
     {
@@ -66,7 +66,7 @@ const Portfolio = () => {
       description: "Comprehensive editing and research design consultation for a multi-city study of antibiotic resistant bacteria in urban water infrastructure.",
       outcome: "Published in Environmental Science & Technology and cited in policy recommendations.",
       services: ["Manuscript Restructuring", "Statistical Validation", "Journal Formatting"],
-      image: "https://s3.ap-south-1.amazonaws.com/client-deliverables.sciscribesolutions/website_imges/p1.webp?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4TV37PKLV5CX6OMV%2F20250509%2Fap-south-1%2Fs3%2Faws4_request&X-Amz-Date=20250509T201354Z&X-Amz-Expires=604800&X-Amz-SignedHeaders=host&X-Amz-Signature=50e73bc261609d8c1c0e47d00547d44f8881bf896d4b8308d7a768eeefc5287c",
+      image: "https://client-deliverables.sciscribesolutions.s3.ap-south-1.amazonaws.com/website_imges/p1.webp",
       tags: ["Environmental Health", "Microbiology", "Public Health"]
     }
   ];

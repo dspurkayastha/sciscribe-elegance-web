@@ -1,20 +1,19 @@
-
 import { motion } from "framer-motion";
 
 const AcademicPartnersSection = () => {
   const partners = [
     {
-      image: "https://s3.ap-south-1.amazonaws.com/client-deliverables.sciscribesolutions/website_imges/medical.webp?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4TV37PKLV5CX6OMV%2F20250509%2Fap-south-1%2Fs3%2Faws4_request&X-Amz-Date=20250509T193847Z&X-Amz-Expires=604800&X-Amz-SignedHeaders=host&X-Amz-Signature=ea00a44f8a4a905b39311a358b49a6babb1e312f0e7dcf6d1c7269b076dfe3b8",
+      image: "https://client-deliverables.sciscribesolutions.s3.ap-south-1.amazonaws.com/website_imges/medical.webp",
       type: "Medical Professionals & Researchers",
       description: "We assist clinicians, researchers, and healthcare professionals with expert writing, editing, and publication support — tailored to meet journal and academic standards."
     },
     {
-      image: "https://s3.ap-south-1.amazonaws.com/client-deliverables.sciscribesolutions/website_imges/phd1.webp?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4TV37PKLV5CX6OMV%2F20250509%2Fap-south-1%2Fs3%2Faws4_request&X-Amz-Date=20250509T193848Z&X-Amz-Expires=604800&X-Amz-SignedHeaders=host&X-Amz-Signature=4a567e80a5f86e6c5a3dac23cfc65d7e7c2a7b17dbc286c2ecfc59dd35823779",
+      image: "https://client-deliverables.sciscribesolutions.s3.ap-south-1.amazonaws.com/website_imges/phd1.webp",
       type: "Postgraduate & PhD Scholars",
       description: "Comprehensive editorial support tailored for thesis chapters, dissertations, and high-impact publications — every step of the way."
     },
     {
-      image: "https://s3.ap-south-1.amazonaws.com/client-deliverables.sciscribesolutions/website_imges/scientist.webp?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4TV37PKLV5CX6OMV%2F20250509%2Fap-south-1%2Fs3%2Faws4_request&X-Amz-Date=20250509T193848Z&X-Amz-Expires=604800&X-Amz-SignedHeaders=host&X-Amz-Signature=52b8dc68a4de129ab31bb1f661dce3dabdb6e1af78580154aecc362b950af1db",
+      image: "https://client-deliverables.sciscribesolutions.s3.ap-south-1.amazonaws.com/website_imges/scientist.webp",
       type: "Academic Professionals & Scientists",
       description: "Your ideas deserve to resonate — we help polish, structure, and elevate your work for global readership and academic excellence."
     }
