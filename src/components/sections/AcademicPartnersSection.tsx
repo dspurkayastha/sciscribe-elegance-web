@@ -3,17 +3,17 @@ import { motion } from "framer-motion";
 const AcademicPartnersSection = () => {
   const partners = [
     {
-      image: "https://client-deliverables.sciscribesolutions.s3.ap-south-1.amazonaws.com/website_imges/medical.webp",
+      image: "https://sciscribe-website-images.s3.ap-south-1.amazonaws.com/website_imges/medical.webp",
       type: "Medical Professionals & Researchers",
       description: "We assist clinicians, researchers, and healthcare professionals with expert writing, editing, and publication support — tailored to meet journal and academic standards."
     },
     {
-      image: "https://client-deliverables.sciscribesolutions.s3.ap-south-1.amazonaws.com/website_imges/phd1.webp",
+      image: "https://sciscribe-website-images.s3.ap-south-1.amazonaws.com/website_imges/phd1.webp",
       type: "Postgraduate & PhD Scholars",
       description: "Comprehensive editorial support tailored for thesis chapters, dissertations, and high-impact publications — every step of the way."
     },
     {
-      image: "https://client-deliverables.sciscribesolutions.s3.ap-south-1.amazonaws.com/website_imges/scientist.webp",
+      image: "https://sciscribe-website-images.s3.ap-south-1.amazonaws.com/website_imges/scientist.webp",
       type: "Academic Professionals & Scientists",
       description: "Your ideas deserve to resonate — we help polish, structure, and elevate your work for global readership and academic excellence."
     }

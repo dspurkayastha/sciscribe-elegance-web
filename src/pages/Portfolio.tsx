@@ -16,7 +16,7 @@ const Portfolio = () => {
       description: "Comprehensive editing and statistical analysis support for a meta-analysis examining the efficacy of various COVID-19 vaccines across different populations.",
       outcome: "Published in World Journal of Infectious Diseases with 150+ citations in the first year.",
       services: ["Statistical Analysis", "Manuscript Editing", "Figure Creation", "Journal Formatting"],
-      image: "https://client-deliverables.sciscribesolutions.s3.ap-south-1.amazonaws.com/website_imges/pC19.webp",
+      image: "https://sciscribe-website-images.s3.ap-south-1.amazonaws.com/website_imges/pC19.webp",
       tags: ["Medical", "Meta-Analysis", "Epidemiology"]
     },
     {
@@ -26,7 +26,7 @@ const Portfolio = () => {
       description: "Structural editing and technical clarity enhancement for a groundbreaking paper on quantum algorithm optimization for error correction.",
       outcome: "Featured as a cover article in Quantum Information Processing.",
       services: ["Technical Editing", "Visual Abstract Creation", "Response to Reviewers"],
-      image: "https://client-deliverables.sciscribesolutions.s3.ap-south-1.amazonaws.com/website_imges/pqc.webp",
+      image: "https://sciscribe-website-images.s3.ap-south-1.amazonaws.com/website_imges/pqc.webp",
       tags: ["Physics", "Quantum Computing", "Algorithm"]
     },
     {
@@ -36,7 +36,7 @@ const Portfolio = () => {
       description: "Comprehensive thesis editing and data visualization support for a doctoral dissertation examining sustainable farming methods in the face of climate change.",
       outcome: "Recipient of university's Outstanding Dissertation Award and later adapted into a book.",
       services: ["Thesis Editing", "Data Visualization", "Chapter Structuring"],
-      image: "https://client-deliverables.sciscribesolutions.s3.ap-south-1.amazonaws.com/website_imges/pclimch.webp",
+      image: "https://sciscribe-website-images.s3.ap-south-1.amazonaws.com/website_imges/pclimch.webp",
       tags: ["Environmental Science", "Agriculture", "Climate Change"]
     },
     {
@@ -46,7 +46,7 @@ const Portfolio = () => {
       description: "Language editing, statistical analysis, and journal submission support for research identifying new biomarkers for early-stage Alzheimer's disease.",
       outcome: "Published in Neurology and led to a follow-up research grant.",
       services: ["Statistical Analysis", "Language Polishing", "Cover Letter Writing"],
-      image: "https://client-deliverables.sciscribesolutions.s3.ap-south-1.amazonaws.com/website_imges/paz.webp",
+      image: "https://sciscribe-website-images.s3.ap-south-1.amazonaws.com/website_imges/paz.webp",
       tags: ["Neurology", "Biomarkers", "Clinical Research"]
     },
     {
@@ -56,7 +56,7 @@ const Portfolio = () => {
       description: "Technical editing and visualization support for a complex paper on applying novel machine learning algorithms to financial risk modeling.",
       outcome: "Published in Journal of Financial Economics.",
       services: ["Technical Editing", "Figure Design", "Abstract Refinement"],
-      image: "https://client-deliverables.sciscribesolutions.s3.ap-south-1.amazonaws.com/website_imges/pML.webp",
+      image: "https://sciscribe-website-images.s3.ap-south-1.amazonaws.com/website_imges/pML.webp",
       tags: ["Finance", "Machine Learning", "Risk Assessment"]
     },
     {
@@ -66,7 +66,7 @@ const Portfolio = () => {
       description: "Comprehensive editing and research design consultation for a multi-city study of antibiotic resistant bacteria in urban water infrastructure.",
       outcome: "Published in Environmental Science & Technology and cited in policy recommendations.",
       services: ["Manuscript Restructuring", "Statistical Validation", "Journal Formatting"],
-      image: "https://client-deliverables.sciscribesolutions.s3.ap-south-1.amazonaws.com/website_imges/p1.webp",
+      image: "https://sciscribe-website-images.s3.ap-south-1.amazonaws.com/website_imges/p1.webp",
       tags: ["Environmental Health", "Microbiology", "Public Health"]
     }
   ];

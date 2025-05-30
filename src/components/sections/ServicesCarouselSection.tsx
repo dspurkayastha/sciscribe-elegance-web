@@ -11,31 +11,31 @@ const ServicesCarouselSection = () => {
       id: 1,
       title: "Scientific Manuscript Editing",
       description: "We enhance clarity, structure, and language while preserving your scientific voice. Our editors ensure your manuscript meets journal standards and effectively communicates your research findings.",
-      image: "https://client-deliverables.sciscribesolutions.s3.ap-south-1.amazonaws.com/website_imges/cman.webp",
+      image: "https://sciscribe-website-images.s3.ap-south-1.amazonaws.com/website_imges/cman.webp",
     },
     {
       id: 2,
       title: "Statistical Analysis & Data Visualization",
       description: "We create impactful figures, tables, and visuals, and offer guidance on study design, statistical analysis, and presenting your findings with confidence.",
-      image: "https://client-deliverables.sciscribesolutions.s3.ap-south-1.amazonaws.com/website_imges/cstats.webp",
+      image: "https://sciscribe-website-images.s3.ap-south-1.amazonaws.com/website_imges/cstats.webp",
     },
     {
       id: 3,
       title: "Thesis & Dissertation Support",
       description: "Comprehensive editing support for graduate students, ensuring your thesis meets academic standards for clarity, structure, and formatting requirements.",
-      image: "https://client-deliverables.sciscribesolutions.s3.ap-south-1.amazonaws.com/website_imges/cthesis.webp",
+      image: "https://sciscribe-website-images.s3.ap-south-1.amazonaws.com/website_imges/cthesis.webp",
     },
     {
       id: 4,
       title: "Scientific Publication Services",
       description: "End-to-end publication support, including journal selection, cover letter creation, response to reviewers, and formatting according to journal guidelines.",
-      image: "https://client-deliverables.sciscribesolutions.s3.ap-south-1.amazonaws.com/website_imges/cjournal.webp",
+      image: "https://sciscribe-website-images.s3.ap-south-1.amazonaws.com/website_imges/cjournal.webp",
     },
     {
       id: 5,
       title: "Grant Writing & Peer Review",
       description: "Professional editing and peer review of grant proposals and research papers to increase your chances of funding and acceptance.",
-      image: "https://client-deliverables.sciscribesolutions.s3.ap-south-1.amazonaws.com/website_imges/cgrant.webp",
+      image: "https://sciscribe-website-images.s3.ap-south-1.amazonaws.com/website_imges/cgrant.webp",
     }
   ];
 

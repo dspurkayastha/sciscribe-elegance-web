@@ -8,19 +8,19 @@ const TeamSection = () => {
       name: "D S",
       role: "Chief Executive Officer & Founder",
       bio: "D S leads SciScribe Solutions with extensive expertise in scientific communication and research publication. His vision drives our commitment to excellence in academic editing and consulting.",
-      image: "https://client-deliverables.sciscribesolutions.s3.ap-south-1.amazonaws.com/website_imges/1.webp",
+      image: "https://sciscribe-website-images.s3.ap-south-1.amazonaws.com/website_imges/1.webp",
     },
     {
       name: "S S",
       role: "Senior Editor & Co-Founder",
       bio: "With a background in research methodology and data analysis, Maria ensures the highest standards of scientific accuracy in our editing services.",
-      image: "https://client-deliverables.sciscribesolutions.s3.ap-south-1.amazonaws.com/website_imges/2.webp",
+      image: "https://sciscribe-website-images.s3.ap-south-1.amazonaws.com/website_imges/2.webp",
     },
     {
       name: "S G",
       role: "Statistical Consultant",
       bio: "Specializing in research design and statistical analysis, James helps researchers optimize their methodology and data presentation.",
-      image: "https://client-deliverables.sciscribesolutions.s3.ap-south-1.amazonaws.com/website_imges/3.webp",
+      image: "https://sciscribe-website-images.s3.ap-south-1.amazonaws.com/website_imges/3.webp",
     }
   ];
 
