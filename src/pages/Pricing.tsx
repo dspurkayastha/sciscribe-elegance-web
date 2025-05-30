@@ -117,8 +117,8 @@ const Pricing = () => {
                 <li className="flex items-start"><Check className="h-5 w-5 text-sciscribe-gold mr-2 mt-0.5" /><span>Grammar & spelling corrections</span></li>
                 <li className="flex items-start"><Check className="h-5 w-5 text-sciscribe-gold mr-2 mt-0.5" /><span>Basic language improvements</span></li>
                 <li className="flex items-start"><Check className="h-5 w-5 text-sciscribe-gold mr-2 mt-0.5" /><span>Punctuation & formatting fixes</span></li>
-                <li className="flex items-start"><Check className="h-5 w-5 text-sciscribe-gold mr-2 mt-0.5" /><span>Technical term consistency</span></li>
-                <li className="flex items-start"><Check className="h-5 w-5 text-sciscribe-gold mr-2 mt-0.5" /><span>7-day delivery</span></li>
+                <li className="flex items-start"><Check className="h-5 w-5 text-sciscribe-gold mr-2 mt-0.5" /><span>Technical terminology consistency</span></li>
+                <li className="flex items-start"><Check className="h-5 w-5 text-sciscribe-gold mr-2 mt-0.5" /><span>3 weeks delivery</span></li>
               </ul>
               <div className="mt-auto">
                 <Link to="/payment" className="w-full"><Button className="w-full btn-premium">Choose Plan</Button></Link>
@@ -158,7 +158,7 @@ const Pricing = () => {
                 </span>
               </div>
               <div className="mb-6 mt-8">
-                <h3 className="text-xl font-bold mb-2">Enhance Package</h3>
+                <h3 className="text-xl font-bold mb-2">Insight Package</h3>
                 <div className="flex items-end mb-4">
                   <span className="text-4xl font-bold">₹10,000</span>
                   <span className="text-lg text-muted-foreground ml-1 mb-1">($120)</span>
@@ -171,7 +171,7 @@ const Pricing = () => {
                 <li className="flex items-start"><Check className="h-5 w-5 text-sciscribe-blue mr-2 mt-0.5" /><span>Structure & flow improvements</span></li>
                 <li className="flex items-start"><Check className="h-5 w-5 text-sciscribe-blue mr-2 mt-0.5" /><span>Scientific clarity optimization</span></li>
                 <li className="flex items-start"><Check className="h-5 w-5 text-sciscribe-blue mr-2 mt-0.5" /><span>References formatting</span></li>
-                <li className="flex items-start"><Check className="h-5 w-5 text-sciscribe-blue mr-2 mt-0.5" /><span>5-day delivery</span></li>
+                <li className="flex items-start"><Check className="h-5 w-5 text-sciscribe-blue mr-2 mt-0.5" /><span>2 weeks delivery</span></li>
               </ul>
               <div className="mt-auto">
                 <Link to="/payment" className="w-full"><Button className="w-full bg-sciscribe-blue hover:bg-sciscribe-blue/80 btn-premium">Choose Plan</Button></Link>
@@ -183,7 +183,7 @@ const Pricing = () => {
               variants={itemVariants}
             >
               <div className="mb-6">
-                <h3 className="text-xl font-bold mb-2">Complete Package</h3>
+                <h3 className="text-xl font-bold mb-2">Enhance Package</h3>
                 <div className="flex items-end mb-4">
                   <span className="text-4xl font-bold">₹15,000</span>
                   <span className="text-lg text-muted-foreground ml-1 mb-1">($180)</span>
@@ -191,12 +191,13 @@ const Pricing = () => {
                 <p className="text-sm text-muted-foreground">Full-service editing and journal submission support</p>
               </div>
               <ul className="space-y-3 mb-8">
-                <li className="flex items-start"><Check className="h-5 w-5 text-sciscribe-gold mr-2 mt-0.5" /><span>Everything in Enhance Package</span></li>
-                <li className="flex items-start"><Check className="h-5 w-5 text-sciscribe-gold mr-2 mt-0.5" /><span>Cover letter writing</span></li>
-                <li className="flex items-start"><Check className="h-5 w-5 text-sciscribe-gold mr-2 mt-0.5" /><span>Journal formatting</span></li>
+                <li className="flex items-start"><Check className="h-5 w-5 text-sciscribe-gold mr-2 mt-0.5" /><span>Everything in Impact Package</span></li>
+                <li className="flex items-start"><Check className="h-5 w-5 text-sciscribe-gold mr-2 mt-0.5" /><span>Standard Statistical Analysis</span></li>
+                <li className="flex items-start"><Check className="h-5 w-5 text-sciscribe-gold mr-2 mt-0.5" /><span>Standard Plots and Graphs</span></li>
+                <li className="flex items-start"><Check className="h-5 w-5 text-sciscribe-gold mr-2 mt-0.5" /><span>Journal formatting & Cover letter writing</span></li>
                 <li className="flex items-start"><Check className="h-5 w-5 text-sciscribe-gold mr-2 mt-0.5" /><span><TooltipProvider><Tooltip><TooltipTrigger className="flex items-center underline decoration-dotted underline-offset-2">Reviewer response support<HelpCircle className="h-3 w-3 ml-1" /></TooltipTrigger><TooltipContent><p className="max-w-xs">Assistance with responding to reviewer comments and manuscript revisions after initial submission.</p></TooltipContent></Tooltip></TooltipProvider></span></li>
                 <li className="flex items-start"><Check className="h-5 w-5 text-sciscribe-gold mr-2 mt-0.5" /><span>Journal selection guidance</span></li>
-                <li className="flex items-start"><Check className="h-5 w-5 text-sciscribe-gold mr-2 mt-0.5" /><span>Priority 5-day delivery</span></li>
+                <li className="flex items-start"><Check className="h-5 w-5 text-sciscribe-gold mr-2 mt-0.5" /><span>Priority 7-day delivery</span></li>
               </ul>
               <div className="mt-auto">
                 <Link to="/payment" className="w-full"><Button className="w-full btn-premium">Choose Plan</Button></Link>
@@ -214,17 +215,17 @@ const Pricing = () => {
                 <TableHeader>
                   <TableRow className="bg-gradient-to-r from-sciscribe-blue/10 to-sciscribe-gold/10 sticky top-0 z-10">
                     <TableHead className="py-4 px-6 text-left text-lg font-semibold text-sciscribe-blue">Feature / Service</TableHead>
-                    <TableHead className="py-4 px-6 text-center text-lg font-semibold">Clarity Package<br/><span className='font-normal'>(₹5,000+)</span></TableHead>
-                    <TableHead className="py-4 px-6 text-center text-lg font-semibold">Insight Package<br/><span className='font-normal'>(₹10,000+)</span></TableHead>
-                    <TableHead className="py-4 px-6 text-center text-lg font-semibold">Impact Package<br/><span className='font-normal'>(₹15,000+)</span></TableHead>
+                    <TableHead className="py-4 px-6 text-center text-lg font-semibold">Insight Package<br/><span className='font-normal'>(₹5,000+)</span></TableHead>
+                    <TableHead className="py-4 px-6 text-center text-lg font-semibold">Impact Package<br/><span className='font-normal'>(₹10,000+)</span></TableHead>
+                    <TableHead className="py-4 px-6 text-center text-lg font-semibold">Enhance Package<br/><span className='font-normal'>(₹15,000+)</span></TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
                   <TableRow>
                     <TableCell className="font-medium">Ideal For</TableCell>
                     <TableCell className="text-center">Light corrections & cleanup</TableCell>
-                    <TableCell className="text-center">Structural improvement & style polishing</TableCell>
-                    <TableCell className="text-center">Final-stage submission, journal-ready</TableCell>
+                    <TableCell className="text-center">Structural improvement & stylistic polishing</TableCell>
+                    <TableCell className="text-center">Final-stage submission, Journal-ready</TableCell>
                   </TableRow>
                   <TableRow>
                     <TableCell className="font-medium">Grammar & Spell Check</TableCell>
@@ -269,6 +270,18 @@ const Pricing = () => {
                     <TableCell className="text-center">✅</TableCell>
                   </TableRow>
                   <TableRow>
+                    <TableCell className="font-medium">Advanced Statistical Analysis</TableCell>
+                    <TableCell className="text-center">❌</TableCell>
+                    <TableCell className="text-center">❌</TableCell>
+                    <TableCell className="text-center">✅</TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell className="font-medium">Individualised Plots and Graphs</TableCell>
+                    <TableCell className="text-center">❌</TableCell>
+                    <TableCell className="text-center">❌</TableCell>
+                    <TableCell className="text-center">✅</TableCell>
+                  </TableRow>
+                  <TableRow>
                     <TableCell className="font-medium">Editorial Feedback & Comments</TableCell>
                     <TableCell className="text-center">❌</TableCell>
                     <TableCell className="text-center">✅</TableCell>
@@ -278,7 +291,7 @@ const Pricing = () => {
                     <TableCell className="font-medium">Revision Cycles Included</TableCell>
                     <TableCell className="text-center">1 revision</TableCell>
                     <TableCell className="text-center">2 revisions (15-day window)</TableCell>
-                    <TableCell className="text-center">2 revisions (15-day window)</TableCell>
+                    <TableCell className="text-center">3 revisions (15-day window)</TableCell>
                   </TableRow>
                   <TableRow>
                     <TableCell className="font-medium">Priority Support</TableCell>
