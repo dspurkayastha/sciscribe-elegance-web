@@ -8,6 +8,7 @@ import { ThemeProvider } from "./components/theme/ThemeProvider";
 import CustomCursor from "./components/ui/CustomCursor";
 import ScrollToTop from "./components/ScrollToTop";
 import Index from "./pages/Index";
+import SummerOffer from "./pages/SummerOffer";
 import About from "./pages/About";
 import Services from "./pages/Services";
 import Pricing from "./pages/Pricing";
@@ -41,6 +42,7 @@ const App = () => (
           <CustomCursor />
           <Routes>
             <Route path="/" element={<Index />} />
+            <Route path="/summer-offer" element={<SummerOffer />} />
             <Route path="/about" element={<About />} />
             <Route path="/services" element={<Services />} />
             <Route path="/pricing" element={<Pricing />} />
