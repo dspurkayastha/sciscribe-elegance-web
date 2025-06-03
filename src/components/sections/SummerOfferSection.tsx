@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { useLocation } from "react-router-dom";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -6,6 +6,8 @@ import { cn } from "@/lib/utils";
 import ContactSection from "./ContactSection";
 import ContactSectionSummerOffer from "./ContactSectionSummerOffer";
 import { motion } from "framer-motion";
+import { useIsMobile } from "@/hooks/use-mobile";
+import { useDebounce } from "@/hooks/use-debounce";
 
 // Countdown timer hook
 const OFFER_DEADLINE = new Date("2025-07-31T23:59:59+05:30").getTime();
@@ -35,10 +37,39 @@ const glassCard =
   "relative bg-white/70 dark:bg-slate-900/60 backdrop-blur-lg rounded-3xl shadow-xl border border-sciscribe-gold/20 dark:border-sciscribe-gold/30 p-8 md:p-12 max-w-2xl mx-auto animate-fade-in";
 
 const SummerOfferSection: React.FC = () => {
+  const isMobile = useIsMobile();
   const location = useLocation();
   const code = getQueryParam(location.search, "code") || "ADQR2025";
   const countdown = useCountdown(OFFER_DEADLINE);
+  const debouncedCountdown = useDebounce(countdown, 1000);
   const offerExpired = !countdown;
+  
+  // Update glass card styles for mobile
+  const glassCard = `relative bg-white/70 dark:bg-slate-900/60 backdrop-blur-lg rounded-3xl shadow-xl 
+    border border-sciscribe-gold/20 dark:border-sciscribe-gold/30 
+    ${isMobile ? 'p-6 mx-4' : 'p-8 md:p-12'} 
+    max-w-2xl w-full mx-auto animate-fade-in`;
+
+  // Memoize countdown rendering to prevent unnecessary re-renders
+  const renderCountdown = useMemo(() => {
+    if (!countdown) return null;
+    
+    if (isMobile) {
+      return (
+        <Badge variant="default" className="text-sm px-3 py-1.5 rounded-full animate-glow">
+          {countdown.days > 0 && `${countdown.days}d `}
+          {countdown.hours}h {countdown.minutes}m
+        </Badge>
+      );
+    }
+    
+    return (
+      <Badge variant="default" className="text-lg px-4 py-2 rounded-full animate-glow">
+        {countdown.days > 0 && `${countdown.days}d `}
+        {countdown.hours}h {countdown.minutes}m {countdown.seconds}s left
+      </Badge>
+    );
+  }, [countdown, isMobile]);
 
   return (
     <section className="relative z-10 py-16 md:py-24 flex items-center justify-center min-h-[80vh]">
@@ -48,47 +79,47 @@ const SummerOfferSection: React.FC = () => {
 
       <motion.div
         className={glassCard}
-        initial={{ opacity: 0, y: 40 }}
+        initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.7, ease: "easeOut" }}
+        transition={{ duration: 0.5, ease: "easeOut" }}
       >
-        <div className="flex flex-col gap-4 items-center text-center mb-6">
+        <div className="flex flex-col gap-4 items-center text-center mb-4 md:mb-6">
           <motion.h1
-            className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-sciscribe-gold to-sciscribe-amber bg-clip-text text-transparent drop-shadow-lg"
-            initial={{ opacity: 0, y: -20 }}
+            className={`${isMobile ? 'text-2xl' : 'text-3xl md:text-4xl'} font-bold bg-gradient-to-r from-sciscribe-gold to-sciscribe-amber bg-clip-text text-transparent`}
+            initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2, duration: 0.6 }}
+            transition={{ delay: 0.1, duration: 0.5 }}
           >
             Summer 2025 Exclusive Offer
           </motion.h1>
+          
           <motion.p
-            className="text-lg md:text-xl text-foreground/80 mb-2"
+            className={`${isMobile ? 'text-base' : 'text-lg md:text-xl'} text-foreground/80`}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 0.3, duration: 0.5 }}
+            transition={{ delay: 0.2, duration: 0.5 }}
           >
             Claim your special discount by submitting the form below. Limited time only!
           </motion.p>
+          
           <div className="flex flex-col items-center gap-2">
             {offerExpired ? (
-              <Badge variant="destructive" className="text-lg px-4 py-2 rounded-full animate-pulse">
+              <Badge variant="destructive" className={`${isMobile ? 'text-sm px-3 py-1' : 'text-lg px-4 py-2'} rounded-full animate-pulse`}>
                 Offer Expired
               </Badge>
             ) : (
-              <Badge variant="default" className="text-lg px-4 py-2 rounded-full animate-glow">
-                {countdown.days > 0 && `${countdown.days}d `}
-                {countdown.hours}h {countdown.minutes}m {countdown.seconds}s left
-              </Badge>
+              renderCountdown
             )}
           </div>
         </div>
+        
         <ContactSectionSummerOffer
-  prefillCode={code}
-  hideInfoPanel={true}
-  disabled={offerExpired}
-  headline="Claim Your Summer Discount"
-  subtext="Submit your details and our team will reach out with your exclusive offer. Hurry, spots are limited!"
-/>
+          prefillCode={code}
+          hideInfoPanel={isMobile} // Hide on mobile to save space
+          disabled={offerExpired}
+          headline={isMobile ? "Claim Your Offer" : "Claim Your Summer Discount"}
+          subtext="Submit your details and our team will reach out with your exclusive offer. Hurry, spots are limited!"
+        />
       </motion.div>
     </section>
   );

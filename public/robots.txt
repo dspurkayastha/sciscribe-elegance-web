@@ -3,12 +3,29 @@
 
 User-agent: *
 Allow: /
+Crawl-delay: 10
 
-# Disallow specific admin paths
+# Disallow specific paths
 Disallow: /admin/
 Disallow: /dashboard/
+Disallow: /api/
+Disallow: /*.json$
+Disallow: /*?*
 
 # Sitemap location
+Sitemap: https://sciscribe-solutions.com/sitemap.xml
+
+# Mobile-specific directives (if needed)
+User-agent: Googlebot-Mobile
+Allow: /
+
+# Block AI crawlers
+User-agent: ChatGPT-User
+Disallow: /
+User-agent: GPTBot
+Disallow: /
+User-agent: CCBot
+Disallow: /
 Sitemap: https://sciscribe.com/sitemap.xml
 
 # Search engine specific directives
