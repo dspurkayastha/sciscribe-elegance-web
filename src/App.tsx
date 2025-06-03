@@ -11,6 +11,7 @@ import CustomCursor from "./components/ui/CustomCursor";
 import ScrollToTop from "./components/ScrollToTop";
 import Document from "./pages/_document";
 import LoadingSpinner from "@/components/ui/LoadingSpinner";
+import CookieConsentBanner from "@/components/ui/CookieConsentBanner";
 
 // Lazy load non-critical components
 const Index = lazy(() => import("./pages/Index"));
@@ -66,6 +67,7 @@ const App = () => (
             <BrowserRouter>
               <ScrollToTop />
               <CustomCursor />
+              <CookieConsentBanner />
               <Suspense fallback={<PageLoading />}>
                 <Routes>
                   <Route path="/" element={<Index />} />
