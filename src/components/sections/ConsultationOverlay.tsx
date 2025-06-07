@@ -247,7 +247,19 @@ export function ConsultationOverlay({ isOpen, onClose }: ConsultationOverlayProp
                   <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-sciscribe-teal/30 to-sciscribe-teal/30 blur opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg" />
                 </div>
               </div>
-              <div className="relative my-4">
+              
+              {/* OR Divider */}
+              <div className="relative mt-2 mb-1">
+                <div className="absolute inset-0 flex items-center">
+                  <div className="w-full border-t border-slate-200 dark:border-slate-700"></div>
+                </div>
+                <div className="relative flex justify-center">
+                  <span className="px-3 bg-white dark:bg-slate-900 text-sm italic text-slate-500 dark:text-slate-400">
+                    Or
+                  </span>
+                </div>
+              </div>
+              <div className="relative mt-1 mb-2">
                 <div className="absolute inset-0 flex items-center">
                   <div className="w-full border-t border-slate-200 dark:border-slate-700"></div>
                 </div>
