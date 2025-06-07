@@ -116,36 +116,7 @@ const HeroSection = () => {
             transition={{ delay: 0.8, duration: 0.5 }}
             className="w-full flex flex-col items-center justify-center space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0"
           >
-            {/* 1. Get Started Today */}
-            <div className="relative group w-full sm:w-auto rounded-lg overflow-hidden">
-              <div className="absolute inset-0 -z-10 rounded-lg bg-gradient-to-r from-sciscribe-teal/40 via-sciscribe-blue/50 to-sciscribe-teal/40 blur opacity-70 group-hover:opacity-90 transition-all duration-300" />
-              <Button
-                asChild
-                size="lg"
-                className="relative px-6 py-6 text-base font-medium text-white overflow-hidden transition-all duration-300 hover:scale-[1.02] z-10 bg-gradient-to-br from-sciscribe-teal to-sciscribe-blue"
-              >
-                <Link to="/services" className="flex items-center justify-center gap-2 no-underline">
-                  <span>Get Started Today</span>
-                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-                </Link>
-              </Button>
-            </div>
-
-            {/* 2. View Pricing */}
-            <div className="relative group w-full sm:w-auto rounded-lg overflow-hidden">
-              <div className="absolute inset-0 -z-10 rounded-lg bg-gradient-to-r from-sciscribe-gold/30 to-amber-300/30 blur opacity-70 group-hover:opacity-90 transition-all duration-300" />
-              <Button
-                asChild
-                size="lg"
-                className="relative px-6 py-6 text-base font-medium overflow-hidden transition-all duration-300 hover:scale-[1.02] z-10 bg-gradient-to-br from-sciscribe-gold to-amber-300 dark:to-amber-300"
-              >
-                <Link to="/pricing" className="flex items-center justify-center no-underline">
-                  <span>View Pricing</span>
-                </Link>
-              </Button>
-            </div>
-
-            {/* 3. Get a Free Consult */}
+            {/* 1. Get a Free Consult */}
             <div className="relative group w-full sm:w-auto rounded-lg overflow-hidden">
               {/* particle glow */}
               <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden rounded-lg">
@@ -166,9 +137,38 @@ const HeroSection = () => {
               >
                 <div className="relative z-10 flex items-center justify-center gap-2">
                   <MessageCircleMore className="h-5 w-5 transition-transform group-hover:scale-110" />
-                  <span>Get a Free Consult</span>
+                  <span>Get a Free Consult !!</span>
                 </div>
                 <Sparkles className="pointer-events-none absolute -right-1 -top-1 h-3 w-3 text-teal-300 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              </Button>
+            </div>
+
+            {/* 2. View Pricing */}
+            <div className="relative group w-full sm:w-auto rounded-lg overflow-hidden">
+              <div className="absolute inset-0 -z-10 rounded-lg bg-gradient-to-r from-sciscribe-gold/30 to-amber-300/30 blur opacity-70 group-hover:opacity-90 transition-all duration-300" />
+              <Button
+                asChild
+                size="lg"
+                className="relative px-6 py-6 text-base font-medium overflow-hidden transition-all duration-300 hover:scale-[1.02] z-10 bg-gradient-to-br from-sciscribe-gold to-amber-300 dark:to-amber-300"
+              >
+                <Link to="/pricing" className="flex items-center justify-center no-underline">
+                  <span>View Pricing</span>
+                </Link>
+              </Button>
+            </div>
+
+            {/* 3. Get Started Today */}
+            <div className="relative group w-full sm:w-auto rounded-lg overflow-hidden">
+              <div className="absolute inset-0 -z-10 rounded-lg bg-gradient-to-r from-sciscribe-teal/40 via-sciscribe-blue/50 to-sciscribe-teal/40 blur opacity-70 group-hover:opacity-90 transition-all duration-300" />
+              <Button
+                asChild
+                size="lg"
+                className="relative px-6 py-6 text-base font-medium text-white overflow-hidden transition-all duration-300 hover:scale-[1.02] z-10 bg-gradient-to-br from-sciscribe-teal to-sciscribe-blue"
+              >
+                <Link to="/services" className="flex items-center justify-center gap-2 no-underline">
+                  <span>Get Started Today</span>
+                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                </Link>
               </Button>
             </div>
           </motion.div>
