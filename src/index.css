@@ -217,6 +217,34 @@
 }
 
 @layer components {
+  /* Custom animations */
+  @keyframes pulse-slow {
+    0%, 100% {
+      opacity: 0.7;
+      transform: scale(1.02);
+    }
+    50% {
+      opacity: 1;
+      transform: scale(1.05);
+    }
+  }
+
+  /* Breathing animation */
+  @keyframes breathe {
+    0%, 100% {
+      opacity: 0.6;
+      transform: scale(0.98);
+    }
+    50% {
+      opacity: 0.9;
+      transform: scale(1.02);
+    }
+  }
+  
+  .animate-breathe {
+    animation: breathe 4s ease-in-out infinite;
+  }
+
   /* Typography */
   h1, h2, h3, h4, h5, h6 {
     @apply font-heading font-bold;

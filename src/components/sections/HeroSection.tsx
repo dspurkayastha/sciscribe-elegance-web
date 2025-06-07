@@ -1,12 +1,14 @@
-
-import { useEffect, useRef } from "react";
-import { ChevronDown, ArrowRight } from "lucide-react";
+import { useState, useEffect, useRef } from "react";
+import { ChevronDown, ArrowRight, MessageCircleMore, Sparkles } from "lucide-react";
+import { ParticleGlow } from "@/components/ui/ParticleGlow";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import { ConsultationOverlay } from "./ConsultationOverlay";
 
 const HeroSection = () => {
   const heroRef = useRef<HTMLDivElement>(null);
+  const [isConsultationOpen, setIsConsultationOpen] = useState(false);
   
   useEffect(() => {
     const handleScroll = () => {
@@ -103,42 +105,78 @@ const HeroSection = () => {
             transition={{ delay: 0.6, duration: 0.8 }}
             className="mx-auto mb-10 max-w-2xl text-lg text-foreground/80 md:text-xl"
           >
-            Expert scientific editing, publication support, and research consultancy 
+            Expert scientific editing, publication support, and research consultancy
             that transforms your work into compelling scientific narratives.
           </motion.p>
-          
-          <motion.div 
+
+          {/* Buttons Row */}
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.8, duration: 0.5 }}
-            className="flex flex-col items-center justify-center space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0"
+            className="w-full flex flex-col items-center justify-center space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0"
           >
-            <Button 
-              size="lg" 
-              className="group bg-gradient-to-r from-primary to-primary/90 px-6 py-6 text-base font-medium transition-all hover:shadow-lg hover:shadow-primary/20"
-              asChild
-            >
-              <Link to="/services">
-                Get Started Today
-                <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-              </Link>
-            </Button>
-            <Button 
-              variant="outline" 
-              size="lg" 
-              className="border-primary/20 bg-background/80 px-6 py-6 text-base backdrop-blur hover:bg-primary/5"
-              asChild
-            >
-              <Link to="/pricing">
-                View Pricing
-              </Link>
-            </Button>
+            {/* 1. Get Started Today */}
+            <div className="relative group w-full sm:w-auto rounded-lg overflow-hidden">
+              <div className="absolute inset-0 -z-10 rounded-lg bg-gradient-to-r from-sciscribe-teal/40 via-sciscribe-blue/50 to-sciscribe-teal/40 blur opacity-70 group-hover:opacity-90 transition-all duration-300" />
+              <Button
+                asChild
+                size="lg"
+                className="relative px-6 py-6 text-base font-medium text-white overflow-hidden transition-all duration-300 hover:scale-[1.02] z-10 bg-gradient-to-br from-sciscribe-teal to-sciscribe-blue"
+              >
+                <Link to="/services" className="flex items-center justify-center gap-2 no-underline">
+                  <span>Get Started Today</span>
+                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                </Link>
+              </Button>
+            </div>
+
+            {/* 2. View Pricing */}
+            <div className="relative group w-full sm:w-auto rounded-lg overflow-hidden">
+              <div className="absolute inset-0 -z-10 rounded-lg bg-gradient-to-r from-sciscribe-gold/30 to-amber-300/30 blur opacity-70 group-hover:opacity-90 transition-all duration-300" />
+              <Button
+                asChild
+                size="lg"
+                className="relative px-6 py-6 text-base font-medium overflow-hidden transition-all duration-300 hover:scale-[1.02] z-10 bg-gradient-to-br from-sciscribe-gold to-amber-300 dark:to-amber-300"
+              >
+                <Link to="/pricing" className="flex items-center justify-center no-underline">
+                  <span>View Pricing</span>
+                </Link>
+              </Button>
+            </div>
+
+            {/* 3. Get a Free Consult */}
+            <div className="relative group w-full sm:w-auto rounded-lg overflow-hidden">
+              {/* particle glow */}
+              <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden rounded-lg">
+                <ParticleGlow
+                  particleColor="rgba(94, 234, 212, 0.8)"
+                  particleCount={20}
+                  speedRange={[0.1, 0.3]}
+                  sizeRange={[1, 3]}
+                  glowSizeMultiplier={4}
+                />
+              </div>
+              <div className="absolute inset-0 -z-10 rounded-lg bg-gradient-to-r from-sciscribe-teal/40 via-sciscribe-blue/50 to-sciscribe-teal/40 blur opacity-70 group-hover:opacity-90 transition-all duration-300 animate-pulse" />
+              <Button
+                onClick={() => setIsConsultationOpen(true)}
+                variant="default"
+                size="lg"
+                className="relative px-6 py-6 text-base font-medium text-white shadow-lg shadow-teal-500/20 transition-all duration-300 hover:scale-[1.02] z-10 bg-gradient-to-r from-sciscribe-teal to-sciscribe-blue"
+              >
+                <div className="relative z-10 flex items-center justify-center gap-2">
+                  <MessageCircleMore className="h-5 w-5 transition-transform group-hover:scale-110" />
+                  <span>Get a Free Consult</span>
+                </div>
+                <Sparkles className="pointer-events-none absolute -right-1 -top-1 h-3 w-3 text-teal-300 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              </Button>
+            </div>
           </motion.div>
         </motion.div>
       </div>
-      
+
       {/* Scroll indicator */}
-      <motion.div 
+      <motion.div
         className="absolute bottom-8 left-1/2 z-10 -translate-x-1/2"
         animate={{ y: [0, 8, 0] }}
         transition={{ duration: 2, repeat: Infinity }}
@@ -151,6 +189,12 @@ const HeroSection = () => {
       
       {/* Bottom gradient overlay */}
       <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-background to-transparent" />
+      
+      {/* Consultation Overlay */}
+      <ConsultationOverlay 
+        isOpen={isConsultationOpen} 
+        onClose={() => setIsConsultationOpen(false)} 
+      />
     </section>
   );
 };
