@@ -193,10 +193,19 @@ export function ConsultationOverlay({ isOpen, onClose }: ConsultationOverlayProp
         throw new Error(errorData.error || 'Failed to submit form');
       }
 
-      // Show success state
+              // Show success state and auto-close after delay
       setIsSuccess(true);
       reset();
       
+      // Auto-close after 3 seconds
+      const timer = setTimeout(() => {
+        onClose();
+        // Reset the success state when closing
+        setTimeout(() => setIsSuccess(false), 300); // Small delay to allow animation
+      }, 3000);
+
+      // Cleanup timer on unmount
+      return () => clearTimeout(timer);
     } catch (error) {
       console.error('Error submitting form:', error);
       // Show error message to user
@@ -210,9 +219,19 @@ export function ConsultationOverlay({ isOpen, onClose }: ConsultationOverlayProp
     }
   };
 
+  // Handle time slot selection
   const selectTimeSlot = (slot: string) => {
     setValue('timeSlot', slot, { shouldValidate: true });
   };
+
+  // Reset form when overlay is opened
+  useEffect(() => {
+    if (isOpen) {
+      reset();
+      setSelectedDate(undefined);
+      setIsSuccess(false);
+    }
+  }, [isOpen, reset]);
 
   if (!isOpen) return null;
 
@@ -317,24 +336,23 @@ export function ConsultationOverlay({ isOpen, onClose }: ConsultationOverlayProp
               </div>
             </div>
             {/* Scrollable form content */}
-            <div 
-              ref={formRef}
-              className="flex-1 overflow-y-auto px-6 pb-6 pt-2"
-            >
+            <div ref={formRef} className="flex-1 overflow-y-auto px-6 pb-6 pt-2">
               {isSuccess ? (
-                <div className="text-center py-8">
+                <div className="text-center py-12">
                   <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-green-100 dark:bg-green-900/30 mb-4">
-                    <svg className="h-8 w-8 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg className="h-8 w-8 text-green-500" fill="none" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
                   </div>
-                  <h3 className="text-xl font-semibold text-slate-800 dark:text-white mb-2">Request Received!</h3>
+                  <h3 className="text-xl font-semibold text-slate-800 dark:text-white mb-2">
+                    Request Received!
+                  </h3>
                   <p className="text-slate-600 dark:text-slate-300 mb-6">
-                    We've received your consultation request. Our team will contact you shortly to confirm your time slot.
+                    We've received your request and will contact you shortly.
                   </p>
-                  <Button onClick={onClose} className="px-8">
-                    Close
-                  </Button>
+                  <p className="text-sm text-slate-500 dark:text-slate-400">
+                    This window will close automatically...
+                  </p>
                 </div>
               ) : (
                 <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">

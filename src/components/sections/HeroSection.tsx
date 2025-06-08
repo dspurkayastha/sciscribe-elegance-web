@@ -29,7 +29,7 @@ const HeroSection = () => {
   }, []);
 
   return (
-    <section className="relative h-screen w-full overflow-hidden">
+    <section className="relative w-full min-h-screen overflow-visible md:h-screen md:overflow-hidden">
       {/* Modern Background with Gradient Overlay */}
       <div className="absolute inset-0 z-0">
         {/* Modern abstract background pattern */}
@@ -40,8 +40,8 @@ const HeroSection = () => {
         <div className="absolute inset-0 mix-blend-overlay opacity-20 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCI+CjxyZWN0IHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCIgZmlsbD0ibm9uZSI+PC9yZWN0Pgo8cGF0aCBkPSJNMzAgNTAgQzE3IDE1IDEwIDAgMTAgMCBMNDAgMCBDNDAgMCA1MCAxNSAzMCA1MFoiIGZpbGw9InJnYmEoMjAsIDIxMCwgMTkwLCAwLjAzKSIgdHJhbnNmb3JtPSJyb3RhdGUoMCwgMzAsIDMwKSI+PC9wYXRoPgo8cGF0aCBkPSJNMzAgNTAgQzE3IDE1IDEwIDAgMTAgMCBMNDAgMCBDNDAgMCA1MCAxNSAzMCA1MFoiIGZpbGw9InJnYmEoMTQwLCA4NSwgMjQ3LCAwLjAzKSIgdHJhbnNmb3JtPSJyb3RhdGUoMTIwLCAzMCwgMzApIj48L3BhdGg+CjxwYXRoIGQ9Ik0zMCA1MCBDMTcgMTUgMTAgMCAxMCAwIEw0MCAwIEM0MCAwIDUwIDE1IDMwIDUwWiIgZmlsbD0icmdiYSgyMCwgMjEwLCAxOTAsIDAuMDMpIiB0cmFuc2Zvcm09InJvdGF0ZSgyNDAsIDMwLCAzMCkiPjwvcGF0aD4KPC9zdmc+')]" />
       </div>
 
-      {/* Floating Decorative Elements */}
-      <div aria-hidden="true" className="select-none">
+      {/* Floating Decorative Elements (hidden on mobile) */}
+      <div aria-hidden="true" className="select-none hidden sm:block">
         <motion.div 
           className="absolute left-[10%] top-1/4 h-64 w-64 rounded-full bg-primary/10 blur-3xl"
           animate={{ 
@@ -118,8 +118,8 @@ const HeroSection = () => {
           >
             {/* 1. Get a Free Consult */}
             <div className="relative group w-full sm:w-auto rounded-lg overflow-hidden">
-              {/* particle glow */}
-              <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden rounded-lg">
+              {/* particle glow (hidden on mobile) */}
+              <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden rounded-lg hidden sm:block">
                 <ParticleGlow
                   particleColor="rgba(94, 234, 212, 0.8)"
                   particleCount={20}
@@ -128,7 +128,7 @@ const HeroSection = () => {
                   glowSizeMultiplier={4}
                 />
               </div>
-              <div className="absolute inset-0 -z-10 rounded-lg bg-gradient-to-r from-sciscribe-teal/40 via-sciscribe-blue/50 to-sciscribe-teal/40 blur opacity-70 group-hover:opacity-90 transition-all duration-300 animate-pulse" />
+              <div className="hidden sm:block absolute inset-0 -z-10 rounded-lg bg-gradient-to-r from-sciscribe-teal/40 via-sciscribe-blue/50 to-sciscribe-teal/40 blur opacity-70 group-hover:opacity-90 transition-all duration-300 sm:animate-pulse" />
               <Button
                 onClick={() => setIsConsultationOpen(true)}
                 variant="default"
@@ -145,7 +145,7 @@ const HeroSection = () => {
 
             {/* 2. View Pricing */}
             <div className="relative group w-full sm:w-auto rounded-lg overflow-hidden">
-              <div className="absolute inset-0 -z-10 rounded-lg bg-gradient-to-r from-sciscribe-gold/30 to-amber-300/30 blur opacity-70 group-hover:opacity-90 transition-all duration-300" />
+              <div className="hidden sm:block absolute inset-0 -z-10 rounded-lg bg-gradient-to-r from-sciscribe-gold/30 to-amber-300/30 blur opacity-70 group-hover:opacity-90 transition-all duration-300" />
               <Button
                 asChild
                 size="lg"
@@ -159,7 +159,7 @@ const HeroSection = () => {
 
             {/* 3. Get Started Today */}
             <div className="relative group w-full sm:w-auto rounded-lg overflow-hidden">
-              <div className="absolute inset-0 -z-10 rounded-lg bg-gradient-to-r from-sciscribe-teal/40 via-sciscribe-blue/50 to-sciscribe-teal/40 blur opacity-70 group-hover:opacity-90 transition-all duration-300" />
+              <div className="hidden sm:block absolute inset-0 -z-10 rounded-lg bg-gradient-to-r from-sciscribe-teal/40 via-sciscribe-blue/50 to-sciscribe-teal/40 blur opacity-70 group-hover:opacity-90 transition-all duration-300" />
               <Button
                 asChild
                 size="lg"
@@ -175,9 +175,9 @@ const HeroSection = () => {
         </motion.div>
       </div>
 
-      {/* Scroll indicator */}
+      {/* Scroll indicator (hidden on mobile) */}
       <motion.div
-        className="absolute bottom-8 left-1/2 z-10 -translate-x-1/2"
+        className="hidden sm:block absolute bottom-8 left-1/2 z-10 -translate-x-1/2"
         animate={{ y: [0, 8, 0] }}
         transition={{ duration: 2, repeat: Infinity }}
       >
