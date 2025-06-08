@@ -12,9 +12,14 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { format, addDays, isToday } from 'date-fns';
 import { toast } from '@/components/ui/use-toast';
 
+// Simple phone number validation (allows numbers, spaces, +, -, and ())
+const phoneRegex = /^[\d\s+\-()]{10,20}$/;
+
 const formSchema = z.object({
   name: z.string().min(2, { message: 'Name must be at least 2 characters.' }),
-  contact: z.string().min(5, { message: 'Please enter a valid email or phone number.' }),
+  contact: z.string()
+    .min(10, { message: 'Please enter a valid phone number (at least 10 digits).' })
+    .regex(phoneRegex, { message: 'Please enter a valid phone number.' }),
   message: z.string().min(10, { message: 'Please provide more details (min 10 characters).' }),
   date: z.date({
     required_error: 'Please select a date',
@@ -154,11 +159,15 @@ export function ConsultationOverlay({ isOpen, onClose }: ConsultationOverlayProp
       // Prepare honeypot value (from hidden input, if present)
       const honeypot = (document.querySelector('input[name="bot-field"]') as HTMLInputElement)?.value || "";
       
+      // Clean the phone number (remove all non-digit characters except + at the start)
+      const cleanPhone = data.contact.replace(/^(\+)?(\d)/, (match, p1, p2) => {
+        return p1 ? `${p1}${p2}` : p2;
+      }).replace(/\D/g, '');
+      
       // Prepare the submission data
       const submissionData = {
         name: data.name,
-        email: data.contact.includes('@') ? data.contact : undefined,
-        phone: !data.contact.includes('@') ? data.contact : undefined,
+        phone: cleanPhone,
         message: data.message,
         consultationDate: data.date.toISOString(),
         timeSlot: data.timeSlot,
@@ -169,7 +178,7 @@ export function ConsultationOverlay({ isOpen, onClose }: ConsultationOverlayProp
 
       // Call the API
       const response = await fetch(
-        'https://asia-south1-sciscribe-main.cloudfunctions.net/submitQuickContactForm',
+        'https://asia-south1-sciscribe-main.cloudfunctions.net/submitConsultationForm',
         {
           method: 'POST',
           headers: {
@@ -346,18 +355,44 @@ export function ConsultationOverlay({ isOpen, onClose }: ConsultationOverlayProp
 
                   <div>
                     <label htmlFor="contact" className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
-                      Email or Phone <span className="text-red-500">*</span>
+                      Phone Number <span className="text-red-500">*</span>
                     </label>
-                    <Input
-                      id="contact"
-                      type="text"
-                      className={`bg-white/80 dark:bg-slate-800/80 ${errors.contact ? 'border-red-500' : ''}`}
-                      placeholder="your@email.com or +1 (555) 000-0000"
-                      {...register('contact')}
-                    />
+                    <div className="relative">
+                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <PhoneCall className="h-4 w-4 text-slate-400" />
+                      </div>
+                      <Input
+                        id="contact"
+                        type="tel"
+                        className={`pl-10 bg-white/80 dark:bg-slate-800/80 ${errors.contact ? 'border-red-500' : ''}`}
+                        placeholder="+1 (555) 000-0000"
+                        {...register('contact', {
+                          onChange: (e) => {
+                            // Format phone number as user types
+                            const value = e.target.value.replace(/\D/g, '');
+                            let formattedValue = '';
+                            
+                            if (value.length > 0) {
+                              formattedValue = `+${value.substring(0, 2)}`;
+                              if (value.length > 2) {
+                                formattedValue += ` (${value.substring(2, Math.min(7, value.length))}`;
+                              }
+                              if (value.length > 7) {
+                                formattedValue += `) ${value.substring(7, Math.min(12, value.length))}`;
+                              }
+                            }
+                            
+                            e.target.value = formattedValue;
+                          }
+                        })}
+                      />
+                    </div>
                     {errors.contact && (
                       <p className="mt-1 text-sm text-red-500">{errors.contact.message}</p>
                     )}
+                    <p className="mt-1 text-xs text-slate-500">
+                      Include country code (e.g., +1 for US, +91 for India)
+                    </p>
                   </div>
 
                   {/* Date and Time Selection */}
