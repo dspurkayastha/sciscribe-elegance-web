@@ -10,6 +10,7 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { format, addDays, isToday } from 'date-fns';
+import { toast } from '@/components/ui/use-toast';
 
 const formSchema = z.object({
   name: z.string().min(2, { message: 'Name must be at least 2 characters.' }),
@@ -149,19 +150,55 @@ export function ConsultationOverlay({ isOpen, onClose }: ConsultationOverlayProp
   const onSubmit = async (data: FormValues) => {
     try {
       setIsSubmitting(true);
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      // Prepare honeypot value (from hidden input, if present)
+      const honeypot = (document.querySelector('input[name="bot-field"]') as HTMLInputElement)?.value || "";
+      
+      // Prepare the submission data
+      const submissionData = {
+        name: data.name,
+        email: data.contact.includes('@') ? data.contact : undefined,
+        phone: !data.contact.includes('@') ? data.contact : undefined,
+        message: data.message,
+        consultationDate: data.date.toISOString(),
+        timeSlot: data.timeSlot,
+        type: 'consultation',
+        honeypot,
+        createdAt: new Date().toISOString()
+      };
+
+      // Call the API
+      const response = await fetch(
+        'https://asia-south1-sciscribe-main.cloudfunctions.net/submitQuickContactForm',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(submissionData),
+        }
+      );
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.error || 'Failed to submit form');
+      }
+
+      // Show success state
       setIsSuccess(true);
       reset();
+      
     } catch (error) {
       console.error('Error submitting form:', error);
+      // Show error message to user
+      toast({
+        title: 'Submission failed',
+        description: error instanceof Error ? error.message : 'Please try again later',
+        variant: 'destructive',
+      });
     } finally {
       setIsSubmitting(false);
     }
-    console.log('Form submitted:', data);
-    setIsSubmitting(false);
-    setIsSuccess(true);
-    reset();
   };
 
   const selectTimeSlot = (slot: string) => {
@@ -420,6 +457,11 @@ export function ConsultationOverlay({ isOpen, onClose }: ConsultationOverlayProp
                     {errors.message && (
                       <p className="mt-1 text-sm text-red-500">{errors.message.message}</p>
                     )}
+                  </div>
+
+                  {/* Honeypot field - hidden from users but visible to bots */}
+                  <div className="absolute opacity-0 w-0 h-0 overflow-hidden">
+                    <input type="text" name="bot-field" tabIndex={-1} autoComplete="off" />
                   </div>
 
                   <div className="sticky bottom-0 bg-white dark:bg-slate-900 pt-4 pb-2 -mx-6 px-6 border-t border-slate-200 dark:border-slate-800">
