@@ -1,3 +1,6 @@
+import Clarity from '@microsoft/clarity';
+const projectId = "rwq42hh9v5";
+Clarity.init(projectId);
 
 import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
