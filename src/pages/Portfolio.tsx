@@ -6,6 +6,9 @@ import { motion } from "framer-motion";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { Search, Download, ExternalLink, BookOpen, Award, Users, FileText } from "lucide-react";
+import PortfolioSection from "@/components/sections/PortfolioSection";
+import LightningSeparator from "@/components/ui/lightningseparator";
+import Seo from "@/components/ui/Seo";
 
 const Portfolio = () => {
   const projects = [
@@ -98,6 +101,10 @@ const Portfolio = () => {
 
   return (
     <div className="flex min-h-screen flex-col">
+      <Seo
+        title="SciScribe Solutions Portfolio | Scientific Editing Success Stories"
+        description="Explore our portfolio of successful scientific editing and research consulting projects across various disciplines and publications."
+      />
       <InteractiveBackground />
       <Navbar />
       <main className="dark:bg-sciscribe-navy/5 pt-24">
@@ -105,7 +112,7 @@ const Portfolio = () => {
         <section className="section-container">
           <div className="max-w-4xl mx-auto text-center">
             <motion.h1 
-              className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 bg-gradient-to-r from-sciscribe-gold to-sciscribe-amber bg-clip-text text-transparent"
+              className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 bg-gradient-to-r from-sciscribe-blue to-sciscribe-teal bg-clip-text text-transparent"
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
@@ -154,8 +161,8 @@ const Portfolio = () => {
             </div>
           </div>
         </section>
-
-        {/* Portfolio Projects */}
+        
+        {/* Extended Portfolio Projects */}
         <section className="section-container pt-0">
           <div className="container mx-auto px-6">
             <Tabs defaultValue="all">
@@ -191,7 +198,9 @@ const Portfolio = () => {
             </Tabs>
           </div>
         </section>
-
+        {/* Original Portfolio Section from Homepage */}
+        <PortfolioSection />
+        
         {/* Stats Section */}
         <section className="py-16 bg-white/50 dark:bg-sciscribe-navy/30">
           <div className="container mx-auto px-6">
@@ -215,7 +224,7 @@ const Portfolio = () => {
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: 0.1 }}
                 >
-                  <p className="text-4xl font-bold text-sciscribe-gold mb-2">98%</p>
+                  <p className="text-4xl font-bold text-sciscribe-gold mb-2">95%</p>
                   <p className="text-sm text-sciscribe-navy/80 dark:text-white/70">Publication Success Rate</p>
                 </motion.div>
                 
@@ -226,8 +235,8 @@ const Portfolio = () => {
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: 0.2 }}
                 >
-                  <p className="text-4xl font-bold text-sciscribe-gold mb-2">35+</p>
-                  <p className="text-sm text-sciscribe-navy/80 dark:text-white/70">Countries Served</p>
+                  <p className="text-4xl font-bold text-sciscribe-gold mb-2">25+</p>
+                  <p className="text-sm text-sciscribe-navy/80 dark:text-white/70">States Served</p>
                 </motion.div>
                 
                 <motion.div 
@@ -244,7 +253,7 @@ const Portfolio = () => {
             </div>
           </div>
         </section>
-
+        <LightningSeparator />
         {/* Testimonials */}
         <section className="section-container">
           <div className="max-w-4xl mx-auto text-center mb-12">

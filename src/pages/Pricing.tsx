@@ -5,6 +5,9 @@ import { motion } from "framer-motion";
 import { Check, HelpCircle, FileText, Search, BarChart4, TrendingUp, Clock } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import PriceAdvantageSection from "@/components/sections/PriceAdvantageSection";
+import EnhancedPricingCards from "@/components/sections/EnhancedPricingCards";
+import EnhancedComparisonTable from "@/components/sections/EnhancedComparisonTable";
 import {
   Dialog,
   DialogContent,
@@ -30,7 +33,7 @@ import {
   TableHead,
   TableCell
 } from "@/components/ui/table";
-import TestimonialsSection from "@/components/sections/TestimonialsSection";
+import EnhancedTestimonialsSection from "@/components/sections/EnhancedTestimonialsSection";
 import { Linkedin, Twitter } from "lucide-react";
 import LightningSeparator from "@/components/ui/lightningseparator";
 
@@ -74,7 +77,7 @@ const Pricing = () => {
         <section className="section-container">
           <div className="max-w-4xl mx-auto text-center">
             <motion.h1 
-              className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 bg-gradient-to-r from-sciscribe-gold to-sciscribe-amber bg-clip-text text-transparent"
+              className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 bg-gradient-to-r from-sciscribe-blue to-sciscribe-teal bg-clip-text text-transparent"
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
@@ -87,324 +90,21 @@ const Pricing = () => {
               animate={{ opacity: 1 }}
               transition={{ delay: 0.2, duration: 0.5 }}
             >
-              Quality scientific editing and consultancy at competitive rates
+              Unlock world-class research solutions that take you from concept to publication — all at the most affordable prices, guaranteed.
             </motion.p>
           </div>
         </section>
+        
+        {/* Price Advantage Section */}
+        <PriceAdvantageSection />
+        
+        {/* Enhanced Pricing Cards */}
+        <EnhancedPricingCards />
 
-        {/* Pricing Cards */}
-        <section className="section-container">
-          <motion.div 
-            className="grid grid-cols-1 md:grid-cols-3 gap-8"
-            variants={containerVariants}
-            initial="hidden"
-            animate="visible"
-          >
-            {/* Insight Package */}
-            <motion.div 
-              className="premium-card hover:border-sciscribe-gold/50 transition-all duration-500 flex flex-col shadow-lg border border-sciscribe-gold/10"
-              variants={itemVariants}
-            >
-              <div className="mb-6">
-                <h3 className="text-xl font-bold mb-2">Insight Package</h3>
-                <div className="flex items-end mb-4">
-                  <span className="text-4xl font-bold">₹5,000</span>
-                  <span className="text-lg text-muted-foreground ml-1 mb-1">($60)</span>
-                </div>
-                <p className="text-sm text-muted-foreground">For manuscripts in the early draft stage</p>
-              </div>
-              <ul className="space-y-3 mb-8">
-                <li className="flex items-start"><Check className="h-5 w-5 text-sciscribe-gold mr-2 mt-0.5" /><span>Grammar & spelling corrections</span></li>
-                <li className="flex items-start"><Check className="h-5 w-5 text-sciscribe-gold mr-2 mt-0.5" /><span>Basic language improvements</span></li>
-                <li className="flex items-start"><Check className="h-5 w-5 text-sciscribe-gold mr-2 mt-0.5" /><span>Punctuation & formatting fixes</span></li>
-                <li className="flex items-start"><Check className="h-5 w-5 text-sciscribe-gold mr-2 mt-0.5" /><span>Technical terminology consistency</span></li>
-                <li className="flex items-start"><Check className="h-5 w-5 text-sciscribe-gold mr-2 mt-0.5" /><span>3 weeks delivery</span></li>
-              </ul>
-              <div className="mt-auto">
-                <Link to="/payment" className="w-full"><Button className="w-full btn-premium">Choose Plan</Button></Link>
-              </div>
-            </motion.div>
-            {/* Enhance Package */}
-            <motion.div 
-              className="premium-card border-2 border-sciscribe-blue/50 relative flex flex-col shadow-xl scale-105 z-10"
-              variants={itemVariants}
-            >
-              <div className="absolute top-0 left-0 right-0 -mt-4 flex justify-center z-20">
-                {/* Glow & Particle Effect Background */}
-                <span className="relative inline-block">
-                  {/* Particle Glow Background */}
-                  <span aria-hidden="true" className="absolute inset-0 flex items-center justify-center pointer-events-none z-[-1]">
-                    {/* Amber Glow */}
-                    <span className="absolute w-[150%] h-[250%] rounded-full bg-gradient-to-br from-sciscribe-amber/30 to-sciscribe-gold/20 blur-2xl opacity-70 animate-pulse" style={{ top: '-60%', left: '-10%' }} />
-                    {/* Particles */}
-                    {[...Array(8)].map((_, i) => (
-                      <span
-                        key={i}
-                        className="absolute rounded-full bg-sciscribe-amber/60 opacity-70 blur-md animate-particle"
-                        style={{
-                          width: `${10 + Math.random() * 10}px`,
-                          height: `${10 + Math.random() * 10}px`,
-                          left: `${10 + Math.random() * 80}%`,
-                          top: `${10 + Math.random() * 80}%`,
-                          animationDelay: `${i * 0.25}s`,
-                          animationDuration: `${1.5 + Math.random()}s`,
-                        }}
-                      />
-                    ))}
-                  </span>
-                  <span className="bg-gradient-to-r from-sciscribe-amber/80 to-sciscribe-gold/90 text-sciscribe-amber-900 text-xs font-bold uppercase py-1 px-4 rounded-full shadow-lg ring-2 ring-sciscribe-amber/40 backdrop-blur-sm drop-shadow-md relative">
-                    Most Popular
-                  </span>
-                </span>
-              </div>
-              <div className="mb-6 mt-8">
-                <h3 className="text-xl font-bold mb-2">Impact Package</h3>
-                <div className="flex items-end mb-4">
-                  <span className="text-4xl font-bold">₹10,000</span>
-                  <span className="text-lg text-muted-foreground ml-1 mb-1">($120)</span>
-                </div>
-                <p className="text-sm text-muted-foreground">Comprehensive editing with structural improvements</p>
-              </div>
-              <ul className="space-y-3 mb-8">
-                <li className="flex items-start"><Check className="h-5 w-5 text-sciscribe-blue mr-2 mt-0.5" /><span>Everything in Insight Package</span></li>
-                <li className="flex items-start"><Check className="h-5 w-5 text-sciscribe-blue mr-2 mt-0.5" /><span>Advanced language enhancement</span></li>
-                <li className="flex items-start"><Check className="h-5 w-5 text-sciscribe-blue mr-2 mt-0.5" /><span>Structure & flow improvements</span></li>
-                <li className="flex items-start"><Check className="h-5 w-5 text-sciscribe-blue mr-2 mt-0.5" /><span>Scientific clarity optimization</span></li>
-                <li className="flex items-start"><Check className="h-5 w-5 text-sciscribe-blue mr-2 mt-0.5" /><span>References formatting</span></li>
-                <li className="flex items-start"><Check className="h-5 w-5 text-sciscribe-blue mr-2 mt-0.5" /><span>2 weeks delivery</span></li>
-              </ul>
-              <div className="mt-auto">
-                <Link to="/payment" className="w-full"><Button className="w-full bg-sciscribe-blue hover:bg-sciscribe-blue/80 btn-premium">Choose Plan</Button></Link>
-              </div>
-            </motion.div>
-            {/* Complete Package */}
-            <motion.div 
-              className="premium-card hover:border-sciscribe-gold/50 transition-all duration-500 flex flex-col shadow-lg border border-sciscribe-gold/10"
-              variants={itemVariants}
-            >
-              <div className="mb-6">
-                <h3 className="text-xl font-bold mb-2">Enhance Package</h3>
-                <div className="flex items-end mb-4">
-                  <span className="text-4xl font-bold">₹15,000</span>
-                  <span className="text-lg text-muted-foreground ml-1 mb-1">($180)</span>
-                </div>
-                <p className="text-sm text-muted-foreground">Full-service editing and journal submission support</p>
-              </div>
-              <ul className="space-y-3 mb-8">
-                <li className="flex items-start"><Check className="h-5 w-5 text-sciscribe-gold mr-2 mt-0.5" /><span>Everything in Impact Package</span></li>
-                <li className="flex items-start"><Check className="h-5 w-5 text-sciscribe-gold mr-2 mt-0.5" /><span>Standard Statistical Analysis</span></li>
-                <li className="flex items-start"><Check className="h-5 w-5 text-sciscribe-gold mr-2 mt-0.5" /><span>Standard Plots and Graphs</span></li>
-                <li className="flex items-start"><Check className="h-5 w-5 text-sciscribe-gold mr-2 mt-0.5" /><span>Journal formatting & Cover letter writing</span></li>
-                <li className="flex items-start"><Check className="h-5 w-5 text-sciscribe-gold mr-2 mt-0.5" /><span><TooltipProvider><Tooltip><TooltipTrigger className="flex items-center underline decoration-dotted underline-offset-2">Reviewer response support<HelpCircle className="h-3 w-3 ml-1" /></TooltipTrigger><TooltipContent><p className="max-w-xs">Assistance with responding to reviewer comments and manuscript revisions after initial submission.</p></TooltipContent></Tooltip></TooltipProvider></span></li>
-                <li className="flex items-start"><Check className="h-5 w-5 text-sciscribe-gold mr-2 mt-0.5" /><span>Journal selection guidance</span></li>
-                <li className="flex items-start"><Check className="h-5 w-5 text-sciscribe-gold mr-2 mt-0.5" /><span>Priority 7-day delivery</span></li>
-              </ul>
-              <div className="mt-auto">
-                <Link to="/payment" className="w-full"><Button className="w-full btn-premium">Choose Plan</Button></Link>
-              </div>
-            </motion.div>
-          </motion.div>
-        </section>
-
-        {/* Feature Comparison Table */}
-        <section className="section-container py-12">
-          <div className="max-w-5xl mx-auto">
-            <h2 className="text-3xl font-bold mb-8 text-center">Compare Our Packages</h2>
-            <div className="overflow-x-auto rounded-xl shadow-lg ring-1 ring-sciscribe-blue/10">
-              <Table className="bg-white dark:bg-sciscribe-navy/70 border border-sciscribe-blue/10 text-base">
-                <TableHeader>
-                  <TableRow className="bg-gradient-to-r from-sciscribe-blue/10 to-sciscribe-gold/10 sticky top-0 z-10">
-                    <TableHead className="py-4 px-6 text-left text-lg font-semibold text-sciscribe-blue">Feature / Service</TableHead>
-                    <TableHead className="py-4 px-6 text-center text-lg font-semibold">Insight Package<br/><span className='font-normal'>(₹5,000+)</span></TableHead>
-                    <TableHead className="py-4 px-6 text-center text-lg font-semibold">Impact Package<br/><span className='font-normal'>(₹10,000+)</span></TableHead>
-                    <TableHead className="py-4 px-6 text-center text-lg font-semibold">Enhance Package<br/><span className='font-normal'>(₹15,000+)</span></TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  <TableRow>
-                    <TableCell className="font-medium">Ideal For</TableCell>
-                    <TableCell className="text-center">Light corrections & cleanup</TableCell>
-                    <TableCell className="text-center">Structural improvement & stylistic polishing</TableCell>
-                    <TableCell className="text-center">Final-stage submission, Journal-ready</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell className="font-medium">Grammar & Spell Check</TableCell>
-                    <TableCell className="text-center">✅</TableCell>
-                    <TableCell className="text-center">✅</TableCell>
-                    <TableCell className="text-center">✅</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell className="font-medium">Basic Language Correction & Readability</TableCell>
-                    <TableCell className="text-center">✅</TableCell>
-                    <TableCell className="text-center">✅</TableCell>
-                    <TableCell className="text-center">✅</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell className="font-medium">Formatting to General Academic Structure</TableCell>
-                    <TableCell className="text-center">✅</TableCell>
-                    <TableCell className="text-center">✅</TableCell>
-                    <TableCell className="text-center">✅</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell className="font-medium">Citation Alignment (APA/MLA/Vancouver)</TableCell>
-                    <TableCell className="text-center">✅</TableCell>
-                    <TableCell className="text-center">✅</TableCell>
-                    <TableCell className="text-center">✅</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell className="font-medium">Paragraph Restructuring</TableCell>
-                    <TableCell className="text-center">❌</TableCell>
-                    <TableCell className="text-center">✅</TableCell>
-                    <TableCell className="text-center">✅</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell className="font-medium">Tone, Style, and Transition Refinement</TableCell>
-                    <TableCell className="text-center">❌</TableCell>
-                    <TableCell className="text-center">✅</TableCell>
-                    <TableCell className="text-center">✅</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell className="font-medium">Bibliography Cleanup</TableCell>
-                    <TableCell className="text-center">❌</TableCell>
-                    <TableCell className="text-center">✅</TableCell>
-                    <TableCell className="text-center">✅</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell className="font-medium">Advanced Statistical Analysis</TableCell>
-                    <TableCell className="text-center">❌</TableCell>
-                    <TableCell className="text-center">❌</TableCell>
-                    <TableCell className="text-center">✅</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell className="font-medium">Individualised Plots and Graphs</TableCell>
-                    <TableCell className="text-center">❌</TableCell>
-                    <TableCell className="text-center">❌</TableCell>
-                    <TableCell className="text-center">✅</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell className="font-medium">Editorial Feedback & Comments</TableCell>
-                    <TableCell className="text-center">❌</TableCell>
-                    <TableCell className="text-center">❌</TableCell>
-                    <TableCell className="text-center">✅</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell className="font-medium">Revision Cycles Included</TableCell>
-                    <TableCell className="text-center">1 revision</TableCell>
-                    <TableCell className="text-center">2 revisions (15-day window)</TableCell>
-                    <TableCell className="text-center">3 revisions (15-day window)</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell className="font-medium">Priority Support</TableCell>
-                    <TableCell className="text-center">❌</TableCell>
-                    <TableCell className="text-center">❌</TableCell>
-                    <TableCell className="text-center">✅</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell className="font-medium">Fast-Track Delivery (48–72 hrs)</TableCell>
-                    <TableCell className="text-center">❌</TableCell>
-                    <TableCell className="text-center">❌</TableCell>
-                    <TableCell className="text-center">Optional (Add-On)</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell className="font-medium">Editing Certificate</TableCell>
-                    <TableCell className="text-center">❌</TableCell>
-                    <TableCell className="text-center">❌</TableCell>
-                    <TableCell className="text-center">✅</TableCell>
-                  </TableRow>
-                </TableBody>
-              </Table>
-            </div>
-          </div>
-        </section>
+        {/* Enhanced Feature Comparison Table */}
+        <EnhancedComparisonTable />
         <LightningSeparator />
-        {/* Service Comparison Section */}
-        <section className="section-container py-16">
-          <div className="max-w-6xl mx-auto">
-            <h2 className="text-3xl font-bold mb-4 text-center flex items-center justify-center gap-2 bg-gradient-to-r from-sciscribe-blue/70 to-sciscribe-gold/70 bg-clip-text text-transparent drop-shadow-md">
-              Why Choose SciScribe Over the Rest?
-            </h2>
-            <p className="mb-10 text-center text-lg text-sciscribe-navy/90 dark:text-white/80 max-w-3xl mx-auto">
-              <span className="font-semibold text-sciscribe-gold">See how SciScribe Solutions outshines the competition.</span> Our expert team, transparent pricing, and premium features set us apart from generic editing providers. We deliver <span className="font-semibold text-sciscribe-blue">real academic impact</span>—not just corrections. Compare below and discover why leading researchers trust us to elevate their work.
-            </p>
-            <div className="overflow-x-auto rounded-xl shadow ring-1 ring-sciscribe-blue/10">
-              <Table className="min-w-[900px] bg-white dark:bg-sciscribe-navy/70 border border-sciscribe-blue/10 text-base">
-                <TableHeader>
-                  <TableRow className="bg-gradient-to-r from-sciscribe-blue/10 to-sciscribe-gold/10 sticky top-0 z-10">
-                    <TableHead className="py-4 px-6 text-left text-base font-semibold text-sciscribe-blue">Service</TableHead>
-                    <TableHead className="py-4 px-6 text-center text-base font-semibold">Manuscript Editing</TableHead>
-                    <TableHead className="py-4 px-6 text-center text-base font-semibold">Statistical Analysis</TableHead>
-                    <TableHead className="py-4 px-6 text-center text-base font-semibold">Figure Creation</TableHead>
-                    <TableHead className="py-4 px-6 text-center text-base font-semibold">Journal Submission</TableHead>
-                    <TableHead className="py-4 px-6 text-center text-base font-semibold">AI Assistance</TableHead>
-                    <TableHead className="py-4 px-6 text-center text-base font-semibold">Pricing</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {/* Editage */}
-                  <TableRow className="hover:bg-sciscribe-blue/5 transition">
-                    <TableCell className="font-semibold">Editage</TableCell>
-                    <TableCell className="text-center text-green-600 font-medium">Yes</TableCell>
-                    <TableCell className="text-center text-green-600 font-medium">Yes</TableCell>
-                    <TableCell className="text-center text-green-600 font-medium">Yes</TableCell>
-                    <TableCell className="text-center text-green-600 font-medium">Yes</TableCell>
-                    <TableCell className="text-center text-yellow-500 font-medium">Limited</TableCell>
-                    <TableCell className="text-center">$$$$</TableCell>
-                  </TableRow>
-                  {/* Enago */}
-                  <TableRow className="hover:bg-sciscribe-blue/5 transition">
-                    <TableCell className="font-semibold">Enago</TableCell>
-                    <TableCell className="text-center text-green-600 font-medium">Yes</TableCell>
-                    <TableCell className="text-center text-green-600 font-medium">Yes</TableCell>
-                    <TableCell className="text-center text-red-500 font-medium">No</TableCell>
-                    <TableCell className="text-center text-green-600 font-medium">Yes</TableCell>
-                    <TableCell className="text-center text-red-500 font-medium">No</TableCell>
-                    <TableCell className="text-center">$$$</TableCell>
-                  </TableRow>
-                  {/* Wordvice */}
-                  <TableRow className="hover:bg-sciscribe-blue/5 transition">
-                    <TableCell className="font-semibold">Wordvice</TableCell>
-                    <TableCell className="text-center text-green-600 font-medium">Yes</TableCell>
-                    <TableCell className="text-center text-yellow-500 font-medium">Basic/None</TableCell>
-                    <TableCell className="text-center text-red-500 font-medium">No</TableCell>
-                    <TableCell className="text-center text-yellow-500 font-medium">Limited</TableCell>
-                    <TableCell className="text-center text-red-500 font-medium">No</TableCell>
-                    <TableCell className="text-center">$$</TableCell>
-                  </TableRow>
-                  {/* AJE */}
-                  <TableRow className="hover:bg-sciscribe-blue/5 transition">
-                    <TableCell className="font-semibold">AJE <span className="text-xs text-muted-foreground">(Research Square)</span></TableCell>
-                    <TableCell className="text-center text-green-600 font-medium">Yes</TableCell>
-                    <TableCell className="text-center text-red-500 font-medium">No</TableCell>
-                    <TableCell className="text-center text-green-600 font-medium">Yes</TableCell>
-                    <TableCell className="text-center text-green-600 font-medium">Yes</TableCell>
-                    <TableCell className="text-center text-red-500 font-medium">No</TableCell>
-                    <TableCell className="text-center">$$$</TableCell>
-                  </TableRow>
-                  {/* Pubrica */}
-                  <TableRow className="hover:bg-sciscribe-blue/5 transition">
-                    <TableCell className="font-semibold">Pubrica</TableCell>
-                    <TableCell className="text-center text-green-600 font-medium">Yes</TableCell>
-                    <TableCell className="text-center text-green-600 font-medium">Yes</TableCell>
-                    <TableCell className="text-center text-green-600 font-medium">Yes</TableCell>
-                    <TableCell className="text-center text-green-600 font-medium">Yes</TableCell>
-                    <TableCell className="text-center text-red-500 font-medium">No</TableCell>
-                    <TableCell className="text-center">$$$</TableCell>
-                  </TableRow>
-                  {/* SciScribe Solutions */}
-                  <TableRow className="hover:bg-sciscribe-blue/10 bg-gradient-to-r from-sciscribe-gold/10 via-sciscribe-gold/0 to-sciscribe-blue/5 border-2 border-sciscribe-gold/50 transition">
-                    <TableCell className="font-semibold">SciScribe Solutions</TableCell>
-                    <TableCell className="text-center text-green-700 font-semibold">Yes</TableCell>
-                    <TableCell className="text-center text-green-700 font-semibold">Yes</TableCell>
-                    <TableCell className="text-center text-green-700 font-semibold">Yes</TableCell>
-                    <TableCell className="text-center text-green-700 font-semibold">Yes</TableCell>
-                    <TableCell className="text-center text-blue-600 font-semibold">In Progress</TableCell>
-                    <TableCell className="text-center font-semibold">$$</TableCell>
-                  </TableRow>
-                </TableBody>
-              </Table>
-            </div>
-          </div>
-        </section>
+        
 
         {/* Add-on Services */}
         <section className="bg-white/50 dark:bg-sciscribe-navy/30 py-16">
@@ -591,9 +291,7 @@ const Pricing = () => {
 
         {/* TESTIMONIALS SECTION */}
         <LightningSeparator />
-        <section className="section-container pt-10">
-          <TestimonialsSection />
-        </section>
+        
 
         {/* Custom Quote */}
         <section className="relative bg-gradient-to-r from-sciscribe-blue/10 to-sciscribe-teal/10 dark:from-sciscribe-blue/20 dark:to-sciscribe-teal/20 pt-0 pb-18 overflow-visible">

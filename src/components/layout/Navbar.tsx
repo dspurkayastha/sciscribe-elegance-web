@@ -10,20 +10,34 @@ import { Link, useLocation } from "react-router-dom";
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [hasScrolled, setHasScrolled] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const location = useLocation();
 
   useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
     const handleScroll = () => {
-      if (window.scrollY > 10) {
+      if (window.scrollY > 100) { // Increased threshold to ensure navbar appears after hero section
         setIsScrolled(true);
+        setHasScrolled(true);
       } else {
         setIsScrolled(false);
       }
     };
 
+    // Initial checks
+    handleResize();
+    handleScroll();
+
     window.addEventListener("scroll", handleScroll);
+    window.addEventListener("resize", handleResize);
+    
     return () => {
       window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", handleResize);
     };
   }, []);
 
@@ -33,11 +47,11 @@ const Navbar = () => {
 
   return (
     <nav
-      className={`fixed top-0 z-50 w-full transition-all duration-300 ${
+      className={`fixed top-0 z-50 w-full ${
         isScrolled 
-          ? "dark:bg-sciscribe-navy/80 bg-white/95 shadow-sm backdrop-blur-sm" 
-          : "dark:bg-transparent bg-transparent"
-      }`}
+          ? "dark:bg-sciscribe-navy/80 bg-white/95 shadow-sm backdrop-blur-sm opacity-100" 
+          : "opacity-0 pointer-events-none"
+      } transition-opacity duration-200`}
     >
       <div className="container mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
@@ -92,10 +106,11 @@ const Navbar = () => {
             
             {/* Mobile Menu Button */}
             <button
-              className="dark:text-white text-sciscribe-navy md:hidden"
+              className="dark:text-white text-sciscribe-navy md:hidden p-1"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
+              aria-label="Toggle menu"
             >
-              {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+              {isMenuOpen ? <X size={22} /> : <Menu size={22} />}
             </button>
           </div>
         </div>

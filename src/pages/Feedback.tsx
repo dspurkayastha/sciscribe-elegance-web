@@ -18,6 +18,8 @@ import {
 } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
+import EnhancedTestimonialsSection from "@/components/sections/EnhancedTestimonialsSection";
+import LightningSeparator from "@/components/ui/lightningseparator";
 
 const Feedback = () => {
   const [name, setName] = useState("");
@@ -262,6 +264,8 @@ const Feedback = () => {
                 Your feedback is invaluable in our mission to provide the best scientific editing and support services.
               </p>
             </motion.div>
+            <LightningSeparator />
+            <EnhancedTestimonialsSection />
           </div>
         </section>
       </main>

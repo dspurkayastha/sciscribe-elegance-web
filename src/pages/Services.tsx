@@ -6,6 +6,10 @@ import { motion } from "framer-motion";
 import { FileText, BookOpen, Microscope, FileCheck, ClipboardList, BarChart } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import AddOnServicesSection from "@/components/sections/AddOnServicesSection";
+import ServicesCarouselSection from "@/components/sections/ServicesCarouselSection";
+import LightningSeparator from "@/components/ui/lightningseparator";
+import Seo from "@/components/ui/Seo";
 
 const Services = () => {
   const services = [
@@ -60,6 +64,10 @@ const Services = () => {
 
   return (
     <div className="flex min-h-screen flex-col">
+      <Seo
+        title="SciScribe Solutions Services | Scientific Editing & Research Support"
+        description="Explore our comprehensive scientific editing, research consulting, and publication support services designed to elevate your academic and research work."
+      />
       <InteractiveBackground />
       <Navbar />
       <main className="dark:bg-sciscribe-navy/5 pt-24">
@@ -80,7 +88,7 @@ const Services = () => {
               animate={{ opacity: 1 }}
               transition={{ delay: 0.2, duration: 0.5 }}
             >
-              Comprehensive solutions to elevate your research from concept to publication
+              End-to-end research solutions you can trust — exceptional quality at the best possible price.
             </motion.p>
           </div>
         </section>
@@ -125,6 +133,16 @@ const Services = () => {
           </motion.div>
         </section>
 
+        <LightningSeparator />
+        
+        {/* Add-On Services Section */}
+        <AddOnServicesSection />
+        
+        <LightningSeparator />
+        
+        {/* Services Carousel Section */}
+        <ServicesCarouselSection />
+        
         {/* CTA Section */}
         <section className="bg-gradient-to-r from-sciscribe-blue/10 to-sciscribe-teal/10 dark:from-sciscribe-blue/20 dark:to-sciscribe-teal/20 py-16">
           <div className="container mx-auto px-6 text-center">

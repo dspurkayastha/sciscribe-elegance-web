@@ -1,7 +1,7 @@
-import { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
 import { ChevronDown, ArrowRight, MessageCircleMore, Sparkles } from "lucide-react";
 import { ParticleGlow } from "@/components/ui/ParticleGlow";
-import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { ConsultationOverlay } from "./ConsultationOverlay";
@@ -9,6 +9,23 @@ import { ConsultationOverlay } from "./ConsultationOverlay";
 const HeroSection = () => {
   const heroRef = useRef<HTMLDivElement>(null);
   const [isConsultationOpen, setIsConsultationOpen] = useState(false);
+  const [currentBenefitIndex, setCurrentBenefitIndex] = useState(0);
+  
+  const benefits = [
+    "3x Faster Turnaround Times",
+    "100% Native English Editors",
+    "Publication-Ready Deliverables",
+    "Lowest in segment prices"
+  ];
+  
+  // Rotate through benefits every 3 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentBenefitIndex((prevIndex) => (prevIndex + 1) % benefits.length);
+    }, 3000);
+    
+    return () => clearInterval(interval);
+  }, [benefits.length]);
   
   useEffect(() => {
     const handleScroll = () => {
@@ -30,24 +47,26 @@ const HeroSection = () => {
 
   return (
     <section className="relative w-full min-h-screen overflow-visible md:h-screen md:overflow-hidden">
-      {/* Modern Background with Gradient Overlay */}
+      {/* Background Image with Overlay */}
       <div className="absolute inset-0 z-0">
-        {/* Modern abstract background pattern */}
-        <div className="absolute inset-0 bg-gradient-to-b from-background/40 to-background/80 backdrop-blur-[2px]" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,rgba(59,130,246,0.2)_0%,transparent_70%)]" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_70%,rgba(140,85,247,0.15)_0%,transparent_60%)]" />
-        <div className="absolute inset-0 bg-[linear-gradient(40deg,rgba(20,210,190,0.05)_0%,rgba(59,130,246,0.05)_30%,rgba(140,85,247,0.05)_70%)]" />
-        <div className="absolute inset-0 mix-blend-overlay opacity-20 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCI+CjxyZWN0IHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCIgZmlsbD0ibm9uZSI+PC9yZWN0Pgo8cGF0aCBkPSJNMzAgNTAgQzE3IDE1IDEwIDAgMTAgMCBMNDAgMCBDNDAgMCA1MCAxNSAzMCA1MFoiIGZpbGw9InJnYmEoMjAsIDIxMCwgMTkwLCAwLjAzKSIgdHJhbnNmb3JtPSJyb3RhdGUoMCwgMzAsIDMwKSI+PC9wYXRoPgo8cGF0aCBkPSJNMzAgNTAgQzE3IDE1IDEwIDAgMTAgMCBMNDAgMCBDNDAgMCA1MCAxNSAzMCA1MFoiIGZpbGw9InJnYmEoMTQwLCA4NSwgMjQ3LCAwLjAzKSIgdHJhbnNmb3JtPSJyb3RhdGUoMTIwLCAzMCwgMzApIj48L3BhdGg+CjxwYXRoIGQ9Ik0zMCA1MCBDMTcgMTUgMTAgMCAxMCAwIEw0MCAwIEM0MCAwIDUwIDE1IDMwIDUwWiIgZmlsbD0icmdiYSgyMCwgMjEwLCAxOTAsIDAuMDMpIiB0cmFuc2Zvcm09InJvdGF0ZSgyNDAsIDMwLCAzMCkiPjwvcGF0aD4KPC9zdmc+')]" />
+        {/* Hero background image */}
+        <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: "url('https://sciscribe-website-images.s3.ap-south-1.amazonaws.com/website_imges/banner.webp')" }} />
+        
+        {/* Gradient overlays for better text readability */}
+        <div className="absolute inset-0 bg-gradient-to-r from-background/80 via-background/50 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-background/60 to-transparent" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,rgba(59,130,246,0.1)_0%,transparent_70%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_10%_70%,rgba(140,85,247,0.08)_0%,transparent_60%)]" />
       </div>
 
-      {/* Floating Decorative Elements (hidden on mobile) */}
+      {/* Floating Decorative Elements (only on left side) */}
       <div aria-hidden="true" className="select-none hidden sm:block">
         <motion.div 
           className="absolute left-[10%] top-1/4 h-64 w-64 rounded-full bg-primary/10 blur-3xl"
           animate={{ 
-            x: [0, 30, 0], 
-            y: [0, -30, 0],
-            opacity: [0.5, 0.8, 0.5] 
+            x: [0, 20, 0], 
+            y: [0, -20, 0],
+            opacity: [0.4, 0.7, 0.4] 
           }}
           transition={{ 
             duration: 15, 
@@ -56,11 +75,11 @@ const HeroSection = () => {
           }}
         />
         <motion.div 
-          className="absolute right-[15%] top-1/3 h-48 w-48 rounded-full bg-accent/10 blur-3xl"
+          className="absolute left-[15%] bottom-1/3 h-48 w-48 rounded-full bg-accent/10 blur-3xl"
           animate={{ 
-            x: [0, -20, 0], 
-            y: [0, 20, 0],
-            opacity: [0.3, 0.6, 0.3] 
+            x: [0, -15, 0], 
+            y: [0, 15, 0],
+            opacity: [0.3, 0.5, 0.3] 
           }}
           transition={{ 
             duration: 12, 
@@ -71,23 +90,23 @@ const HeroSection = () => {
         />
       </div>
 
-      {/* Content */}
+      {/* Content - Left aligned */}
       <div 
         ref={heroRef}
-        className="container relative z-10 mx-auto flex h-full flex-col items-center justify-center px-6 text-center"
+        className="container relative z-10 mx-auto flex h-full flex-col items-start justify-center px-6 text-left"
       >
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="max-w-4xl"
+          className="max-w-xl lg:max-w-2xl pt-16 sm:pt-0"
         >
-          {/* Badge */}
+          {/* Badge - hidden on mobile */}
           <motion.div
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.3, duration: 0.5 }}
-            className="mx-auto mb-8 inline-flex items-center rounded-full border border-primary/20 bg-background/80 px-4 py-1.5 text-sm font-medium text-primary backdrop-blur"
+            className="mb-8 hidden sm:inline-flex items-center rounded-full border border-primary/20 bg-background/80 px-4 py-1.5 text-sm font-medium text-primary backdrop-blur"
           >
             <span className="mr-1 flex h-2 w-2 rounded-full bg-primary"></span>
             Redefining Scientific Communication
@@ -95,7 +114,8 @@ const HeroSection = () => {
           
           {/* Main Title */}
           <h1 className="mb-6 text-5xl font-bold tracking-tight md:text-6xl lg:text-7xl">
-            <span className="block">Elevate Your Research.</span> 
+            <span className="block">Elevate Your</span> 
+            <span className="block">Research.</span>
             <span className="bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">Perfect Your Manuscript.</span>
           </h1>
           
@@ -103,18 +123,20 @@ const HeroSection = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.6, duration: 0.8 }}
-            className="mx-auto mb-10 max-w-2xl text-lg text-foreground/80 md:text-xl"
+            className="mb-10 max-w-lg text-lg text-foreground/90 md:text-xl"
           >
-            Expert scientific editing, publication support, and research consultancy
-            that transforms your work into compelling scientific narratives.
+            Expert editing, advanced statistics, and publication support—
+            delivered with speed, clarity, and guaranteed results.
           </motion.p>
+
+
 
           {/* Buttons Row */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.8, duration: 0.5 }}
-            className="w-full flex flex-col items-center justify-center space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0"
+            className="w-full flex flex-col items-start justify-start space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0"
           >
             {/* 1. Get a Free Consult */}
             <div className="relative group w-full sm:w-auto rounded-lg overflow-hidden">
@@ -137,7 +159,7 @@ const HeroSection = () => {
               >
                 <div className="relative z-10 flex items-center justify-center gap-2">
                   <MessageCircleMore className="h-5 w-5 transition-transform group-hover:scale-110" />
-                  <span>Get a Free Consult !!</span>
+                  <span>Get a Free Consult<sup>*</sup></span>
                 </div>
                 <Sparkles className="pointer-events-none absolute -right-1 -top-1 h-3 w-3 text-teal-300 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               </Button>
@@ -165,19 +187,53 @@ const HeroSection = () => {
                 size="lg"
                 className="relative px-6 py-6 text-base font-medium text-white overflow-hidden transition-all duration-300 hover:scale-[1.02] z-10 bg-gradient-to-br from-sciscribe-teal to-sciscribe-blue"
               >
-                <Link to="/services" className="flex items-center justify-center gap-2 no-underline">
-                  <span>Get Started Today</span>
+                <Link to="/contact" className="flex items-center justify-center gap-2 no-underline">
+                  <span>Get a Free Review<sup>**</sup></span>
                   <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                 </Link>
               </Button>
             </div>
           </motion.div>
         </motion.div>
+        
+        {/* Microtype text */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.0, duration: 0.5 }}
+          className="mt-4 text-xs text-muted-foreground flex flex-row justify-center sm:justify-start space-x-6 font-mono italic tracking-wide"
+        >
+          <span>* No commitments</span>
+          <span>** No hidden charges</span>
+        </motion.div>
       </div>
 
-      {/* Scroll indicator (hidden on mobile) */}
+      {/* Animated benefits text (hidden on mobile) */}
+      <div className="hidden md:block absolute bottom-24 left-[47%] z-10 text-center">
+        <div className="h-6 overflow-hidden">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={currentBenefitIndex}
+              initial={{ x: 40, opacity: 0, scale: 0.9 }}
+              animate={{ x: 0, opacity: 1, scale: 1 }}
+              exit={{ x: -40, opacity: 0, scale: 0.9 }}
+              transition={{ 
+                type: "spring", 
+                stiffness: 100, 
+                damping: 15,
+                duration: 0.6 
+              }}
+              className="text-sm font-medium bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent"
+            >
+              {benefits[currentBenefitIndex]}
+            </motion.div>
+          </AnimatePresence>
+        </div>
+      </div>
+
+      {/* Scroll indicator (hidden on mobile) - positioned below middle button */}
       <motion.div
-        className="hidden sm:block absolute bottom-8 left-1/2 z-10 -translate-x-1/2"
+        className="hidden sm:block absolute bottom-8 left-1/2 -translate-x-1/2 z-10"
         animate={{ y: [0, 8, 0] }}
         transition={{ duration: 2, repeat: Infinity }}
       >
@@ -189,6 +245,9 @@ const HeroSection = () => {
       
       {/* Bottom gradient overlay */}
       <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-background to-transparent" />
+      
+      {/* Subtle vignette overlay for depth */}
+      <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_center,transparent_40%,rgba(0,0,0,0.15)_100%)] mix-blend-multiply" />
       
       {/* Consultation Overlay */}
       <ConsultationOverlay 
