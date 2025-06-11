@@ -3,8 +3,10 @@ import { motion } from "framer-motion";
 import { Search, FileText, BarChart2, BookOpen, Clock, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import { useAnalytics } from "@/hooks/useAnalytics";
 
 const AddOnServicesSection = () => {
+  const { logCtaClick } = useAnalytics();
   const services = [
     {
       icon: <Search className="h-8 w-8" />,
@@ -105,7 +107,16 @@ const AddOnServicesSection = () => {
               Our team would be happy to discuss your specific requirements and tailor a solution that fits your goals.
               <strong> Customization is key to what we do.</strong>
             </p>
-            <Link to="/contact">
+            <Link 
+              to="/contact"
+              onClick={() => {
+                logCtaClick({
+                  cta_id: 'addon_services_contact_button',
+                  cta_text: 'Contact Us',
+                  cta_location: 'addon_services_section'
+                });
+              }}
+            >
               <Button className="btn-premium">Contact Us</Button>
             </Link>
           </div>

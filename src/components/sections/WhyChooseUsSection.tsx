@@ -5,8 +5,10 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { cn } from "@/lib/utils";
+import { useAnalytics } from "@/hooks/useAnalytics";
 
 const WhyChooseUsSection = () => {
+  const { logCtaClick } = useAnalytics();
   const reasons = [
     {
       icon: <GraduationCap className="h-8 w-8" />,
@@ -151,7 +153,16 @@ const WhyChooseUsSection = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.3 }}
         >
-          <Link to="/contact">
+          <Link 
+            to="/contact"
+            onClick={() => {
+              logCtaClick({
+                cta_id: 'why_choose_us_get_started',
+                cta_text: 'Get Started Today',
+                cta_location: 'why_choose_us_section'
+              });
+            }}
+          >
             <Button 
               className="bg-gradient-to-r from-sciscribe-blue to-sciscribe-teal hover:from-sciscribe-blue/90 hover:to-sciscribe-teal/90 text-white group"
               size="lg"

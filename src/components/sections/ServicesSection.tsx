@@ -5,8 +5,10 @@ import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
+import { useAnalytics } from "@/hooks/useAnalytics";
 
 const ServicesSection = () => {
+  const { logCtaClick } = useAnalytics();
   const services = [
     {
       title: "Scientific Writing & Manuscript Development",
@@ -159,7 +161,17 @@ const ServicesSection = () => {
                 </ul>
                 
                 <div className="mt-auto flex justify-center">
-                  <Link to="/services" className="w-full">
+                  <Link 
+                    to="/services" 
+                    className="w-full"
+                    onClick={() => {
+                      logCtaClick({
+                        cta_id: `services_learn_more_${service.title.toLowerCase().replace(/\s+/g, '_')}`,
+                        cta_text: 'Learn more',
+                        cta_location: 'services_section'
+                      });
+                    }}
+                  >
                     <Button
                       variant="outline"
                       className="w-full border-sciscribe-blue/30 hover:bg-sciscribe-blue/10 hover:text-sciscribe-blue group transition-all duration-300"

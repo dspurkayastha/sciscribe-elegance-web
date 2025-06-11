@@ -2,8 +2,10 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import { useAnalytics } from "@/hooks/useAnalytics";
 
 const TestimonialsSection = () => {
+  const { logCtaClick } = useAnalytics();
   const testimonials = [
     {
       id: 1,
@@ -106,7 +108,16 @@ const TestimonialsSection = () => {
         </div>
         
         <div className="mt-16 text-center">
-          <Link to="/feedback">
+          <Link 
+            to="/feedback"
+            onClick={() => {
+              logCtaClick({
+                cta_id: 'testimonials_leave_feedback',
+                cta_text: 'Leave Feedback',
+                cta_location: 'testimonials_section'
+              });
+            }}
+          >
             <Button variant="outline" className="border-sciscribe-blue/30 hover:bg-sciscribe-blue/10 text-sciscribe-blue dark:border-sciscribe-blue/50 dark:hover:bg-sciscribe-blue/20">
               Leave Feedback
             </Button>

@@ -23,6 +23,12 @@ let analytics: ReturnType<typeof getAnalytics> | null = null;
 (async () => {
   if (await isAnalyticsSupported()) {
     analytics = getAnalytics(app);
+    // Enable debug mode in development
+    if (import.meta.env.DEV) {
+      window.gtag?.('config', import.meta.env.VITE_FIREBASE_MEASUREMENT_ID, {
+        debug_mode: true
+      });
+    }
   }
 })();
 

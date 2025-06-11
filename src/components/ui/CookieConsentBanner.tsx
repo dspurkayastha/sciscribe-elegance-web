@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Button } from '@/components/ui/button'; // Assuming you have a Button component
+import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
-
-const COOKIE_CONSENT_KEY = 'cookie_consent_given';
+import { COOKIE_CONSENT_KEY, setAnalyticsConsent } from '@/utils/analyticsConsent';
 
 const CookieConsentBanner: React.FC = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -15,17 +14,13 @@ const CookieConsentBanner: React.FC = () => {
   }, []);
 
   const handleAccept = () => {
-    localStorage.setItem(COOKIE_CONSENT_KEY, 'true');
+    setAnalyticsConsent(true);
     setIsVisible(false);
-    // Optionally, initialize analytics here if they were deferred
-    // e.g., if (window.gtag) { window.gtag('consent', 'update', { 'analytics_storage': 'granted' }); }
   };
 
   const handleDecline = () => {
-    localStorage.setItem(COOKIE_CONSENT_KEY, 'false');
+    setAnalyticsConsent(false);
     setIsVisible(false);
-    // Optionally, update analytics consent to denied
-    // e.g., if (window.gtag) { window.gtag('consent', 'update', { 'analytics_storage': 'denied' }); }
   };
 
   if (!isVisible) {

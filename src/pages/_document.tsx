@@ -14,16 +14,7 @@ export const Document: React.FC<DocumentProps> = ({ children, styles }) => {
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover" />
         <meta name="theme-color" content="#6366F1" />
         
-        {/* Google tag (gtag.js) */}
-        // <script async src="https://www.googletagmanager.com/gtag/js?id=G-MVG24STSTN" />
-        // <script dangerouslySetInnerHTML={{ __html: `gtag('config', 'G-MVG24STSTN')` }} />
-        <script>
-          {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-          `}
-        </script>
+        {/* Analytics handled by Firebase */}
 
         {/* Preconnect to external domains */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />

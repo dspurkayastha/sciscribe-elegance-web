@@ -3,8 +3,11 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { WavyBackground } from "@/components/ui/wavy-background";
+import { useAnalytics } from "@/hooks/useAnalytics";
 
 const CTASection: React.FC = () => {
+  const { logCtaClick } = useAnalytics();
+  
   // SciScribe color scheme for the wavy background
   const sciscribeColors = [
     "#0ea5e9", // sciscribe-blue
@@ -68,7 +71,18 @@ const CTASection: React.FC = () => {
                   size="lg"
                   className="bg-gradient-to-r from-sciscribe-blue to-sciscribe-teal hover:from-sciscribe-teal hover:to-sciscribe-blue text-white px-8 py-6 text-lg shadow-lg transition-all duration-300"
                 >
-                  <Link to="/contact">Get Started Today</Link>
+                  <Link 
+                    to="/contact"
+                    onClick={() => {
+                      logCtaClick({
+                        cta_id: 'cta_section_get_started',
+                        cta_text: 'Get Started Today',
+                        cta_location: 'cta_section'
+                      });
+                    }}
+                  >
+                    Get Started Today
+                  </Link>
                 </Button>
               </motion.div>
             </div>

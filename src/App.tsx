@@ -1,17 +1,30 @@
-
-import { lazy, Suspense } from 'react';
+import { lazy, Suspense, useEffect } from 'react';
 import { HelmetProvider } from 'react-helmet-async';
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import { useAnalytics } from "@/hooks/useAnalytics";
 import { ThemeProvider } from "./components/theme/ThemeProvider";
 import CustomCursor from "./components/ui/CustomCursor";
 import ScrollToTop from "./components/ScrollToTop";
 import Document from "./pages/_document";
 import LoadingSpinner from "@/components/ui/LoadingSpinner";
+import GoogleTagManager from "./components/analytics/GoogleTagManager";
 import CookieConsentBanner from "@/components/ui/CookieConsentBanner";
+
+// Analytics wrapper component
+function AnalyticsProvider({ children }: { children: React.ReactNode }) {
+  const location = useLocation();
+  const { logPageView } = useAnalytics();
+
+  useEffect(() => {
+    logPageView(location.pathname);
+  }, [location, logPageView]);
+
+  return <>{children}</>;
+}
 
 // Lazy load non-critical components
 const Index = lazy(() => import("./pages/Index"));
@@ -68,6 +81,7 @@ const App = () => (
               <ScrollToTop />
               <CustomCursor />
               <CookieConsentBanner />
+              <GoogleTagManager />
               <Suspense fallback={<PageLoading />}>
                 <Routes>
                   <Route path="/" element={<Index />} />

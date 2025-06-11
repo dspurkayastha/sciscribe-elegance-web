@@ -3,6 +3,7 @@ import { InteractiveBackground } from "@/components/background/InteractiveBackgr
 import Footer from "@/components/layout/Footer";
 import Navbar from "@/components/layout/Navbar";
 import { motion } from "framer-motion";
+import { useAnalytics } from "@/hooks/useAnalytics";
 import { Heart, MessageSquareDashed } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -31,6 +32,7 @@ const Feedback = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
   const navigate = useNavigate();
+  const { logFormSubmitted } = useAnalytics();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -60,6 +62,14 @@ const Feedback = () => {
         title: "Thank you for your feedback!",
         description: "We appreciate your time and will use your insights to improve our services.",
       });
+      
+      // Track form submission with analytics
+      logFormSubmitted({
+        form_id: 'feedback_page_form',
+        form_name: 'Feedback Form',
+        success: true
+      });
+      
       // Reset form
       setName("");
       setEmail("");
@@ -74,6 +84,14 @@ const Feedback = () => {
         title: "Submission failed",
         description: "Please try again later or contact us directly.",
         variant: "destructive",
+      });
+      
+      // Track form submission error with analytics
+      logFormSubmitted({
+        form_id: 'feedback_page_form',
+        form_name: 'Feedback Form',
+        success: false,
+        error: error instanceof Error ? error.message : 'Unknown error'
       });
     } finally {
       setIsSubmitting(false);

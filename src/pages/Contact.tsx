@@ -11,6 +11,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "@/components/ui/use-toast";
+import { useAnalytics } from "@/hooks/useAnalytics";
 import {
   Select,
   SelectContent,
@@ -63,6 +64,7 @@ const addOnOptions = [
   const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
   const { toast } = useToast();
+  const { logFormSubmitted } = useAnalytics(); // Added useAnalytics hook
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -172,6 +174,14 @@ const addOnOptions = [
         description: "We've received your message and will get back to you soon.",
         variant: "default",
       });
+      
+      // Track form submission with analytics
+      logFormSubmitted({
+        form_id: 'contact_page_form',
+        form_name: 'Contact Page Form',
+        success: true
+      });
+      
       navigate("/thank-you", { 
         state: { 
           source: "contact",
@@ -183,6 +193,14 @@ const addOnOptions = [
         title: "Something went wrong",
         description: "Your message couldn't be sent. Please try again.",
         variant: "destructive",
+      });
+      
+      // Track form submission error with analytics
+      logFormSubmitted({
+        form_id: 'contact_page_form',
+        form_name: 'Contact Page Form',
+        success: false,
+        error: error instanceof Error ? error.message : 'Unknown error'
       });
     } finally {
       setIsSubmitting(false);

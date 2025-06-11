@@ -5,11 +5,13 @@ import { ParticleGlow } from "@/components/ui/ParticleGlow";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { ConsultationOverlay } from "./ConsultationOverlay";
+import { useAnalytics } from "@/hooks/useAnalytics";
 
 const HeroSection = () => {
   const heroRef = useRef<HTMLDivElement>(null);
   const [isConsultationOpen, setIsConsultationOpen] = useState(false);
   const [currentBenefitIndex, setCurrentBenefitIndex] = useState(0);
+  const { logCtaClick } = useAnalytics();
   
   const benefits = [
     "3x Faster Turnaround Times",
@@ -152,7 +154,15 @@ const HeroSection = () => {
               </div>
               <div className="hidden sm:block absolute inset-0 -z-10 rounded-lg bg-gradient-to-r from-sciscribe-teal/40 via-sciscribe-blue/50 to-sciscribe-teal/40 blur opacity-70 group-hover:opacity-90 transition-all duration-300 sm:animate-pulse" />
               <Button
-                onClick={() => setIsConsultationOpen(true)}
+                onClick={() => {
+                  setIsConsultationOpen(true);
+                  // Track CTA click
+                  logCtaClick({
+                    cta_id: 'hero_consultation_button',
+                    cta_text: 'Get a Free Consult',
+                    cta_location: 'hero_section'
+                  });
+                }}
                 variant="default"
                 size="lg"
                 className="relative px-6 py-6 text-base font-medium text-white shadow-lg shadow-teal-500/20 transition-all duration-300 hover:scale-[1.02] z-10 bg-gradient-to-r from-sciscribe-teal to-sciscribe-blue"
@@ -173,7 +183,16 @@ const HeroSection = () => {
                 size="lg"
                 className="relative px-6 py-6 text-base font-medium overflow-hidden transition-all duration-300 hover:scale-[1.02] z-10 bg-gradient-to-br from-sciscribe-gold to-amber-300 dark:to-amber-300"
               >
-                <Link to="/pricing" className="flex items-center justify-center no-underline">
+                <Link 
+                  to="/pricing" 
+                  className="flex items-center justify-center no-underline"
+                  onClick={() => {
+                    logCtaClick({
+                      cta_id: 'hero_pricing_button',
+                      cta_text: 'View Pricing',
+                      cta_location: 'hero_section'
+                    });
+                  }}>
                   <span>View Pricing</span>
                 </Link>
               </Button>
@@ -187,7 +206,16 @@ const HeroSection = () => {
                 size="lg"
                 className="relative px-6 py-6 text-base font-medium text-white overflow-hidden transition-all duration-300 hover:scale-[1.02] z-10 bg-gradient-to-br from-sciscribe-teal to-sciscribe-blue"
               >
-                <Link to="/contact" className="flex items-center justify-center gap-2 no-underline">
+                <Link 
+                  to="/contact" 
+                  className="flex items-center justify-center gap-2 no-underline"
+                  onClick={() => {
+                    logCtaClick({
+                      cta_id: 'hero_free_review_button',
+                      cta_text: 'Get a Free Review',
+                      cta_location: 'hero_section'
+                    });
+                  }}>
                   <span>Get a Free Review<sup>**</sup></span>
                   <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                 </Link>

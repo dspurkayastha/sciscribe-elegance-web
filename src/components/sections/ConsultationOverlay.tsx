@@ -11,6 +11,7 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { format, addDays, isToday } from 'date-fns';
 import { toast } from '@/components/ui/use-toast';
+import { useAnalytics } from '@/hooks/useAnalytics';
 
 // Simple phone number validation (allows numbers, spaces, +, -, and ())
 const phoneRegex = /^[\d\s+\-()]{10,20}$/;
@@ -72,7 +73,8 @@ export function ConsultationOverlay({ isOpen, onClose }: ConsultationOverlayProp
   const [isSuccess, setIsSuccess] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const formRef = useRef<HTMLDivElement>(null);
-  
+  const { logConsultationBooked, logWhatsappClick } = useAnalytics();
+
   // Handle scroll for shadow effect
   useEffect(() => {
     const formElement = formRef.current;
@@ -197,6 +199,14 @@ export function ConsultationOverlay({ isOpen, onClose }: ConsultationOverlayProp
       setIsSuccess(true);
       reset();
       
+      // Track successful consultation booking with analytics
+      logConsultationBooked({
+        date: data.date.toISOString(),
+        time_slot: data.timeSlot,
+        success: true,
+        service_type: 'general_consultation' // Required parameter for ConsultationParams
+      });
+      
       // Auto-close after 3 seconds
       const timer = setTimeout(() => {
         onClose();
@@ -213,6 +223,15 @@ export function ConsultationOverlay({ isOpen, onClose }: ConsultationOverlayProp
         title: 'Submission failed',
         description: error instanceof Error ? error.message : 'Please try again later',
         variant: 'destructive',
+      });
+      
+      // Track consultation booking error with analytics
+      logConsultationBooked({
+        date: data.date.toISOString(),
+        time_slot: data.timeSlot,
+        success: false,
+        service_type: 'general_consultation',
+        error: error instanceof Error ? error.message : 'Unknown error'
       });
     } finally {
       setIsSubmitting(false);
@@ -302,7 +321,11 @@ export function ConsultationOverlay({ isOpen, onClose }: ConsultationOverlayProp
                       href="https://wa.me/919395582679" 
                       target="_blank" 
                       rel="noopener noreferrer" 
-                      onClick={e => e.stopPropagation()} 
+                      onClick={e => {
+                        e.stopPropagation();
+                        // Track WhatsApp click with analytics
+                        logWhatsappClick('consultation_overlay');
+                      }} 
                       className="flex items-center justify-center gap-2 no-underline"
                     >
                       <MessageCircleMore className="h-5 w-5 text-green-600 dark:text-green-400" />

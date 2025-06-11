@@ -7,6 +7,7 @@ import {
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
+import { useAnalytics } from "@/hooks/useAnalytics";
 
 const ContactSection = () => {
   const [formData, setFormData] = useState({
@@ -17,6 +18,7 @@ const ContactSection = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const { toast } = useToast();
+  const { logFormSubmitted, logWhatsappClick } = useAnalytics();
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -68,6 +70,13 @@ const ContactSection = () => {
         description: "We'll get back to you as soon as possible."
       });
 
+      // Track form submission with analytics
+      logFormSubmitted({
+        form_id: 'contact_quick',
+        form_name: 'Quick Contact Form',
+        success: true
+      });
+
       setIsSuccess(true);
       resetForm();
     } catch (error) {
@@ -76,6 +85,14 @@ const ContactSection = () => {
         description:
           "There was a problem sending your message. Please try again.",
         variant: "destructive"
+      });
+      
+      // Track form submission error with analytics
+      logFormSubmitted({
+        form_id: 'contact_quick',
+        form_name: 'Quick Contact Form',
+        success: false,
+        error: error instanceof Error ? error.message : 'Unknown error'
       });
     } finally {
       setIsSubmitting(false);
@@ -149,6 +166,9 @@ const ContactSection = () => {
                     href="https://api.whatsapp.com/message/XMKZUS2MJHUBG1"
                     target="_blank"
                     rel="noopener noreferrer"
+                    onClick={() => {
+                      logWhatsappClick('contact_section');
+                    }}
                     className="flex items-center text-foreground/70 
                       hover:text-sciscribe-gold transition-colors mt-1"
                   >
