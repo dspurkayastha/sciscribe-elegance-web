@@ -2,6 +2,7 @@ import { useState } from "react";
 import { InteractiveBackground } from "@/components/background/InteractiveBackground";
 import Footer from "@/components/layout/Footer";
 import Navbar from "@/components/layout/Navbar";
+import RouterAwareSeo from "@/components/ui/RouterAwareSeo";
 import { motion } from "framer-motion";
 import { useAnalytics } from "@/hooks/useAnalytics";
 import { Heart, MessageSquareDashed } from "lucide-react";
@@ -100,6 +101,11 @@ const Feedback = () => {
 
   return (
     <div className="flex min-h-screen flex-col">
+      <RouterAwareSeo
+        title="Share Your Feedback | SciScribe Solutions"
+        description="We value your feedback. Share your experience with our scientific editing and research support services to help us improve."
+        trackPageView={true}
+      />
       <InteractiveBackground />
       <Navbar />
       <main className="dark:bg-sciscribe-navy/5 pt-24">

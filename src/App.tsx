@@ -12,6 +12,7 @@ import ScrollToTop from "./components/ScrollToTop";
 import Document from "./pages/_document";
 import LoadingSpinner from "@/components/ui/LoadingSpinner";
 import GoogleTagManager from "./components/analytics/GoogleTagManager";
+import SEOHead from "./components/seo/SEOHead";
 import CookieConsentBanner from "@/components/ui/CookieConsentBanner";
 
 // Analytics wrapper component

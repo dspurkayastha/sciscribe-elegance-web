@@ -12,7 +12,8 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import Seo from "@/components/ui/Seo";
+import RouterAwareSeo from "@/components/ui/RouterAwareSeo";
+import FAQSchema from "@/components/seo/FAQSchema";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -43,7 +44,7 @@ const Payment = () => {
 
   return (
     <>
-      <Seo
+      <RouterAwareSeo
         title="Payment | SciScribe Solutions"
         description="Make a secure payment for your SciScribe Solutions project via our trusted Razorpay gateway. Read about payment security, invoice process, and frequently asked questions."
       />
@@ -144,6 +145,25 @@ const Payment = () => {
             {/* FAQ Section */}
             <section className="bg-secondary/30 dark:bg-secondary/10 py-16 rounded-xl">
               <div className="container mx-auto px-6">
+                {/* Add structured data for payment FAQs */}
+                <FAQSchema faqs={[
+                  {
+                    question: "What payment methods do you accept?",
+                    answer: "We accept all major credit and debit cards (Visa, Mastercard, American Express, Rupay), UPI payments, net banking, and wallet payments through our secure payment gateway, Razorpay."
+                  },
+                  {
+                    question: "How does the invoice and payment process work?",
+                    answer: "After discussing your project requirements, we'll send you a personalized quote. Once approved, you'll receive an invoice with a secure payment link. Simply follow the link to complete your payment through our secure gateway."
+                  },
+                  {
+                    question: "Is my payment information secure?",
+                    answer: "Absolutely. We use Razorpay, a PCI DSS compliant payment gateway that employs industry-standard encryption protocols to ensure your payment information is always secure. We never store your full credit card details on our servers."
+                  },
+                  {
+                    question: "Do you offer any discounts for bulk orders?",
+                    answer: "Yes, we offer volume discounts for large projects or ongoing collaborations. Contact us to discuss your specific needs and we'll create a custom package that provides the best value for your requirements."
+                  }
+                ]} />
                 <h2 className="text-3xl font-bold mb-8 text-center">Payment FAQs</h2>
                 
                 <div className="max-w-3xl mx-auto">

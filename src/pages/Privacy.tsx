@@ -2,6 +2,9 @@
 import { motion } from "framer-motion";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
+import RouterAwareSeo from "@/components/ui/RouterAwareSeo";
+import { useAnalytics } from "@/hooks/useAnalytics";
+import { useEffect } from "react";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -25,8 +28,32 @@ const itemVariants = {
 };
 
 const Privacy = () => {
+  const { logPageView } = useAnalytics();
+  
+  // Track page view when component mounts
+  useEffect(() => {
+    logPageView('/privacy');
+  }, [logPageView]);
+
   return (
     <>
+      <RouterAwareSeo
+        title="Privacy Policy | SciScribe Solutions"
+        description="Our privacy policy outlines how we collect, use, and protect your personal information when you use our scientific editing and research support services."
+        trackPageView={false} // We're manually tracking the page view above
+        noindex={false} // Privacy policy should be indexed
+        schema={{
+          "@context": "https://schema.org",
+          "@type": "WebPage",
+          "name": "Privacy Policy",
+          "description": "Our privacy policy outlines how we collect, use, and protect your personal information when you use our scientific editing and research support services.",
+          "dateModified": "2025-04-12",
+          "publisher": {
+            "@type": "Organization",
+            "name": "SciScribe Solutions"
+          }
+        }}
+      />
       <Navbar />
       
       <main className="pt-20">

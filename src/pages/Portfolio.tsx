@@ -8,9 +8,17 @@ import { Badge } from "@/components/ui/badge";
 import { Search, Download, ExternalLink, BookOpen, Award, Users, FileText } from "lucide-react";
 import PortfolioSection from "@/components/sections/PortfolioSection";
 import LightningSeparator from "@/components/ui/lightningseparator";
-import Seo from "@/components/ui/Seo";
+import RouterAwareSeo from "@/components/ui/RouterAwareSeo";
+import { useAnalytics } from "@/hooks/useAnalytics";
+import { useEffect } from "react";
 
 const Portfolio = () => {
+  const { logPageView } = useAnalytics();
+  
+  // Track page view when component mounts
+  useEffect(() => {
+    logPageView('/portfolio');
+  }, [logPageView]);
   const projects = [
     {
       id: 1,
@@ -99,11 +107,37 @@ const Portfolio = () => {
     { value: "data-science", label: "Data Science" }
   ];
 
+  // Create structured data for portfolio projects
+  const createPortfolioStructuredData = () => {
+    const itemListElements = projects.map((project, index) => ({
+      "@type": "ListItem",
+      "position": index + 1,
+      "item": {
+        "@type": "CreativeWork",
+        "name": project.title,
+        "description": project.description,
+        "image": project.image,
+        "keywords": project.tags.join(", "),
+        "genre": project.category
+      }
+    }));
+
+    return {
+      "@context": "https://schema.org",
+      "@type": "ItemList",
+      "itemListElement": itemListElements,
+      "numberOfItems": projects.length,
+      "name": "SciScribe Solutions Portfolio"
+    };
+  };
+
   return (
     <div className="flex min-h-screen flex-col">
-      <Seo
-        title="SciScribe Solutions Portfolio | Scientific Editing Success Stories"
-        description="Explore our portfolio of successful scientific editing and research consulting projects across various disciplines and publications."
+      <RouterAwareSeo
+        title="Portfolio | SciScribe Solutions"
+        description="Explore our portfolio of successful scientific editing, manuscript preparation, and research support projects across various disciplines."
+        trackPageView={false} // We're manually tracking the page view above
+        schema={createPortfolioStructuredData()}
       />
       <InteractiveBackground />
       <Navbar />

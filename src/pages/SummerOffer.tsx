@@ -1,4 +1,4 @@
-import Seo from "@/components/ui/Seo";
+import RouterAwareSeo from "@/components/ui/RouterAwareSeo";
 import { InteractiveBackground } from "@/components/background/InteractiveBackground";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
@@ -7,7 +7,7 @@ import SummerOfferSection from "@/components/sections/SummerOfferSection";
 const SummerOffer: React.FC = () => {
   return (
     <div className="flex min-h-screen flex-col">
-      <Seo
+      <RouterAwareSeo
         title="Exclusive Summer Offer | SciScribe Solutions"
         description="Claim your exclusive discount by filling out our special summer offer form. Limited time only!"
       />

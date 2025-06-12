@@ -1,6 +1,7 @@
 import { InteractiveBackground } from "@/components/background/InteractiveBackground";
 import Footer from "@/components/layout/Footer";
 import Navbar from "@/components/layout/Navbar";
+import RouterAwareSeo from "@/components/ui/RouterAwareSeo";
 import { motion } from "framer-motion";
 import { Mail, MapPin, Phone, MessageCircleMore } from "lucide-react";
 import { useState } from "react";
@@ -210,6 +211,32 @@ const addOnOptions = [
 
   return (
     <div className="flex min-h-screen flex-col">
+      <RouterAwareSeo
+        title="Contact Us | SciScribe Solutions"
+        description="Get in touch with our scientific editing and research support team. We're here to help with your academic publication needs."
+        trackPageView={true}
+        schema={{
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          "name": "SciScribe Solutions",
+          "url": "https://www.sciscribesolutions.com",
+          "logo": "https://www.sciscribesolutions.com/images/logo.png",
+          "contactPoint": {
+            "@type": "ContactPoint",
+            "telephone": "+91 9395582679",
+            "contactType": "customer service",
+            "email": "contact@sciscribesolutions.com",
+            "availableLanguage": ["English"]
+          },
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "Hazra Road",
+            "addressLocality": "Kolkata",
+            "addressRegion": "West Bengal",
+            "addressCountry": "India"
+          }
+        }}
+      />
       <InteractiveBackground />
       <Navbar />
       <main className="dark:bg-sciscribe-navy/5 pt-24">

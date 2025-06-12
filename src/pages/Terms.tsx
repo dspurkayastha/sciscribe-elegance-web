@@ -2,6 +2,9 @@
 import { motion } from "framer-motion";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
+import RouterAwareSeo from "@/components/ui/RouterAwareSeo";
+import { useAnalytics } from "@/hooks/useAnalytics";
+import { useEffect } from "react";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -25,8 +28,32 @@ const itemVariants = {
 };
 
 const Terms = () => {
+  const { logPageView } = useAnalytics();
+  
+  // Track page view when component mounts
+  useEffect(() => {
+    logPageView('/terms');
+  }, [logPageView]);
+
   return (
     <>
+      <RouterAwareSeo
+        title="Terms and Conditions | SciScribe Solutions"
+        description="Our terms and conditions outline the rules, guidelines, and legal agreements between SciScribe Solutions and users of our scientific editing services."
+        trackPageView={false} // We're manually tracking the page view above
+        noindex={false} // Terms should be indexed
+        schema={{
+          "@context": "https://schema.org",
+          "@type": "WebPage",
+          "name": "Terms and Conditions",
+          "description": "Our terms and conditions outline the rules, guidelines, and legal agreements between SciScribe Solutions and users of our scientific editing services.",
+          "dateModified": "2025-04-12",
+          "publisher": {
+            "@type": "Organization",
+            "name": "SciScribe Solutions"
+          }
+        }}
+      />
       <Navbar />
       
       <main className="pt-20">

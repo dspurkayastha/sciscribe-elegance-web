@@ -1,6 +1,9 @@
 import { InteractiveBackground } from "@/components/background/InteractiveBackground";
 import Footer from "@/components/layout/Footer";
 import Navbar from "@/components/layout/Navbar";
+import RouterAwareSeo from "@/components/ui/RouterAwareSeo";
+import FAQSchema from "@/components/seo/FAQSchema";
+import { useAnalytics } from "@/hooks/useAnalytics";
 import { motion } from "framer-motion";
 import { Check, HelpCircle, FileText, Search, BarChart4, TrendingUp, Clock } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -43,6 +46,12 @@ const Pricing = () => {
   const [projectDetails, setProjectDetails] = useState("");
   const [wordCount, setWordCount] = useState("");
   const [dialogOpen, setDialogOpen] = useState(false);
+  const { logPageView } = useAnalytics();
+  
+  // Track page view when component mounts
+  useEffect(() => {
+    logPageView('/pricing');
+  }, [logPageView]);
 
   const handleCustomQuoteSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -68,8 +77,68 @@ const Pricing = () => {
     visible: { opacity: 1, y: 0, transition: { duration: 0.5 } }
   };
 
+  // Create structured data for pricing
+  const pricingStructuredData = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "name": "SciScribe Scientific Editing Services",
+    "description": "Professional scientific editing and research support services for academics and researchers.",
+    "provider": {
+      "@type": "Organization",
+      "name": "SciScribe Solutions",
+      "url": "https://www.sciscribesolutions.com"
+    },
+    "offers": [
+      {
+        "@type": "Offer",
+        "name": "Basic Editing",
+        "description": "Grammar, spelling, and basic language improvements",
+        "price": "0.02",
+        "priceCurrency": "USD",
+        "priceSpecification": {
+          "@type": "UnitPriceSpecification",
+          "price": "0.02",
+          "priceCurrency": "USD",
+          "unitText": "word"
+        }
+      },
+      {
+        "@type": "Offer",
+        "name": "Advanced Editing",
+        "description": "Comprehensive editing with structural improvements and clarity enhancement",
+        "price": "0.04",
+        "priceCurrency": "USD",
+        "priceSpecification": {
+          "@type": "UnitPriceSpecification",
+          "price": "0.04",
+          "priceCurrency": "USD",
+          "unitText": "word"
+        }
+      },
+      {
+        "@type": "Offer",
+        "name": "Premium Editing",
+        "description": "Complete editing package with journal formatting and submission support",
+        "price": "0.06",
+        "priceCurrency": "USD",
+        "priceSpecification": {
+          "@type": "UnitPriceSpecification",
+          "price": "0.06",
+          "priceCurrency": "USD",
+          "unitText": "word"
+        }
+      }
+    ]
+  };
+
   return (
     <div className="flex min-h-screen flex-col">
+      <RouterAwareSeo
+        title="Pricing | SciScribe Solutions"
+        description="Transparent pricing for our scientific editing, manuscript preparation, and research support services. Choose the package that fits your needs and budget."
+        trackPageView={false} // We're manually tracking the page view above
+        schema={pricingStructuredData}
+      />
       <InteractiveBackground />
       <Navbar />
       <main className="dark:bg-sciscribe-navy/5 pt-24">
@@ -395,6 +464,25 @@ const Pricing = () => {
         {/* FAQ Section */}
         <LightningSeparator />
         <section className="section-container">
+          {/* Add structured data for pricing FAQs */}
+          <FAQSchema faqs={[
+            {
+              question: "How do I determine which package is right for me?",
+              answer: "Choose the Insight Package for basic language polishing, Enhance Package for comprehensive improvements, or Complete Package if you need full assistance with journal submission and reviewer responses."
+            },
+            {
+              question: "What payment methods do you accept?",
+              answer: "We accept payments via UPI, bank transfer, and all major credit cards through secure payment gateways. Detailed payment instructions are provided at checkout."
+            },
+            {
+              question: "Do you offer rush services?",
+              answer: "Yes, we offer expedited services for urgent projects with our Fast-Track Delivery add-on. This ensures your project gets priority attention while maintaining quality."
+            },
+            {
+              question: "Are there any hidden fees?",
+              answer: "No, our pricing is transparent with no hidden costs. The price quoted is the final amount you'll pay, with all included services clearly specified."
+            }
+          ]} />
           <div className="max-w-3xl mx-auto">
             <h2 className="text-3xl font-bold mb-8 text-center">Frequently Asked Questions</h2>
             

@@ -8,17 +8,20 @@ import { InteractiveBackground } from "@/components/background/InteractiveBackgr
 import AcademicPartnersSection from "@/components/sections/AcademicPartnersSection";
 import WhyChooseUsSection from "@/components/sections/WhyChooseUsSection";
 import CTASection from "@/components/sections/CTASection";
-import Seo from "@/components/ui/Seo";
+import RouterAwareSeo from "@/components/ui/RouterAwareSeo";
+import LocalBusinessSchema from "@/components/seo/LocalBusinessSchema";
 import LightningSeparator from "@/components/ui/lightningseparator";
 import EnhancedAcademicPartnersSection from "@/components/sections/EnhancedAcademicPartnersSection";
 
 const Index = () => {
   return (
     <div className="flex min-h-screen flex-col">
-      <Seo
+      <RouterAwareSeo
         title="SciScribe Solutions | Scientific Editing, Research Consulting & Publication Support"
         description="Professional academic editing, research consulting, journal submission support, and publication services for scientists, researchers, and students worldwide. Accelerate your research with our expert team."
       />
+      {/* Add LocalBusinessSchema for better local SEO */}
+      <LocalBusinessSchema />
       <InteractiveBackground />
       <Navbar />
       <main className="dark:bg-sciscribe-navy/5">

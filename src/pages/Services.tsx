@@ -8,8 +8,9 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import AddOnServicesSection from "@/components/sections/AddOnServicesSection";
 import ServicesCarouselSection from "@/components/sections/ServicesCarouselSection";
+import ServicesFAQ from "@/components/sections/ServicesFAQ";
 import LightningSeparator from "@/components/ui/lightningseparator";
-import Seo from "@/components/ui/Seo";
+import RouterAwareSeo from "@/components/ui/RouterAwareSeo";
 
 const Services = () => {
   const services = [
@@ -64,9 +65,10 @@ const Services = () => {
 
   return (
     <div className="flex min-h-screen flex-col">
-      <Seo
-        title="SciScribe Solutions Services | Scientific Editing & Research Support"
-        description="Explore our comprehensive scientific editing, research consulting, and publication support services designed to elevate your academic and research work."
+      <RouterAwareSeo
+        title="Our Services | Scientific Editing & Publication Support"
+        description="Professional scientific editing, journal submission support, research consultancy, and publication services for researchers and academics."
+        article={true}
       />
       <InteractiveBackground />
       <Navbar />
@@ -165,6 +167,11 @@ const Services = () => {
             </motion.div>
           </div>
         </section>
+        
+        <LightningSeparator />
+        
+        {/* Add FAQ Section with structured data */}
+        <ServicesFAQ />
       </main>
       <Footer />
     </div>

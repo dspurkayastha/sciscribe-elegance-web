@@ -1,5 +1,6 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
+import SEOHead from '@/components/seo/SEOHead';
 
 type DocumentProps = {
   children: React.ReactNode;
@@ -9,6 +10,7 @@ type DocumentProps = {
 export const Document: React.FC<DocumentProps> = ({ children, styles }) => {
   return (
     <>
+      <SEOHead />
       <Helmet>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover" />

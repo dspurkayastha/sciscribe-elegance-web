@@ -3,7 +3,6 @@
 
 User-agent: *
 Allow: /
-Crawl-delay: 10
 
 # Disallow specific paths
 Disallow: /admin/
@@ -13,10 +12,18 @@ Disallow: /*.json$
 Disallow: /*?*
 
 # Sitemap location
-Sitemap: https://sciscribe-solutions.com/sitemap.xml
+Sitemap: https://www.sciscribesolutions.com/sitemap.xml
 
-# Mobile-specific directives (if needed)
+# Mobile-specific directives
 User-agent: Googlebot-Mobile
+Allow: /
+
+# Image indexing
+User-agent: Googlebot-Image
+Allow: /
+
+# Video indexing
+User-agent: Googlebot-Video
 Allow: /
 
 # Block AI crawlers

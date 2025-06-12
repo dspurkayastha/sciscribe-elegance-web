@@ -10,7 +10,7 @@ import EnhancedJourneyTimeline from "@/components/sections/EnhancedJourneyTimeli
 import AboutSection from "@/components/sections/AboutSection";
 import TeamSection from "@/components/sections/TeamSection";
 import CoreValuesSection from "@/components/sections/CoreValuesSection";
-import Seo from "@/components/ui/Seo";
+import RouterAwareSeo from "@/components/ui/RouterAwareSeo";
 
 const About = () => {
   const containerVariants = {
@@ -25,9 +25,38 @@ const About = () => {
 
   return (
     <div className="flex min-h-screen flex-col">
-      <Seo
+      <RouterAwareSeo
         title="About SciScribe Solutions | Our Team & Values"
         description="Learn about SciScribe Solutions, our expert team, mission, vision, and core values that drive our commitment to excellence in scientific editing and research support."
+        trackPageView={true}
+        schema={{
+          "@context": "https://schema.org",
+          "@type": "AboutPage",
+          "name": "About SciScribe Solutions",
+          "description": "Learn about SciScribe Solutions, our expert team, mission, vision, and core values that drive our commitment to excellence in scientific editing and research support.",
+          "publisher": {
+            "@type": "Organization",
+            "name": "SciScribe Solutions",
+            "foundingDate": "2018",
+            "foundingLocation": "Kolkata, India",
+            "description": "SciScribe Solutions provides professional scientific editing, manuscript preparation, and research support services to help researchers publish their work effectively.",
+            "slogan": "Elevating Research Through Expert Editing",
+            "member": [
+              {
+                "@type": "Person",
+                "name": "Dr. Ananya Sharma",
+                "jobTitle": "Founder & Chief Editor",
+                "description": "PhD in Molecular Biology with over 15 years of research and editing experience"
+              },
+              {
+                "@type": "Person",
+                "name": "Dr. Rajiv Mehta",
+                "jobTitle": "Senior Scientific Editor",
+                "description": "PhD in Biochemistry with expertise in medical and life sciences editing"
+              }
+            ]
+          }
+        }}
       />
       <InteractiveBackground />
       <Navbar />
