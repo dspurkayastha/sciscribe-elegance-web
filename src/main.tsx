@@ -4,10 +4,14 @@ import { createRoot } from 'react-dom/client';
 import { StrictMode } from 'react';
 import App from './App';
 import './index.css';
+import initPerformanceMonitoring from './utils/performance';
 
 // Initialize Firebase (browser only)
 if (typeof window !== 'undefined') {
   import('./lib/firebase');
+  
+  // Initialize performance monitoring for Core Web Vitals
+  initPerformanceMonitoring();
 }
 
 // Register service worker in production

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useMemo } from "react";
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
 import { ChevronDown, ArrowRight, MessageCircleMore, Sparkles } from "lucide-react";
 import { ParticleGlow } from "@/components/ui/ParticleGlow";
@@ -6,6 +6,59 @@ import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { ConsultationOverlay } from "./ConsultationOverlay";
 import { useAnalytics } from "@/hooks/useAnalytics";
+import useResponsiveImage from "@/hooks/useResponsiveImage";
+
+// Separate component for the hero background image to optimize rendering
+const HeroBackgroundImage = () => {
+  // Use client-side only window measurement to avoid SSR issues
+  const [windowWidth, setWindowWidth] = useState(0);
+  
+  useEffect(() => {
+    // Set initial width only after component mounts (client-side)
+    setWindowWidth(window.innerWidth);
+    
+    // Function to update window width using requestAnimationFrame for performance
+    const handleResize = () => {
+      // Use RAF to avoid excessive updates during resize
+      requestAnimationFrame(() => {
+        setWindowWidth(window.innerWidth);
+      });
+    };
+    
+    // Add event listener with passive option for better performance
+    window.addEventListener('resize', handleResize, { passive: true });
+    
+    // Clean up event listener
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+  
+  // Select appropriate image based on screen width
+  const getBackgroundImage = useMemo(() => {
+    // Default image for SSR or before client measurement
+    if (windowWidth === 0) {
+      return '/images/hero-banner.webp';
+    }
+    
+    if (windowWidth <= 480) {
+      return '/images/responsive/hero-banner-small.webp';
+    } else if (windowWidth <= 768) {
+      return '/images/responsive/hero-banner-mobile.webp';
+    } else {
+      return '/images/hero-banner.webp';
+    }
+  }, [windowWidth]);
+
+  return (
+    <div 
+      className="absolute inset-0 bg-cover bg-center" 
+      style={{ 
+        backgroundImage: `url('${getBackgroundImage}')`,
+        willChange: "transform",
+        contain: "paint"
+      }} 
+    />
+  );
+};
 
 const HeroSection = () => {
   const heroRef = useRef<HTMLDivElement>(null);
@@ -30,6 +83,9 @@ const HeroSection = () => {
   }, [benefits.length]);
   
   useEffect(() => {
+    // Use requestAnimationFrame for better scroll performance
+    let ticking = false;
+    
     const handleScroll = () => {
       if (!heroRef.current) return;
       const scrollY = window.scrollY;
@@ -41,18 +97,26 @@ const HeroSection = () => {
         heroRef.current.style.opacity = opacity.toString();
         heroRef.current.style.transform = `scale(${scale}) translateY(${translateY}px)`;
       }
+      ticking = false;
     };
     
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    const onScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(handleScroll);
+        ticking = true;
+      }
+    };
+    
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   return (
     <section className="relative w-full min-h-screen overflow-visible md:h-screen md:overflow-hidden">
       {/* Background Image with Overlay */}
       <div className="absolute inset-0 z-0">
-        {/* Hero background image */}
-        <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: "url('https://sciscribe-website-images.s3.ap-south-1.amazonaws.com/website_imges/banner.webp')" }} />
+        {/* Hero background image - optimized with responsive images */}
+        <HeroBackgroundImage />
         
         {/* Gradient overlays for better text readability */}
         <div className="absolute inset-0 bg-gradient-to-r from-background/80 via-background/50 to-transparent" />
