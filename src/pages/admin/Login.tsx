@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { auth, googleProvider } from "@/lib/firebase";
@@ -7,6 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
 import { FcGoogle } from "react-icons/fc";
+import { useFirebase } from "@/hooks/useFirebase";
 
 export default function AdminLogin() {
   const [email, setEmail] = useState("");
@@ -14,9 +16,48 @@ export default function AdminLogin() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const { toast } = useToast();
+  const { isFirebaseAvailable } = useFirebase();
+
+  // Show configuration message if Firebase is not available
+  if (!isFirebaseAvailable) {
+    return (
+      <div className="relative flex min-h-screen items-center justify-center overflow-hidden">
+        <div
+          aria-hidden
+          className="absolute inset-0 z-0 animate-gradient bg-gradient-to-br from-sciscribe-navy/90 via-sciscribe-blue/70 to-sciscribe-gold/30 dark:from-slate-900 dark:via-slate-800 dark:to-slate-700"
+        />
+        <Card className="relative z-10 w-full max-w-md p-8 md:p-10 rounded-2xl shadow-2xl bg-white/80 dark:bg-slate-900/80 backdrop-blur-lg border border-slate-100 dark:border-slate-800">
+          <div className="text-center space-y-4">
+            <h1 className="text-2xl font-bold text-sciscribe-navy dark:text-sciscribe-gold">
+              Firebase Configuration Required
+            </h1>
+            <p className="text-muted-foreground">
+              Firebase environment variables are missing. Please configure your Firebase settings to enable authentication.
+            </p>
+            <div className="text-left space-y-2 text-sm">
+              <p className="font-medium">Required environment variables:</p>
+              <ul className="list-disc list-inside space-y-1 text-muted-foreground">
+                <li>VITE_FIREBASE_API_KEY</li>
+                <li>VITE_FIREBASE_AUTH_DOMAIN</li>
+                <li>VITE_FIREBASE_PROJECT_ID</li>
+                <li>VITE_FIREBASE_STORAGE_BUCKET</li>
+                <li>VITE_FIREBASE_MESSAGING_SENDER_ID</li>
+                <li>VITE_FIREBASE_APP_ID</li>
+              </ul>
+            </div>
+            <Button onClick={() => window.location.reload()} className="w-full">
+              Refresh Page
+            </Button>
+          </div>
+        </Card>
+      </div>
+    );
+  }
 
   const handleEmailLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (!auth) return;
+    
     setLoading(true);
     try {
       await signInWithEmailAndPassword(auth, email, password);
@@ -31,6 +72,8 @@ export default function AdminLogin() {
   };
 
   const handleGoogleLogin = async () => {
+    if (!auth || !googleProvider) return;
+    
     setLoading(true);
     try {
       await signInWithPopup(auth, googleProvider);
@@ -51,11 +94,9 @@ export default function AdminLogin() {
         aria-hidden
         className="absolute inset-0 z-0 animate-gradient bg-gradient-to-br from-sciscribe-navy/90 via-sciscribe-blue/70 to-sciscribe-gold/30 dark:from-slate-900 dark:via-slate-800 dark:to-slate-700"
       />
-      {/* Glassmorphism Card */}
       <Card className="relative z-10 w-full max-w-md p-8 md:p-10 rounded-2xl shadow-2xl bg-white/80 dark:bg-slate-900/80 backdrop-blur-lg border border-slate-100 dark:border-slate-800">
         {/* Logo and Heading */}
         <div className="flex flex-col items-center mb-8">
-          {/* Login SVG Icon */}
           <span className="mb-2 rounded-full bg-sciscribe-navy/10 dark:bg-sciscribe-gold/10 p-3 shadow-lg">
             <svg
               xmlns="http://www.w3.org/2000/svg"
