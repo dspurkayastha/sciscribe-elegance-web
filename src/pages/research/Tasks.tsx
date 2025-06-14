@@ -208,41 +208,53 @@ export default function TasksPage() {
   const handleSaveTask = (data: TaskFormData) => {
     const assigneeAvatar = data.assigneeName.substring(0, 2).toUpperCase();
     const taskTags = data.tags ? data.tags.split(',').map(tag => tag.trim()).filter(tag => tag) : [];
-    
     const formSubtasks = data.subtasks?.map(st => ({
-        id: st.id || crypto.randomUUID(), // Ensure new subtasks get an ID
+        id: st.id || crypto.randomUUID(),
         title: st.title,
         completed: st.completed,
     })) || [];
-
     const progress = calculateProgressFromSubtasks(formSubtasks);
 
     if (editingTask) {
       // Update existing task
       const updatedTask: Task = {
         ...editingTask,
-        ...data,
+        title: data.title,
+        description: data.description || '',
+        status: data.status,
+        priority: data.priority,
+        project: data.project || '',
         assignee: { name: data.assigneeName, avatar: assigneeAvatar },
+        dueDate: data.dueDate || '',
         tags: taskTags,
         subtasks: formSubtasks,
         progress: data.status === "Completed" ? 100 : progress,
-        // Keep existing customFields, comments, attachments if not part of form
+        createdAt: editingTask.createdAt,
+        comments: editingTask.comments,
+        attachments: editingTask.attachments,
+        id: editingTask.id,
+        customFields: editingTask.customFields ?? [],
       };
       setTasksData(prevTasks => prevTasks.map(t => t.id === editingTask.id ? updatedTask : t));
     } else {
-      // Create new task
+      // Create new task -- provide ALL required Task fields
+      const now = new Date().toISOString().split('T')[0];
       const newTask: Task = {
-        id: Date.now(), // Simple ID generation
-        ...data,
+        id: Date.now(),
+        title: data.title,
+        description: data.description || '',
+        status: data.status,
+        priority: data.priority,
+        project: data.project || '',
         assignee: { name: data.assigneeName, avatar: assigneeAvatar },
-        dueDate: data.dueDate || new Date().toISOString().split('T')[0], // Default due date if empty
-        progress: data.status === "Completed" ? 100 : progress,
-        subtasks: formSubtasks,
+        dueDate: data.dueDate || now,
         tags: taskTags,
-        createdAt: new Date().toISOString().split('T')[0],
+        subtasks: formSubtasks,
+        progress: data.status === "Completed" ? 100 : progress,
+        createdAt: now,
         comments: 0,
         attachments: 0,
-        customFields: [], // New tasks start with no custom fields via form
+        customFields: [],
       };
       setTasksData(prevTasks => [newTask, ...prevTasks]);
     }
