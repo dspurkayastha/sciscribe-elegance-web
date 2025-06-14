@@ -1,4 +1,3 @@
-
 import { lazy, Suspense, useEffect } from 'react';
 import { HelmetProvider } from 'react-helmet-async';
 import { Toaster } from "@/components/ui/toaster";
@@ -54,6 +53,11 @@ const AdminSettingsPage = lazy(() => import("./pages/admin/Settings"));
 // Research Portal Components
 const ResearchLogin = lazy(() => import("./pages/research/Login"));
 const ResearchDashboard = lazy(() => import("./pages/research/Dashboard"));
+const ProjectsPage = lazy(() => import("./pages/research/Projects"));
+const TasksPage = lazy(() => import("./pages/research/Tasks"));
+const CalendarPage = lazy(() => import("./pages/research/Calendar"));
+const MessagesPage = lazy(() => import("./pages/research/Messages"));
+const ReportsPage = lazy(() => import("./pages/research/Reports"));
 
 // Configure query client with default options
 const queryClient = new QueryClient({
@@ -117,6 +121,11 @@ const App = () => (
                   {/* Research Portal routes */}
                   <Route path="/research/login" element={<ResearchLogin />} />
                   <Route path="/research" element={<ResearchDashboard />} />
+                  <Route path="/research/projects" element={<ProjectsPage />} />
+                  <Route path="/research/tasks" element={<TasksPage />} />
+                  <Route path="/research/calendar" element={<CalendarPage />} />
+                  <Route path="/research/messages" element={<MessagesPage />} />
+                  <Route path="/research/reports" element={<ReportsPage />} />
                   
                   <Route path="*" element={<NotFound />} />
                 </Routes>
