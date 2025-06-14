@@ -28,6 +28,15 @@ export default function ResearchLayout({ children, activeView }: ResearchLayoutP
   const [searchQuery, setSearchQuery] = useState("");
 
   const handleLogout = async () => {
+    // Handle development logout
+    const devAuth = localStorage.getItem('dev-auth');
+    if (devAuth === 'true') {
+      localStorage.removeItem('dev-auth');
+      navigate("/research/login");
+      return;
+    }
+
+    // Handle Firebase logout
     await auth?.signOut();
     navigate("/research/login");
   };
@@ -101,7 +110,7 @@ export default function ResearchLayout({ children, activeView }: ResearchLayoutP
               <div className="flex items-center space-x-2">
                 <Avatar className="w-8 h-8">
                   <AvatarFallback className="bg-sciscribe-gold text-sciscribe-navy font-semibold">
-                    U
+                    {localStorage.getItem('dev-auth') === 'true' ? 'D' : 'U'}
                   </AvatarFallback>
                 </Avatar>
                 <Button 

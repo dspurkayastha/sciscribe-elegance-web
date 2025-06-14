@@ -10,6 +10,12 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
 import { useFirebase } from "@/hooks/useFirebase";
 
+// Development credentials for testing
+const DEV_CREDENTIALS = {
+  email: "dev@sciscribe.com",
+  password: "dev123"
+};
+
 export default function ResearchLogin() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -61,8 +67,22 @@ export default function ResearchLogin() {
     );
   }
 
+  const handleDevLogin = () => {
+    // Simulate successful login for development
+    localStorage.setItem('dev-auth', 'true');
+    toast({ title: "Development login successful", variant: "default" });
+    navigate("/research");
+  };
+
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Check for development credentials
+    if (email === DEV_CREDENTIALS.email && password === DEV_CREDENTIALS.password) {
+      handleDevLogin();
+      return;
+    }
+    
     if (!auth) return;
     
     setLoading(true);
@@ -108,6 +128,19 @@ export default function ResearchLogin() {
           </CardDescription>
         </CardHeader>
         <CardContent>
+          {/* Development Login Banner */}
+          <div className="bg-amber-50 border border-amber-200 rounded-lg p-3 mb-4">
+            <div className="flex items-center space-x-2">
+              <div className="w-4 h-4 bg-amber-400 rounded-full flex-shrink-0"></div>
+              <div>
+                <p className="text-sm font-medium text-amber-800">Development Mode</p>
+                <p className="text-xs text-amber-700">
+                  Use: <strong>dev@sciscribe.com</strong> / <strong>dev123</strong>
+                </p>
+              </div>
+            </div>
+          </div>
+
           <Tabs defaultValue="login" className="w-full">
             <TabsList className="grid w-full grid-cols-2 mb-6">
               <TabsTrigger value="login">Login</TabsTrigger>

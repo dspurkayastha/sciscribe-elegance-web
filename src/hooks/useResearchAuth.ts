@@ -11,6 +11,14 @@ export function useResearchAuth() {
   const { isFirebaseAvailable } = useFirebase();
 
   useEffect(() => {
+    // Check for development authentication
+    const devAuth = localStorage.getItem('dev-auth');
+    if (devAuth === 'true') {
+      setAuthenticated(true);
+      setLoading(false);
+      return;
+    }
+
     if (!isFirebaseAvailable) {
       setLoading(false);
       return;
