@@ -456,7 +456,7 @@ export default function TasksPage() {
                             <Calendar className="w-3 h-3 mr-1" />
                             {task.dueDate}
                           </div>
-                           <Badge className={`${getStatusColor(task.status)} text-xs`} size="sm">
+                           <Badge className={`${getStatusColor(task.status)} text-xs`}> {/* Removed size="sm" here */}
                             {task.status}
                           </Badge>
                         </div>
