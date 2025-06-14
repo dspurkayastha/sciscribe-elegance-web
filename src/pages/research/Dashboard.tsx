@@ -1,4 +1,7 @@
 
+import { useSearchParams } from "react-router-dom";
+import { useResearchAuth } from "@/hooks/useResearchAuth";
+import { useFirebase } from "@/hooks/useFirebase";
 import ResearchLayout from "@/components/research/ResearchLayout";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -49,7 +52,11 @@ const upcomingTasks = [
 ];
 
 export default function ResearchDashboard() {
+  const { loading, authenticated } = useResearchAuth();
+  const { isFirebaseAvailable } = useFirebase();
+  const [searchParams] = useSearchParams();
   const [selectedProject, setSelectedProject] = useState<number | null>(null);
+  const isDemoMode = searchParams.get("demo") === "true";
 
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -69,9 +76,63 @@ export default function ResearchDashboard() {
     }
   };
 
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-sciscribe-light">
+        <div className="animate-pulse flex space-x-4">
+          <div className="rounded-full bg-sciscribe-gold h-4 w-4"></div>
+          <div className="rounded-full bg-sciscribe-blue h-4 w-4"></div>
+          <div className="rounded-full bg-sciscribe-navy h-4 w-4"></div>
+        </div>
+      </div>
+    );
+  }
+
+  if (!isFirebaseAvailable && !isDemoMode) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-sciscribe-light">
+        <Card className="max-w-md">
+          <CardHeader>
+            <CardTitle className="text-sciscribe-navy">Configuration Required</CardTitle>
+            <CardDescription>
+              Please configure Firebase or use demo mode to access the research portal.
+            </CardDescription>
+          </CardHeader>
+        </Card>
+      </div>
+    );
+  }
+
+  if (isFirebaseAvailable && !authenticated && !isDemoMode) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-sciscribe-light">
+        <Card className="max-w-md">
+          <CardHeader>
+            <CardTitle className="text-sciscribe-navy">Authentication Required</CardTitle>
+            <CardDescription>
+              Please log in to access the research collaboration platform.
+            </CardDescription>
+          </CardHeader>
+        </Card>
+      </div>
+    );
+  }
+
   return (
     <ResearchLayout activeView="home">
       <div className="p-6 space-y-6">
+        {isDemoMode && (
+          <div className="bg-sciscribe-gold/10 border border-sciscribe-gold/20 rounded-lg p-4 mb-6">
+            <div className="flex items-center space-x-2">
+              <AlertCircle className="w-5 h-5 text-sciscribe-gold" />
+              <span className="font-medium text-sciscribe-navy">Demo Mode</span>
+            </div>
+            <p className="text-sm text-sciscribe-navy/70 mt-1">
+              You're viewing a demonstration of the research collaboration platform. Some features may be limited.
+            </p>
+          </div>
+        )}
+
         {/* Header */}
         <div className="flex items-center justify-between">
           <div>

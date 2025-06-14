@@ -11,8 +11,13 @@ export function useResearchAuth() {
   const { isFirebaseAvailable } = useFirebase();
 
   useEffect(() => {
-    if (!isFirebaseAvailable || !auth) {
-      navigate("/research/login");
+    if (!isFirebaseAvailable) {
+      setLoading(false);
+      return;
+    }
+
+    if (!auth) {
+      setLoading(false);
       return;
     }
 
@@ -20,13 +25,13 @@ export function useResearchAuth() {
       if (user) {
         setAuthenticated(true);
       } else {
-        navigate("/research/login");
+        setAuthenticated(false);
       }
       setLoading(false);
     });
 
     return () => unsubscribe();
-  }, [navigate, isFirebaseAvailable]);
+  }, [isFirebaseAvailable]);
 
   return { loading, authenticated };
 }

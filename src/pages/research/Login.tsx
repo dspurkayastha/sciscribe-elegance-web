@@ -20,14 +20,42 @@ export default function ResearchLogin() {
 
   if (!isFirebaseAvailable) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-sciscribe-navy/90 via-sciscribe-blue/70 to-sciscribe-gold/30">
-        <Card className="w-full max-w-md p-8 bg-white/80 backdrop-blur-lg">
-          <CardHeader>
-            <CardTitle className="text-sciscribe-navy">Firebase Configuration Required</CardTitle>
-            <CardDescription>
-              Please configure Firebase to access the research collaboration platform.
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-sciscribe-navy/90 via-sciscribe-blue/70 to-sciscribe-gold/30 p-4">
+        <Card className="w-full max-w-md bg-white/90 backdrop-blur-lg shadow-2xl border border-sciscribe-gold/20">
+          <CardHeader className="text-center">
+            <div className="mx-auto mb-4 w-16 h-16 bg-sciscribe-gold/10 rounded-full flex items-center justify-center">
+              <svg className="w-8 h-8 text-sciscribe-navy" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+              </svg>
+            </div>
+            <CardTitle className="text-2xl font-bold text-sciscribe-navy">Research Portal Setup</CardTitle>
+            <CardDescription className="text-sciscribe-navy/70">
+              Firebase configuration required to access the research collaboration platform
             </CardDescription>
           </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="bg-sciscribe-gold/10 border border-sciscribe-gold/20 rounded-lg p-4">
+              <h3 className="font-semibold text-sciscribe-navy mb-2">Setup Options:</h3>
+              <ul className="text-sm text-sciscribe-navy/80 space-y-2">
+                <li>• <strong>Option 1:</strong> Add Firebase config to enable authentication</li>
+                <li>• <strong>Option 2:</strong> Use Supabase integration (recommended)</li>
+                <li>• <strong>Option 3:</strong> Demo mode (limited functionality)</li>
+              </ul>
+            </div>
+            <Button 
+              onClick={() => navigate("/research?demo=true")} 
+              className="w-full bg-sciscribe-navy hover:bg-sciscribe-blue text-white"
+            >
+              Continue with Demo Mode
+            </Button>
+            <Button 
+              onClick={() => navigate("/")} 
+              variant="outline" 
+              className="w-full border-sciscribe-gold text-sciscribe-navy hover:bg-sciscribe-gold/10"
+            >
+              Back to Main Site
+            </Button>
+          </CardContent>
         </Card>
       </div>
     );
