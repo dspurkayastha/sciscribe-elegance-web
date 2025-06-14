@@ -1,11 +1,9 @@
-
-import { useState, ChangeEvent } from "react";
+import { useState, ChangeEvent, useMemo } from "react";
 import ResearchLayout from "@/components/research/ResearchLayout";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
-// Avatar, Checkbox, Progress are now used in sub-components
 import {
   Select,
   SelectContent,
@@ -14,14 +12,21 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { 
-  Plus, Search, Filter, Flag, List, Kanban, CheckSquare
-  // Calendar, Clock, Users, MoreHorizontal, ChevronDown, ChevronRight, Edit3, Tag, Square, Star
-  // Some icons are moved to sub-components or no longer directly used here
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogFooter,
+} from "@/components/ui/dialog";
+import { 
+  Plus, Search, Filter, Flag, List, Kanban, CheckSquare, Pencil
 } from "lucide-react";
 
-import { Task } from '@/types/task'; // Using the new types file
+import { Task, Subtask, CustomField } from '@/types/task';
 import TaskItem from "@/components/research/tasks/TaskItem";
 import TaskCard from "@/components/research/tasks/TaskCard";
+import TaskForm, { TaskFormData } from "@/components/research/tasks/TaskForm"; // Import TaskForm and its data type
 
 // initialSampleTasks, Subtask, CustomField definitions moved or types imported
 
@@ -113,6 +118,12 @@ export default function TasksPage() {
   const [viewMode, setViewMode] = useState<"list" | "board">("list");
   const [expandedTasks, setExpandedTasks] = useState<Set<number>>(new Set());
 
+  const [isTaskModalOpen, setIsTaskModalOpen] = useState(false);
+  const [editingTask, setEditingTask] = useState<Task | null>(null);
+
+  const taskStatusesForForm = useMemo(() => taskStatuses.filter(s => s !== "All"), []);
+  const taskPrioritiesForForm = useMemo(() => taskPriorities.filter(p => p !== "All"), []);
+
   const getStatusColor = (status: string) => {
     switch (status) {
       case "To Do": return "bg-gray-100 text-gray-800";
@@ -148,6 +159,11 @@ export default function TasksPage() {
               subtasks: task.subtasks.map(subtask =>
                 subtask.id === subtaskId ? { ...subtask, completed } : subtask
               ),
+              progress: task.subtasks.length > 0 
+                        ? Math.round(
+                            (task.subtasks.filter(st => st.id === subtaskId ? completed : st.completed).length / task.subtasks.length) * 100
+                          ) 
+                        : task.progress,
             }
           : task
       )
@@ -160,12 +176,77 @@ export default function TasksPage() {
         task.id === taskId
           ? {
               ...task,
-              status: currentStatus === "Completed" ? "In Progress" : "Completed",
-              progress: currentStatus === "Completed" ? (task.subtasks.filter(st => st.completed).length / task.subtasks.length * 100 || 0) : 100,
+              status: currentStatus === "Completed" ? (task.subtasks.some(st => !st.completed) ? "In Progress" : "To Do") : "Completed",
+              progress: currentStatus === "Completed" ? (task.subtasks.length > 0 ? Math.round((task.subtasks.filter(st => st.completed).length / task.subtasks.length) * 100) : 0) : 100,
             }
           : task
       )
     );
+  };
+
+  const openCreateTaskModal = () => {
+    setEditingTask(null);
+    setIsTaskModalOpen(true);
+  };
+
+  const openEditTaskModal = (task: Task) => {
+    setEditingTask(task);
+    setIsTaskModalOpen(true);
+  };
+
+  const closeTaskModal = () => {
+    setIsTaskModalOpen(false);
+    setEditingTask(null);
+  };
+
+  const calculateProgressFromSubtasks = (subtasks: Subtask[]): number => {
+    if (!subtasks || subtasks.length === 0) return 0;
+    const completedCount = subtasks.filter(st => st.completed).length;
+    return Math.round((completedCount / subtasks.length) * 100);
+  };
+
+  const handleSaveTask = (data: TaskFormData) => {
+    const assigneeAvatar = data.assigneeName.substring(0, 2).toUpperCase();
+    const taskTags = data.tags ? data.tags.split(',').map(tag => tag.trim()).filter(tag => tag) : [];
+    
+    const formSubtasks = data.subtasks?.map(st => ({
+        id: st.id || crypto.randomUUID(), // Ensure new subtasks get an ID
+        title: st.title,
+        completed: st.completed,
+    })) || [];
+
+    const progress = calculateProgressFromSubtasks(formSubtasks);
+
+    if (editingTask) {
+      // Update existing task
+      const updatedTask: Task = {
+        ...editingTask,
+        ...data,
+        assignee: { name: data.assigneeName, avatar: assigneeAvatar },
+        tags: taskTags,
+        subtasks: formSubtasks,
+        progress: data.status === "Completed" ? 100 : progress,
+        // Keep existing customFields, comments, attachments if not part of form
+      };
+      setTasksData(prevTasks => prevTasks.map(t => t.id === editingTask.id ? updatedTask : t));
+    } else {
+      // Create new task
+      const newTask: Task = {
+        id: Date.now(), // Simple ID generation
+        ...data,
+        assignee: { name: data.assigneeName, avatar: assigneeAvatar },
+        dueDate: data.dueDate || new Date().toISOString().split('T')[0], // Default due date if empty
+        progress: data.status === "Completed" ? 100 : progress,
+        subtasks: formSubtasks,
+        tags: taskTags,
+        createdAt: new Date().toISOString().split('T')[0],
+        comments: 0,
+        attachments: 0,
+        customFields: [], // New tasks start with no custom fields via form
+      };
+      setTasksData(prevTasks => [newTask, ...prevTasks]);
+    }
+    closeTaskModal();
   };
 
   const filteredTasks = tasksData.filter(task => {
@@ -191,7 +272,7 @@ export default function TasksPage() {
             <h1 className="text-3xl font-bold text-sciscribe-navy">Tasks</h1>
             <p className="text-sciscribe-slate mt-1">Manage and track your research tasks</p>
           </div>
-          <Button className="bg-sciscribe-navy hover:bg-sciscribe-blue text-white">
+          <Button className="bg-sciscribe-navy hover:bg-sciscribe-blue text-white" onClick={openCreateTaskModal}>
             <Plus className="w-4 h-4 mr-2" />
             New Task
           </Button>
@@ -267,7 +348,7 @@ export default function TasksPage() {
           <div className="space-y-3">
             {filteredTasks.map((task) => (
               <Card key={task.id} className="hover:shadow-md transition-shadow">
-                <CardContent className="p-0"> {/* Adjusted padding for TaskItem */}
+                <CardContent className="p-0">
                   <TaskItem
                     task={task}
                     isExpanded={expandedTasks.has(task.id)}
@@ -276,6 +357,7 @@ export default function TasksPage() {
                     onSubtaskChange={handleSubtaskChange}
                     getStatusColor={getStatusColor}
                     getPriorityIcon={getPriorityIcon}
+                    onEditTask={openEditTaskModal} // Pass edit handler
                   />
                 </CardContent>
               </Card>
@@ -296,6 +378,7 @@ export default function TasksPage() {
                       task={task}
                       getStatusColor={getStatusColor}
                       getPriorityIcon={getPriorityIcon}
+                      onEditTask={openEditTaskModal} // Pass edit handler
                     />
                   ))}
                    {tasksInStatus.length === 0 && (
@@ -317,6 +400,25 @@ export default function TasksPage() {
           </div>
         )}
       </div>
+
+      {/* Task Form Dialog */}
+      <Dialog open={isTaskModalOpen} onOpenChange={(isOpen) => { if (!isOpen) closeTaskModal(); else setIsTaskModalOpen(true); }}>
+        <DialogContent className="sm:max-w-[600px] max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>{editingTask ? 'Edit Task' : 'Create New Task'}</DialogTitle>
+            <DialogDescription>
+              {editingTask ? 'Update the details of your task.' : 'Fill in the details for your new task.'}
+            </DialogDescription>
+          </DialogHeader>
+          <TaskForm
+            onSubmit={handleSaveTask}
+            onCancel={closeTaskModal}
+            initialData={editingTask || undefined}
+            taskStatuses={taskStatusesForForm}
+            taskPriorities={taskPrioritiesForForm}
+          />
+        </DialogContent>
+      </Dialog>
     </ResearchLayout>
   );
 }

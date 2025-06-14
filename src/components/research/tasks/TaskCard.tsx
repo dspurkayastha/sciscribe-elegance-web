@@ -4,21 +4,34 @@ import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Progress } from '@/components/ui/progress';
-import { Calendar } from 'lucide-react';
+import { Calendar, Pencil } from 'lucide-react'; // Added Pencil
 import { Task } from '@/types/task';
+import { Button } from '@/components/ui/button'; // Added Button
 
 interface TaskCardProps {
   task: Task;
   getStatusColor: (status: string) => string;
   getPriorityIcon: (priority: string) => JSX.Element;
+  onEditTask: (task: Task) => void; // New prop
 }
 
-const TaskCard: React.FC<TaskCardProps> = ({ task, getStatusColor, getPriorityIcon }) => {
+const TaskCard: React.FC<TaskCardProps> = ({ task, getStatusColor, getPriorityIcon, onEditTask }) => {
   return (
-    <Card className="p-3 hover:shadow-lg transition-shadow cursor-pointer bg-white">
+    <Card className="p-3 hover:shadow-lg transition-shadow bg-white relative group">
+      <Button 
+        variant="ghost" 
+        size="icon" 
+        className="absolute top-1 right-1 w-7 h-7 opacity-0 group-hover:opacity-100 transition-opacity"
+        onClick={(e) => {
+          e.stopPropagation(); // Prevent card click if any
+          onEditTask(task);
+        }}
+      >
+        <Pencil className="w-3.5 h-3.5 text-sciscribe-slate" />
+      </Button>
       <div className="space-y-2">
         <div className="flex items-start justify-between">
-          <h4 className="font-medium text-sciscribe-navy text-sm line-clamp-2">{task.title}</h4>
+          <h4 className="font-medium text-sciscribe-navy text-sm line-clamp-2 mr-8">{task.title}</h4>
           {getPriorityIcon(task.priority)}
         </div>
         <p className="text-xs text-sciscribe-slate line-clamp-2">{task.description}</p>
@@ -60,3 +73,4 @@ const TaskCard: React.FC<TaskCardProps> = ({ task, getStatusColor, getPriorityIc
 };
 
 export default TaskCard;
+
