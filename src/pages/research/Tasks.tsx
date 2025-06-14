@@ -1,7 +1,6 @@
-
-import { useState } from "react";
+import { useState, ChangeEvent } from "react";
 import ResearchLayout from "@/components/research/ResearchLayout";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
@@ -18,13 +17,43 @@ import {
 import { 
   Plus, Search, Filter, Calendar, Clock, Users, 
   CheckSquare, Square, Star, Flag, MoreHorizontal,
-  ChevronDown, ChevronRight, List, Kanban
+  ChevronDown, ChevronRight, List, Kanban, Edit3, Tag
 } from "lucide-react";
 
-const taskStatuses = ["All", "To Do", "In Progress", "In Review", "Completed"];
-const taskPriorities = ["High", "Medium", "Low"];
+// Define types for Subtask and CustomField
+interface Subtask {
+  id: string;
+  title: string;
+  completed: boolean;
+}
 
-const sampleTasks = [
+interface CustomField {
+  id: string;
+  name: string;
+  value: string | number | boolean;
+  type: 'text' | 'select' | 'number' | 'boolean' | 'date';
+  options?: string[];
+}
+
+interface Task {
+  id: number;
+  title: string;
+  description: string;
+  status: string;
+  priority: string;
+  project: string;
+  assignee: { name: string; avatar: string };
+  dueDate: string;
+  progress: number;
+  subtasks: Subtask[];
+  tags: string[];
+  createdAt: string;
+  comments: number;
+  attachments: number;
+  customFields?: CustomField[];
+}
+
+const initialSampleTasks: Task[] = [
   {
     id: 1,
     title: "Review protein folding algorithm",
@@ -33,17 +62,21 @@ const sampleTasks = [
     priority: "High",
     project: "Protein Folding Analysis",
     assignee: { name: "Dr. Smith", avatar: "DS" },
-    dueDate: "2024-01-10",
+    dueDate: "2024-07-10",
     progress: 75,
     subtasks: [
-      { id: 11, title: "Collect performance data", completed: true },
-      { id: 12, title: "Run benchmark tests", completed: true },
-      { id: 13, title: "Document findings", completed: false }
+      { id: "sub1-1", title: "Collect performance data", completed: true },
+      { id: "sub1-2", title: "Run benchmark tests", completed: true },
+      { id: "sub1-3", title: "Document findings", completed: false }
     ],
-    tags: ["Research", "AI"],
-    createdAt: "2024-01-05",
+    tags: ["Research", "AI", "Deep Learning"],
+    createdAt: "2024-07-05",
     comments: 3,
-    attachments: 2
+    attachments: 2,
+    customFields: [
+      { id: "cf1", name: "Review Cycle", value: "2nd", type: "number" },
+      { id: "cf2", name: "Hypothesis Validated", value: false, type: "boolean" }
+    ]
   },
   {
     id: 2,
@@ -53,41 +86,55 @@ const sampleTasks = [
     priority: "Medium",
     project: "Clinical Trial Data Management",
     assignee: { name: "Dr. Brown", avatar: "DB" },
-    dueDate: "2024-01-15",
-    progress: 0,
+    dueDate: "2024-07-15",
+    progress: 10, // Updated progress
     subtasks: [
-      { id: 21, title: "Gather trial data", completed: false },
-      { id: 22, title: "Perform statistical analysis", completed: false },
-      { id: 23, title: "Write executive summary", completed: false }
+      { id: "sub2-1", title: "Gather trial data (Source A)", completed: true },
+      { id: "sub2-2", title: "Gather trial data (Source B)", completed: false },
+      { id: "sub2-3", title: "Perform statistical analysis", completed: false },
+      { id: "sub2-4", title: "Write executive summary", completed: false }
     ],
-    tags: ["Clinical", "Statistics"],
-    createdAt: "2024-01-03",
+    tags: ["Clinical", "Statistics", "Reporting"],
+    createdAt: "2024-07-03",
     comments: 1,
-    attachments: 5
+    attachments: 5,
+    customFields: [
+      { id: "cf3", name: "Data Source", value: "Internal DB", type: "text" },
+      { id: "cf4", name: "Urgency", value: "Medium", type: "select", options: ["Low", "Medium", "High"] }
+    ]
   },
   {
     id: 3,
     title: "Validate gene expression markers",
-    description: "Cross-reference biomarkers with existing literature",
+    description: "Cross-reference biomarkers with existing literature and databases",
     status: "Completed",
     priority: "High",
     project: "Gene Expression Study",
     assignee: { name: "Dr. Garcia", avatar: "DG" },
-    dueDate: "2023-12-28",
+    dueDate: "2024-06-28",
     progress: 100,
     subtasks: [
-      { id: 31, title: "Literature review", completed: true },
-      { id: 32, title: "Biomarker validation", completed: true },
-      { id: 33, title: "Final documentation", completed: true }
+      { id: "sub3-1", title: "Literature review", completed: true },
+      { id: "sub3-2", title: "Biomarker validation (Database A)", completed: true },
+      { id: "sub3-3", title: "Biomarker validation (Database B)", completed: true },
+      { id: "sub3-4", title: "Final documentation", completed: true }
     ],
-    tags: ["Genomics", "Validation"],
-    createdAt: "2023-12-20",
+    tags: ["Genomics", "Validation", "Biomarkers"],
+    createdAt: "2024-06-20",
     comments: 8,
-    attachments: 3
+    attachments: 3,
+    customFields: [
+      { id: "cf5", name: "Validation Method", value: "Cross-sectional", type: "select", options: ["Cross-sectional", "Longitudinal"] },
+      { id: "cf6", name: "Publication Target", value: "Nature Genetics", type: "text" }
+    ]
   }
 ];
 
+const taskStatuses = ["All", "To Do", "In Progress", "In Review", "Completed"];
+const taskPriorities = ["All", "High", "Medium", "Low"]; // Added "All"
+
 export default function TasksPage() {
+  const [tasksData, setTasksData] = useState<Task[]>(initialSampleTasks);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedStatus, setSelectedStatus] = useState("All");
   const [selectedPriority, setSelectedPriority] = useState("All");
@@ -120,9 +167,39 @@ export default function TasksPage() {
     setExpandedTasks(newExpanded);
   };
 
-  const filteredTasks = sampleTasks.filter(task => {
+  const handleSubtaskChange = (taskId: number, subtaskId: string, completed: boolean) => {
+    setTasksData(prevTasks =>
+      prevTasks.map(task =>
+        task.id === taskId
+          ? {
+              ...task,
+              subtasks: task.subtasks.map(subtask =>
+                subtask.id === subtaskId ? { ...subtask, completed } : subtask
+              ),
+            }
+          : task
+      )
+    );
+  };
+  
+  const handleTaskCompletionToggle = (taskId: number, currentStatus: string) => {
+    setTasksData(prevTasks =>
+      prevTasks.map(task =>
+        task.id === taskId
+          ? {
+              ...task,
+              status: currentStatus === "Completed" ? "In Progress" : "Completed", // Basic toggle
+              progress: currentStatus === "Completed" ? (task.subtasks.filter(st => st.completed).length / task.subtasks.length * 100 || 0) : 100,
+            }
+          : task
+      )
+    );
+  };
+
+  const filteredTasks = tasksData.filter(task => {
     const matchesSearch = task.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         task.description.toLowerCase().includes(searchQuery.toLowerCase());
+                         task.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                         (task.customFields && task.customFields.some(cf => String(cf.value).toLowerCase().includes(searchQuery.toLowerCase())));
     const matchesStatus = selectedStatus === "All" || task.status === selectedStatus;
     const matchesPriority = selectedPriority === "All" || task.priority === selectedPriority;
     return matchesSearch && matchesStatus && matchesPriority;
@@ -131,7 +208,7 @@ export default function TasksPage() {
   const tasksByStatus = taskStatuses.slice(1).reduce((acc, status) => {
     acc[status] = filteredTasks.filter(task => task.status === status);
     return acc;
-  }, {} as Record<string, typeof sampleTasks>);
+  }, {} as Record<string, Task[]>);
 
   return (
     <ResearchLayout activeView="tasks">
@@ -155,10 +232,10 @@ export default function TasksPage() {
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-sciscribe-slate" />
               <Input
                 type="text"
-                placeholder="Search tasks..."
+                placeholder="Search tasks, descriptions, custom fields..."
                 value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-10 w-64"
+                onChange={(e: ChangeEvent<HTMLInputElement>) => setSearchQuery(e.target.value)}
+                className="pl-10 w-72" // Increased width slightly
               />
             </div>
             
@@ -178,9 +255,10 @@ export default function TasksPage() {
                 <SelectValue placeholder="Priority" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="All">All Priorities</SelectItem>
-                {taskPriorities.map((priority) => (
-                  <SelectItem key={priority} value={priority}>{priority}</SelectItem>
+                {taskPriorities.map((priority) => ( // Use updated taskPriorities
+                  <SelectItem key={priority} value={priority}>
+                    {priority === "All" ? "All Priorities" : priority}
+                  </SelectItem>
                 ))}
               </SelectContent>
             </Select>
@@ -221,6 +299,7 @@ export default function TasksPage() {
                   <div className="flex items-start space-x-4">
                     <Checkbox 
                       checked={task.status === "Completed"}
+                      onCheckedChange={() => handleTaskCompletionToggle(task.id, task.status)}
                       className="mt-1"
                     />
                     
@@ -231,17 +310,17 @@ export default function TasksPage() {
                             variant="ghost"
                             size="sm"
                             onClick={() => toggleTaskExpansion(task.id)}
-                            className="p-0 h-6 w-6"
+                            className="p-0 h-6 w-6 hover:bg-gray-200 rounded"
                           >
                             {expandedTasks.has(task.id) ? 
-                              <ChevronDown className="w-4 h-4" /> : 
-                              <ChevronRight className="w-4 h-4" />
+                              <ChevronDown className="w-4 h-4 text-sciscribe-slate" /> : 
+                              <ChevronRight className="w-4 h-4 text-sciscribe-slate" />
                             }
                           </Button>
                           
                           <div>
-                            <h3 className="font-medium text-sciscribe-navy">{task.title}</h3>
-                            <p className="text-sm text-sciscribe-slate mt-1">{task.description}</p>
+                            <h3 className={`font-medium text-sciscribe-navy ${task.status === "Completed" ? "line-through text-sciscribe-slate" : ""}`}>{task.title}</h3>
+                            <p className="text-sm text-sciscribe-slate mt-1 line-clamp-1">{task.description}</p>
                           </div>
                         </div>
 
@@ -263,14 +342,15 @@ export default function TasksPage() {
                             </AvatarFallback>
                           </Avatar>
 
-                          <Button variant="ghost" size="icon" className="h-8 w-8">
-                            <MoreHorizontal className="w-4 h-4" />
+                          <Button variant="ghost" size="icon" className="h-8 w-8 hover:bg-gray-200 rounded">
+                            <MoreHorizontal className="w-4 h-4 text-sciscribe-slate" />
                           </Button>
                         </div>
                       </div>
 
                       {expandedTasks.has(task.id) && (
-                        <div className="mt-4 ml-6 space-y-3">
+                        <div className="mt-4 ml-10 pl-1 border-l-2 border-sciscribe-mist space-y-4 py-2">
+                          {/* Progress Bar */}
                           <div className="flex items-center space-x-4">
                             <span className="text-sm font-medium text-sciscribe-navy">Progress:</span>
                             <div className="flex-1 max-w-xs">
@@ -279,30 +359,68 @@ export default function TasksPage() {
                             <span className="text-sm text-sciscribe-slate">{task.progress}%</span>
                           </div>
 
-                          <div className="space-y-2">
-                            <span className="text-sm font-medium text-sciscribe-navy">Subtasks:</span>
-                            {task.subtasks.map((subtask) => (
-                              <div key={subtask.id} className="flex items-center space-x-2 ml-4">
-                                <Checkbox checked={subtask.completed} className="h-4 w-4" />
-                                <span className={`text-sm ${subtask.completed ? 'line-through text-sciscribe-slate' : 'text-sciscribe-navy'}`}>
-                                  {subtask.title}
-                                </span>
-                              </div>
-                            ))}
-                          </div>
+                          {/* Subtasks Section */}
+                          {task.subtasks && task.subtasks.length > 0 && (
+                            <div className="space-y-2">
+                              <h4 className="text-sm font-medium text-sciscribe-navy">Subtasks:</h4>
+                              {task.subtasks.map((subtask) => (
+                                <div key={subtask.id} className="flex items-center space-x-2 ml-4">
+                                  <Checkbox
+                                    id={`subtask-${task.id}-${subtask.id}`}
+                                    checked={subtask.completed}
+                                    onCheckedChange={(checked) => handleSubtaskChange(task.id, subtask.id, !!checked)}
+                                    className="h-4 w-4"
+                                  />
+                                  <label
+                                    htmlFor={`subtask-${task.id}-${subtask.id}`}
+                                    className={`text-sm cursor-pointer ${subtask.completed ? 'line-through text-sciscribe-slate' : 'text-sciscribe-navy'}`}
+                                  >
+                                    {subtask.title}
+                                  </label>
+                                </div>
+                              ))}
+                            </div>
+                          )}
 
-                          <div className="flex items-center space-x-6 text-sm text-sciscribe-slate">
-                            <span>Project: {task.project}</span>
+                          {/* Custom Fields Section */}
+                          {task.customFields && task.customFields.length > 0 && (
+                            <div className="space-y-2">
+                              <h4 className="text-sm font-medium text-sciscribe-navy">Custom Fields:</h4>
+                              <div className="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-2 ml-4">
+                                {task.customFields.map((field) => (
+                                  <div key={field.id} className="flex items-center space-x-2 text-sm">
+                                    <Tag className="w-3.5 h-3.5 text-sciscribe-blue" />
+                                    <span className="font-medium text-sciscribe-slate">{field.name}:</span>
+                                    <span className="text-sciscribe-navy">
+                                      {field.type === 'boolean' ? (field.value ? 'Yes' : 'No') : String(field.value)}
+                                    </span>
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                          )}
+                          
+                          {/* Tags Section */}
+                           {task.tags && task.tags.length > 0 && (
+                            <div className="space-y-1">
+                               <h4 className="text-sm font-medium text-sciscribe-navy">Tags:</h4>
+                               <div className="flex flex-wrap gap-1 ml-4">
+                                {task.tags.map((tag) => (
+                                <Badge key={tag} variant="secondary" className="text-xs">
+                                    {tag}
+                                </Badge>
+                                ))}
+                            </div>
+                            </div>
+                           )}
+
+
+                          {/* Other Details */}
+                          <div className="flex items-center space-x-6 text-sm text-sciscribe-slate pt-2">
+                            <span>Project: <Badge variant="outline">{task.project}</Badge></span>
+                            <span><Clock className="w-3.5 h-3.5 inline mr-1" />Created: {task.createdAt}</span>
                             <span>Comments: {task.comments}</span>
                             <span>Attachments: {task.attachments}</span>
-                          </div>
-
-                          <div className="flex flex-wrap gap-1">
-                            {task.tags.map((tag) => (
-                              <Badge key={tag} variant="outline" className="text-xs">
-                                {tag}
-                              </Badge>
-                            ))}
                           </div>
                         </div>
                       )}
@@ -313,39 +431,53 @@ export default function TasksPage() {
             ))}
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-            {Object.entries(tasksByStatus).map(([status, tasks]) => (
-              <div key={status} className="space-y-4">
-                <div className="flex items-center justify-between">
+          // Kanban Board View (columns by status)
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {Object.entries(tasksByStatus).map(([status, tasksInStatus]) => (
+              <div key={status} className="bg-sciscribe-mist/30 p-4 rounded-lg">
+                <div className="flex items-center justify-between mb-4">
                   <h3 className="font-semibold text-sciscribe-navy">{status}</h3>
-                  <Badge variant="outline">{tasks.length}</Badge>
+                  <Badge variant="secondary">{tasksInStatus.length}</Badge>
                 </div>
                 
-                <div className="space-y-3">
-                  {tasks.map((task) => (
-                    <Card key={task.id} className="p-4 hover:shadow-md transition-shadow cursor-pointer">
-                      <div className="space-y-3">
+                <div className="space-y-3 min-h-[100px]"> {/* Added min-h for empty columns */}
+                  {tasksInStatus.map((task) => (
+                    <Card key={task.id} className="p-3 hover:shadow-lg transition-shadow cursor-pointer bg-white">
+                      <div className="space-y-2">
                         <div className="flex items-start justify-between">
-                          <h4 className="font-medium text-sciscribe-navy text-sm">{task.title}</h4>
+                          <h4 className="font-medium text-sciscribe-navy text-sm line-clamp-2">{task.title}</h4>
                           {getPriorityIcon(task.priority)}
                         </div>
                         
                         <p className="text-xs text-sciscribe-slate line-clamp-2">{task.description}</p>
                         
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center text-xs text-sciscribe-slate">
+                        <div className="flex items-center justify-between text-xs text-sciscribe-slate">
+                           <div className="flex items-center">
                             <Calendar className="w-3 h-3 mr-1" />
                             {task.dueDate}
                           </div>
-                          <Avatar className="w-6 h-6">
-                            <AvatarFallback className="bg-sciscribe-gold text-xs text-sciscribe-navy">
-                              {task.assignee.avatar}
-                            </AvatarFallback>
-                          </Avatar>
+                           <Badge className={`${getStatusColor(task.status)} text-xs`} size="sm">
+                            {task.status}
+                          </Badge>
+                        </div>
+                        
+                        <div className="flex items-center justify-between">
+                          <div className="flex -space-x-1">
+                             <Avatar className="w-6 h-6 border border-white">
+                                <AvatarFallback className="bg-sciscribe-gold text-xs text-sciscribe-navy">
+                                {task.assignee.avatar}
+                                </AvatarFallback>
+                            </Avatar>
+                          </div>
+                          {task.customFields && task.customFields.slice(0,1).map(cf => (
+                            <Badge key={cf.id} variant="outline" className="text-xs truncate max-w-[100px]">
+                                {cf.name}: {String(cf.value)}
+                            </Badge>
+                          ))}
                         </div>
 
                         {task.progress > 0 && (
-                          <div className="space-y-1">
+                          <div className="space-y-1 pt-1">
                             <div className="flex justify-between text-xs">
                               <span className="text-sciscribe-slate">Progress</span>
                               <span className="text-sciscribe-navy">{task.progress}%</span>
@@ -356,6 +488,11 @@ export default function TasksPage() {
                       </div>
                     </Card>
                   ))}
+                   {tasksInStatus.length === 0 && (
+                    <div className="text-center text-sm text-sciscribe-slate py-4">
+                        No tasks in this status.
+                    </div>
+                  )}
                 </div>
               </div>
             ))}
@@ -366,7 +503,7 @@ export default function TasksPage() {
           <div className="text-center py-12">
             <CheckSquare className="w-12 h-12 text-sciscribe-slate mx-auto mb-4" />
             <h3 className="text-lg font-medium text-sciscribe-navy mb-2">No tasks found</h3>
-            <p className="text-sciscribe-slate">Try adjusting your search or filter criteria</p>
+            <p className="text-sciscribe-slate">Try adjusting your search or filter criteria, or create a new task!</p>
           </div>
         )}
       </div>
