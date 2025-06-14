@@ -1,3 +1,4 @@
+
 import { lazy, Suspense, useEffect } from 'react';
 import { HelmetProvider } from 'react-helmet-async';
 import { Toaster } from "@/components/ui/toaster";
@@ -50,6 +51,10 @@ const AdminFeedbackPage = lazy(() => import("./pages/admin/Feedback"));
 const AdminNotesPage = lazy(() => import("./pages/admin/Notes"));
 const AdminSettingsPage = lazy(() => import("./pages/admin/Settings"));
 
+// Research Portal Components
+const ResearchLogin = lazy(() => import("./pages/research/Login"));
+const ResearchDashboard = lazy(() => import("./pages/research/Dashboard"));
+
 // Configure query client with default options
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -85,6 +90,7 @@ const App = () => (
               <GoogleTagManager />
               <Suspense fallback={<PageLoading />}>
                 <Routes>
+                  {/* Main website routes */}
                   <Route path="/" element={<Index />} />
                   <Route path="/summer-offer" element={<SummerOffer />} />
                   <Route path="/about" element={<About />} />
@@ -98,6 +104,8 @@ const App = () => (
                   <Route path="/portfolio" element={<Portfolio />} />
                   <Route path="/feedback" element={<Feedback />} />
                   <Route path="/thank-you" element={<ThankYou />} />
+                  
+                  {/* Admin routes */}
                   <Route path="/admin/login" element={<AdminLogin />} />
                   <Route path="/unauthorized" element={<Unauthorized />} />
                   <Route path="/admin/dashboard" element={<AdminDashboard />} />
@@ -105,6 +113,11 @@ const App = () => (
                   <Route path="/admin/feedback" element={<AdminFeedbackPage />} />
                   <Route path="/admin/notes" element={<AdminNotesPage />} />
                   <Route path="/admin/settings" element={<AdminSettingsPage />} />
+                  
+                  {/* Research Portal routes */}
+                  <Route path="/research/login" element={<ResearchLogin />} />
+                  <Route path="/research" element={<ResearchDashboard />} />
+                  
                   <Route path="*" element={<NotFound />} />
                 </Routes>
               </Suspense>
