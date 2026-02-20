@@ -6,11 +6,69 @@ import { BlogPost } from "@/lib/mock-blog";
 import { Copy } from "lucide-react";
 import Image from "next/image";
 import { useToast } from "@/components/ui/use-toast";
-import ReactMarkdown from 'react-markdown';
+import ReactMarkdown, { Components } from 'react-markdown';
 
 interface BlogPostContentProps {
     post: BlogPost;
 }
+
+/* ── Custom component map for ReactMarkdown ── */
+const markdownComponents: Components = {
+    h1: ({ children }) => (
+        <h1 className="text-3xl md:text-5xl font-serif font-normal text-white leading-tight mt-20 mb-8">
+            {children}
+        </h1>
+    ),
+    h2: ({ children }) => (
+        <>
+            <div className="w-full h-px bg-white/[0.06] mt-16 mb-12" />
+            <h2 className="text-2xl md:text-3xl font-serif font-normal text-white leading-snug mb-6">
+                {children}
+            </h2>
+        </>
+    ),
+    h3: ({ children }) => (
+        <h3 className="text-xl md:text-2xl font-serif italic text-white/90 leading-snug mt-10 mb-4">
+            {children}
+        </h3>
+    ),
+    p: ({ children }) => (
+        <p className="text-base md:text-lg font-light text-white/70 leading-[1.85] mb-6">
+            {children}
+        </p>
+    ),
+    strong: ({ children }) => (
+        <strong className="font-medium text-white/90">{children}</strong>
+    ),
+    em: ({ children }) => (
+        <em className="italic font-serif text-white/80">{children}</em>
+    ),
+    ul: ({ children }) => (
+        <ul className="space-y-3 my-6 pl-1">{children}</ul>
+    ),
+    ol: ({ children }) => (
+        <ol className="space-y-3 my-6 pl-1 counter-reset-item">{children}</ol>
+    ),
+    li: ({ children }) => (
+        <li className="flex items-start gap-3 text-base font-light text-white/70 leading-relaxed">
+            <span className="text-white/20 mt-1.5 text-xs select-none shrink-0">●</span>
+            <span>{children}</span>
+        </li>
+    ),
+    hr: () => (
+        <div className="w-12 h-px bg-white/20 my-16 mx-auto" />
+    ),
+    blockquote: ({ children }) => (
+        <blockquote className="border-l-2 border-white/20 pl-6 my-8 italic">
+            {children}
+        </blockquote>
+    ),
+    a: ({ href, children }) => (
+        <a href={href} className="text-white/90 underline underline-offset-4 decoration-white/30 hover:decoration-white transition-colors">
+            {children}
+        </a>
+    ),
+};
 
 export default function BlogPostContent({ post }: BlogPostContentProps) {
     const { toast } = useToast();
@@ -39,7 +97,7 @@ export default function BlogPostContent({ post }: BlogPostContentProps) {
 
                     {/* Massive Header */}
                     <div className="mb-16 md:mb-24">
-                        <div className="flex gap-4 mb-8">
+                        <div className="flex flex-wrap gap-3 mb-8">
                             {post.tags.map(tag => (
                                 <span key={tag} className="text-xs font-mono uppercase tracking-widest text-white/40 border border-white/20 px-3 py-1 rounded-none">
                                     {tag}
@@ -84,9 +142,11 @@ export default function BlogPostContent({ post }: BlogPostContentProps) {
                         />
                     </div>
 
-                    {/* Reading Formatting */}
-                    <div className="prose prose-lg md:prose-xl dark:prose-invert prose-headings:font-serif prose-headings:font-normal prose-h2:text-4xl prose-h3:text-3xl prose-p:font-light prose-p:text-white/80 prose-p:leading-relaxed prose-a:text-white prose-a:underline prose-a:decoration-white/30 hover:prose-a:decoration-white prose-ol:font-light prose-ul:font-light max-w-3xl mx-auto">
-                        <ReactMarkdown>{post.content}</ReactMarkdown>
+                    {/* Article Body — Custom Rendered Markdown */}
+                    <div className="max-w-3xl mx-auto">
+                        <ReactMarkdown components={markdownComponents}>
+                            {post.content}
+                        </ReactMarkdown>
                     </div>
 
                     {/* Footer Utility */}
