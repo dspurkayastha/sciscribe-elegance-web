@@ -1,0 +1,141 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Warm, minimalist light mode (Zen Apple style: Off-white, soft high-contrast text) */
+    --background: 40 33% 98%;
+    /* Warm off-white #FAF9F6 */
+    --foreground: 240 10% 10%;
+    /* Deep charcoal, almost black #17171A */
+
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 10%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 10%;
+
+    /* Primary is a sleek, almost absolute black for high contrast modularity */
+    --primary: 240 5.9% 10%;
+    --primary-foreground: 40 33% 98%;
+
+    /* Secondary is a very subtle warm grey for layered depth */
+    --secondary: 40 10% 90%;
+    --secondary-foreground: 240 5.9% 10%;
+
+    --muted: 40 10% 94%;
+    --muted-foreground: 240 5% 45%;
+
+    /* Accent brings in the warmth (a subtle gold/amber tone) */
+    --accent: 38 92% 50%;
+    /* #f59e0b */
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 40 10% 90%;
+    --input: 40 10% 90%;
+    --ring: 240 5.9% 10%;
+
+    --radius: 1.25rem;
+    /* Apple-style rounded corners */
+  }
+
+  .dark {
+    /* Sleek, absolute edge-to-edge dark mode #09090B */
+    --background: 240 10% 4%;
+    --foreground: 0 0% 98%;
+
+    /* Cards are slightly elevated #121214 */
+    --card: 240 10% 8%;
+    --card-foreground: 0 0% 98%;
+
+    --popover: 240 10% 8%;
+    --popover-foreground: 0 0% 98%;
+
+    /* Primary is inverted */
+    --primary: 0 0% 98%;
+    --primary-foreground: 240 5.9% 10%;
+
+    --secondary: 240 10% 12%;
+    --secondary-foreground: 0 0% 98%;
+
+    --muted: 240 10% 15%;
+    --muted-foreground: 240 5% 65%;
+
+    /* Accent retains the glowing gold warmth */
+    --accent: 38 92% 50%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 62.8% 40%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 240 10% 15%;
+    --input: 240 10% 15%;
+    --ring: 0 0% 98%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    scroll-behavior: smooth;
+    /* Custom smoothing for Apple-like typography */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+}
+
+@layer components {
+  /* Apple Design Awards Core Modularity */
+
+  /* Deep, natural shadow that feels physical rather than CSS-drawn */
+  .shadow-apple {
+    box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.08),
+      0 18px 36px -18px rgba(0, 0, 0, 0.05);
+  }
+
+  .dark .shadow-apple {
+    box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.5),
+      0 0 1px 0 rgba(255, 255, 255, 0.1) inset;
+  }
+
+  /* Glassmorphism that looks like frosted physical glass */
+  .glass-apple {
+    @apply backdrop-blur-2xl bg-white/70 dark:bg-black/50 border border-white/20 dark:border-white/10;
+  }
+
+  /* Modular Block (Bento-style layout block) */
+  .bento-block {
+    @apply relative overflow-hidden rounded-[2rem] bg-card shadow-apple transition-transform duration-500 hover:scale-[1.02];
+  }
+
+  /* Typography extensions for layout */
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  /* Smooth fluid gradient backgrounds */
+  .bg-mesh-warm {
+    background-color: hsla(40, 33%, 98%, 1);
+    background-image:
+      radial-gradient(at 10% 10%, hsla(38, 92%, 50%, 0.08) 0px, transparent 50%),
+      radial-gradient(at 90% 90%, hsla(240, 10%, 10%, 0.03) 0px, transparent 50%);
+  }
+
+  .dark .bg-mesh-warm {
+    background-color: hsla(240, 10%, 4%, 1);
+    background-image:
+      radial-gradient(at 10% 10%, hsla(38, 92%, 50%, 0.12) 0px, transparent 50%),
+      radial-gradient(at 90% 90%, hsla(240, 10%, 20%, 0.3) 0px, transparent 50%);
+  }
+}

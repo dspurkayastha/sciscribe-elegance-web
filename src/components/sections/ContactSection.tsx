@@ -1,3 +1,4 @@
+"use client";
 import { useState } from "react";
 import {
   Mail,
@@ -5,7 +6,7 @@ import {
   Phone,
   MessageCircleMore
 } from "lucide-react";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 import { useToast } from "@/hooks/use-toast";
 import { useAnalytics } from "@/hooks/useAnalytics";
 
@@ -86,7 +87,7 @@ const ContactSection = () => {
           "There was a problem sending your message. Please try again.",
         variant: "destructive"
       });
-      
+
       // Track form submission error with analytics
       logFormSubmitted({
         form_id: 'contact_quick',
@@ -246,7 +247,7 @@ const ContactSection = () => {
 
               <div className="text-center">
                 <Link
-                  to="/contact"
+                  href="/contact"
                   className="text-sciscribe-gold hover:text-sciscribe-gold/80 
                     font-medium"
                 >

@@ -32,17 +32,19 @@ try {
   googleProvider = new GoogleAuthProvider();
 
   // Initialize analytics if supported
-  (async () => {
-    if (await isAnalyticsSupported()) {
-      analytics = getAnalytics(app!);
-      // Enable debug mode in development
-      if (import.meta.env.DEV) {
-        window.gtag?.('config', firebaseConfig.measurementId, {
-          debug_mode: true
-        });
+  if (typeof window !== "undefined") {
+    isAnalyticsSupported().then((supported) => {
+      if (supported && app) {
+        analytics = getAnalytics(app);
+        // Enable debug mode in development
+        if (process.env.NODE_ENV !== "production") {
+          (window as any).gtag?.('config', firebaseConfig.measurementId, {
+            debug_mode: true
+          });
+        }
       }
-    }
-  })();
+    });
+  }
 } catch (error) {
   console.error('Firebase initialization failed:', error);
 }

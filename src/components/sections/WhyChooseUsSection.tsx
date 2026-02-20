@@ -1,9 +1,10 @@
-
-import { motion } from "framer-motion";
+"use client";
+import React, { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { GraduationCap, UserCheck, Lock, Wrench, Clock, FileCheck, CheckCircle, ArrowRight } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { useAnalytics } from "@/hooks/useAnalytics";
 
@@ -70,7 +71,7 @@ const WhyChooseUsSection = () => {
       {/* Decorative background elements */}
       <div className="absolute top-40 -left-40 w-96 h-96 bg-sciscribe-blue/5 rounded-full blur-3xl"></div>
       <div className="absolute bottom-40 -right-40 w-96 h-96 bg-sciscribe-gold/5 rounded-full blur-3xl"></div>
-      
+
       <div className="container mx-auto px-6 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -90,7 +91,7 @@ const WhyChooseUsSection = () => {
           </p>
         </motion.div>
 
-        <motion.div 
+        <motion.div
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
           variants={containerVariants}
           initial="hidden"
@@ -104,7 +105,7 @@ const WhyChooseUsSection = () => {
               whileHover={{ y: -5, transition: { duration: 0.2 } }}
               className={cn(
                 "premium-glassmorphism flex flex-col h-full rounded-xl overflow-hidden",
-                "border border-sciscribe-blue/10 hover:border-sciscribe-gold/30", 
+                "border border-sciscribe-blue/10 hover:border-sciscribe-gold/30",
                 "hover:shadow-xl transition-all duration-500"
               )}
             >
@@ -112,7 +113,7 @@ const WhyChooseUsSection = () => {
               <div className="bg-gradient-to-r from-sciscribe-teal/10 to-sciscribe-gold/10 p-6 relative overflow-hidden">
                 {/* Decorative elements */}
                 <div className="absolute -right-6 -top-6 w-16 h-16 rounded-full bg-gradient-to-br from-sciscribe-gold/20 to-transparent blur-xl pointer-events-none" />
-                
+
                 <div className="mb-3 flex items-center justify-center">
                   <div className="p-3 rounded-full bg-white/80 dark:bg-sciscribe-navy/50 border border-sciscribe-mist/30 dark:border-white/10 shadow-md">
                     {reason.icon}
@@ -122,13 +123,13 @@ const WhyChooseUsSection = () => {
                   {reason.title}
                 </h3>
               </div>
-              
+
               {/* Card body */}
               <div className="p-6 flex-grow flex flex-col">
                 <p className="text-foreground/80 mb-6">
                   {reason.description}
                 </p>
-                
+
                 {/* Benefits list */}
                 <ul className="space-y-2 mb-6">
                   {reason.benefits?.map((benefit, i) => (
@@ -144,17 +145,17 @@ const WhyChooseUsSection = () => {
             </motion.div>
           ))}
         </motion.div>
-        
+
         {/* Call to action */}
-        <motion.div 
+        <motion.div
           className="mt-16 text-center"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.3 }}
         >
-          <Link 
-            to="/contact"
+          <Link
+            href="/contact"
             onClick={() => {
               logCtaClick({
                 cta_id: 'why_choose_us_get_started',
@@ -163,7 +164,7 @@ const WhyChooseUsSection = () => {
               });
             }}
           >
-            <Button 
+            <Button
               className="bg-gradient-to-r from-sciscribe-blue to-sciscribe-teal hover:from-sciscribe-blue/90 hover:to-sciscribe-teal/90 text-white group"
               size="lg"
             >

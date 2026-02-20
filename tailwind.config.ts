@@ -20,8 +20,8 @@ export default {
 		extend: {
 			fontFamily: {
 				sans: ['Inter', 'sans-serif'],
-				heading: ['Poppins', 'sans-serif'],
-				body: ['Open Sans', 'sans-serif'],
+				heading: ['Inter', 'sans-serif'],
+				body: ['Inter', 'sans-serif'],
 			},
 			colors: {
 				border: 'hsl(var(--border))',
@@ -66,7 +66,6 @@ export default {
 					purple: '#A855F7', // Vibrant Purple (now accent)
 					blue: '#0EA5E9', // Cyan Blue
 					pink: '#D946EF',
-					dark: '#121212',
 					emerald: '#10B981', // Success Color
 					coral: '#F97066', // Alternative accent/highlight
 					slate: '#64748B', // Neutral slate
