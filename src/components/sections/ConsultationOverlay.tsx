@@ -168,7 +168,8 @@ export function ConsultationOverlay({ isOpen, onClose }: ConsultationOverlayProp
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-md"
+          data-lenis-prevent
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-md overscroll-contain"
           onClick={(e) => e.target === e.currentTarget && onClose()}
         >
           <motion.div
@@ -228,7 +229,7 @@ export function ConsultationOverlay({ isOpen, onClose }: ConsultationOverlayProp
             </div>
 
             {/* Scrollable Form */}
-            <div ref={formRef} className="flex-1 overflow-y-auto px-8 pb-8 pt-4">
+            <div ref={formRef} className="flex-1 overflow-y-auto px-8 pb-8 pt-4 overscroll-contain" data-lenis-prevent>
               {isSuccess ? (
                 <div className="text-center py-16">
                   <div className="mx-auto flex h-14 w-14 items-center justify-center border border-white/10 mb-6">
