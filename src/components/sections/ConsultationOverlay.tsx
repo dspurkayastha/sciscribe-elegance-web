@@ -9,7 +9,7 @@ import { useState, useEffect, useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { format, addDays, isToday } from 'date-fns';
+import { format, addDays } from 'date-fns';
 import { toast } from '@/components/ui/use-toast';
 import { useAnalytics } from '@/hooks/useAnalytics';
 
@@ -28,7 +28,6 @@ const formSchema = z.object({
   }),
   timeSlot: z.string().min(1, { message: 'Please select a time slot.' })
 }).refine(data => {
-  // Ensure selected date is not in the past
   const today = new Date();
   today.setHours(0, 0, 0, 0);
   return data.date >= today;
@@ -42,23 +41,19 @@ type FormValues = z.infer<typeof formSchema>;
 // Generate time slots from 9 AM to 5 PM with 1-hour intervals
 const generateTimeSlots = (date: Date): string[] => {
   const slots: string[] = [];
-  const startHour = 9; // 9 AM
-  const endHour = 17; // 5 PM
+  const startHour = 9;
+  const endHour = 17;
   const now = new Date();
-  
-  // If the selected date is today, only show future time slots
   const isCurrentDay = date.toDateString() === now.toDateString();
   const currentHour = now.getHours();
-  
+
   for (let hour = startHour; hour < endHour; hour++) {
-    // Skip past hours if it's today
     if (isCurrentDay && hour <= currentHour) continue;
-    
     const startTime = format(new Date().setHours(hour, 0, 0, 0), 'h:mm a');
     const endTime = format(new Date().setHours(hour + 1, 0, 0, 0), 'h:mm a');
     slots.push(`${startTime} - ${endTime}`);
   }
-  
+
   return slots;
 };
 
@@ -75,28 +70,15 @@ export function ConsultationOverlay({ isOpen, onClose }: ConsultationOverlayProp
   const formRef = useRef<HTMLDivElement>(null);
   const { logConsultationBooked, logWhatsappClick } = useAnalytics();
 
-  // Handle scroll for shadow effect
   useEffect(() => {
     const formElement = formRef.current;
     if (!formElement) return;
-
-    const handleScroll = () => {
-      const scrollTop = formElement.scrollTop;
-      setIsScrolled(scrollTop > 10);
-    };
-    
+    const handleScroll = () => setIsScrolled(formElement.scrollTop > 10);
     formElement.addEventListener('scroll', handleScroll);
-    
-    return () => {
-      formElement.removeEventListener('scroll', handleScroll);
-    };
+    return () => formElement.removeEventListener('scroll', handleScroll);
   }, [isOpen]);
-  
-  // Generate time slots for the selected date
+
   const timeSlots = selectedDate ? generateTimeSlots(selectedDate) : [];
-  
-  // Format selected date for display
-  const formattedDate = selectedDate ? format(selectedDate, 'PPP') : 'Select date';
 
   const {
     register,
@@ -105,89 +87,42 @@ export function ConsultationOverlay({ isOpen, onClose }: ConsultationOverlayProp
     watch,
     formState: { errors },
     reset,
-    trigger
   } = useForm<FormValues>({
     resolver: zodResolver(formSchema),
-    defaultValues: {
-      name: '',
-      contact: '',
-      message: '',
-      date: undefined,
-      timeSlot: ''
-    }
+    defaultValues: { name: '', contact: '', message: '', date: undefined, timeSlot: '' }
   });
-  
-  // Watch the date field to update time slots when date changes
+
   const selectedFormDate = watch('date');
-  
-  // Update time slots when selected date changes
+
   useEffect(() => {
     if (selectedFormDate) {
       const newTimeSlots = generateTimeSlots(selectedFormDate);
-      // If no time slots available for the selected date, clear the time slot
-      if (newTimeSlots.length === 0) {
-        setValue('timeSlot', '');
-      }
+      if (newTimeSlots.length === 0) setValue('timeSlot', '');
     }
   }, [selectedFormDate, setValue]);
-  
-  // Helper function to handle date selection
+
   const handleDateSelect = (date: Date | undefined) => {
     setSelectedDate(date);
-    if (date) {
-      setValue('date', date, { shouldValidate: true });
-    }
-  }; 
-  
-  // Navigate between months in the date picker
-  const nextMonth = () => {
-    // implement next month logic
-  };
-  
-  const prevMonth = () => {
-    // implement previous month logic
-  }; 
-  
-  // Format the selected date for display
-  const formatSelectedDate = (date: Date | undefined) => {
-    if (!date) return 'Select a date';
-    return format(date, 'MMM d, yyyy');
+    if (date) setValue('date', date, { shouldValidate: true });
   };
 
   const onSubmit = async (data: FormValues) => {
     try {
       setIsSubmitting(true);
-      
-      // Prepare honeypot value (from hidden input, if present)
       const honeypot = (document.querySelector('input[name="bot-field"]') as HTMLInputElement)?.value || "";
-      
-      // Clean the phone number (remove all non-digit characters except + at the start)
       const cleanPhone = data.contact.replace(/^(\+)?(\d)/, (match, p1, p2) => {
         return p1 ? `${p1}${p2}` : p2;
       }).replace(/\D/g, '');
-      
-      // Prepare the submission data
+
       const submissionData = {
-        name: data.name,
-        phone: cleanPhone,
-        message: data.message,
-        consultationDate: data.date.toISOString(),
-        timeSlot: data.timeSlot,
-        type: 'consultation',
-        honeypot,
-        createdAt: new Date().toISOString()
+        name: data.name, phone: cleanPhone, message: data.message,
+        consultationDate: data.date.toISOString(), timeSlot: data.timeSlot,
+        type: 'consultation', honeypot, createdAt: new Date().toISOString()
       };
 
-      // Call the API
       const response = await fetch(
         'https://asia-south1-sciscribe-main.cloudfunctions.net/submitConsultationForm',
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(submissionData),
-        }
+        { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(submissionData) }
       );
 
       if (!response.ok) {
@@ -195,64 +130,36 @@ export function ConsultationOverlay({ isOpen, onClose }: ConsultationOverlayProp
         throw new Error(errorData.error || 'Failed to submit form');
       }
 
-              // Show success state and auto-close after delay
       setIsSuccess(true);
       reset();
-      
-      // Track successful consultation booking with analytics
-      logConsultationBooked({
-        date: data.date.toISOString(),
-        time_slot: data.timeSlot,
-        success: true,
-        service_type: 'general_consultation' // Required parameter for ConsultationParams
-      });
-      
-      // Auto-close after 3 seconds
+      logConsultationBooked({ date: data.date.toISOString(), time_slot: data.timeSlot, success: true, service_type: 'general_consultation' });
+
       const timer = setTimeout(() => {
         onClose();
-        // Reset the success state when closing
-        setTimeout(() => setIsSuccess(false), 300); // Small delay to allow animation
+        setTimeout(() => setIsSuccess(false), 300);
       }, 3000);
-
-      // Cleanup timer on unmount
       return () => clearTimeout(timer);
     } catch (error) {
       console.error('Error submitting form:', error);
-      // Show error message to user
-      toast({
-        title: 'Submission failed',
-        description: error instanceof Error ? error.message : 'Please try again later',
-        variant: 'destructive',
-      });
-      
-      // Track consultation booking error with analytics
-      logConsultationBooked({
-        date: data.date.toISOString(),
-        time_slot: data.timeSlot,
-        success: false,
-        service_type: 'general_consultation',
-        error: error instanceof Error ? error.message : 'Unknown error'
-      });
+      toast({ title: 'Submission failed', description: error instanceof Error ? error.message : 'Please try again later', variant: 'destructive' });
+      logConsultationBooked({ date: data.date.toISOString(), time_slot: data.timeSlot, success: false, service_type: 'general_consultation', error: error instanceof Error ? error.message : 'Unknown error' });
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  // Handle time slot selection
-  const selectTimeSlot = (slot: string) => {
-    setValue('timeSlot', slot, { shouldValidate: true });
-  };
+  const selectTimeSlot = (slot: string) => setValue('timeSlot', slot, { shouldValidate: true });
 
-  // Reset form when overlay is opened
   useEffect(() => {
-    if (isOpen) {
-      reset();
-      setSelectedDate(undefined);
-      setIsSuccess(false);
-    }
+    if (isOpen) { reset(); setSelectedDate(undefined); setIsSuccess(false); }
   }, [isOpen, reset]);
 
   if (!isOpen) return null;
+
+  // Shared input styles for the dark editorial aesthetic
+  const inputClasses = "w-full bg-white/[0.04] border border-white/10 text-white placeholder:text-white/30 focus:border-white/30 focus:ring-0 focus:outline-none transition-colors h-12 px-4 text-sm font-light";
+  const labelClasses = "block text-xs font-mono text-white/50 uppercase tracking-wider mb-2";
+  const errorClasses = "mt-1.5 text-xs text-red-400/80 font-light";
 
   return (
     <AnimatePresence>
@@ -261,7 +168,7 @@ export function ConsultationOverlay({ isOpen, onClose }: ConsultationOverlayProp
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-md"
           onClick={(e) => e.target === e.currentTarget && onClose()}
         >
           <motion.div
@@ -269,303 +176,250 @@ export function ConsultationOverlay({ isOpen, onClose }: ConsultationOverlayProp
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: 20, opacity: 0 }}
             transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-            className="flex flex-col w-full max-w-md max-h-[90vh] bg-white dark:bg-slate-900 rounded-2xl shadow-xl overflow-hidden border border-slate-200 dark:border-slate-800"
+            className="flex flex-col w-full max-w-lg max-h-[90vh] bg-[#0a0a12] border border-white/[0.08] overflow-hidden shadow-2xl shadow-black/50"
           >
-            {/* Fixed header with shadow on scroll */}
-            <div className={`sticky top-0 z-20 bg-white dark:bg-slate-900 transition-shadow px-6 pt-6 pb-2 ${isScrolled ? 'shadow-sm' : ''}`}>
-              <div className="flex items-center justify-between">
-                <h2 className="text-2xl font-bold bg-gradient-to-r from-sciscribe-blue to-sciscribe-teal bg-clip-text text-transparent dark:from-sciscribe-gold dark:to-amber-300">
-                  Schedule a Free Consultation
-                </h2>
-                <button
-                  onClick={onClose}
-                  className="p-1 rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors"
-                >
-                  <X className="h-5 w-5 text-slate-500 dark:text-slate-400" />
-                </button>
-              </div>
-              <p className="mt-2 text-slate-600 dark:text-slate-300">
-                Call or text us for an immediate consultation
-              </p>
-              {/* Quick Action Buttons */}
-              <div className="flex gap-3 mt-4">
-                {/* Call Us */}
-                <div className="relative group flex-1 rounded-lg overflow-hidden">
-                  <Button
-                    asChild
-                    variant="outline"
-                    size="lg"
-                    className="w-full px-6 py-6 gap-2 text-base font-medium bg-white/80 dark:bg-slate-800/80 transition-all duration-300 hover:scale-[1.02] hover:shadow-lg hover:shadow-red-500/20"
-                  >
-                    <a 
-                      href="tel:+919395582679" 
-                      onClick={e => e.stopPropagation()} 
-                      className="flex items-center justify-center gap-2 no-underline"
-                    >
-                      <PhoneCall className="h-5 w-5 text-red-600 dark:text-red-400" />
-                      <span className="text-red-800 dark:text-red-200">Call Us</span>
-                    </a>
-                  </Button>
-                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-red-500/30 to-red-600/30 blur opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg" />
-                </div>
+            {/* Header */}
+            <div className={`relative px-8 pt-8 pb-4 transition-all ${isScrolled ? 'border-b border-white/[0.06]' : ''}`}>
+              <button
+                onClick={onClose}
+                className="absolute top-6 right-6 p-1.5 hover:bg-white/[0.05] transition-colors"
+              >
+                <X className="h-4 w-4 text-white/40" />
+              </button>
 
-                {/* WhatsApp */}
-                <div className="relative group flex-1 rounded-lg overflow-hidden">
-                  <Button
-                    asChild
-                    variant="outline"
-                    size="lg"
-                    className="w-full px-6 py-6 gap-2 text-base font-medium bg-white/80 dark:bg-slate-800/80 transition-all duration-300 hover:scale-[1.02] hover:shadow-lg hover:shadow-green-500/20"
-                  >
-                    <a 
-                      href="https://wa.me/919395582679" 
-                      target="_blank" 
-                      rel="noopener noreferrer" 
-                      onClick={e => {
-                        e.stopPropagation();
-                        // Track WhatsApp click with analytics
-                        logWhatsappClick('consultation_overlay');
-                      }} 
-                      className="flex items-center justify-center gap-2 no-underline"
-                    >
-                      <MessageCircleMore className="h-5 w-5 text-green-600 dark:text-green-400" />
-                      <span className="text-green-800 dark:text-green-200">WhatsApp</span>
-                    </a>
-                  </Button>
-                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-sciscribe-teal/30 to-sciscribe-teal/30 blur opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg" />
-                </div>
+              <p className="text-xs tracking-[0.3em] font-mono text-white/40 uppercase mb-3">Consultation</p>
+              <h2 className="text-2xl md:text-3xl font-serif text-white font-normal leading-tight">
+                Schedule a <em className="italic">Free</em><br />Consultation
+              </h2>
+
+              {/* Quick Contact Actions */}
+              <div className="flex gap-3 mt-6">
+                <a
+                  href="tel:+919395582679"
+                  onClick={e => e.stopPropagation()}
+                  className="flex-1 flex items-center justify-center gap-2.5 py-3 border border-white/10 bg-white/[0.02] text-white/70 hover:bg-white/[0.06] hover:text-white transition-all text-sm font-light no-underline"
+                >
+                  <PhoneCall className="h-4 w-4 text-white/40" />
+                  Call Us
+                </a>
+                <a
+                  href="https://wa.me/919395582679"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={e => { e.stopPropagation(); logWhatsappClick('consultation_overlay'); }}
+                  className="flex-1 flex items-center justify-center gap-2.5 py-3 border border-white/10 bg-white/[0.02] text-white/70 hover:bg-white/[0.06] hover:text-white transition-all text-sm font-light no-underline"
+                >
+                  <MessageCircleMore className="h-4 w-4 text-white/40" />
+                  WhatsApp
+                </a>
               </div>
-              
-              {/* OR Divider */}
-              <div className="relative mt-2 mb-1">
+
+              {/* Divider */}
+              <div className="relative mt-5 mb-1">
                 <div className="absolute inset-0 flex items-center">
-                  <div className="w-full border-t border-slate-200 dark:border-slate-700"></div>
+                  <div className="w-full h-px bg-white/[0.06]" />
                 </div>
                 <div className="relative flex justify-center">
-                  <span className="px-3 bg-white dark:bg-slate-900 text-sm italic text-slate-500 dark:text-slate-400">
-                    Or
-                  </span>
-                </div>
-              </div>
-              <div className="relative mt-1 mb-2">
-                <div className="absolute inset-0 flex items-center">
-                  <div className="w-full border-t border-slate-200 dark:border-slate-700"></div>
-                </div>
-                <div className="relative flex justify-center">
-                  <span className="px-3 bg-white dark:bg-slate-900 text-sm text-slate-500 dark:text-slate-400">
-                    Fill in your details and we'll get back to you shortly
+                  <span className="px-4 bg-[#0a0a12] text-xs font-mono text-white/30 tracking-wider">
+                    or, <em className="italic font-serif text-white/40 not-italic" style={{ fontStyle: 'italic' }}>fill in your details</em>
                   </span>
                 </div>
               </div>
             </div>
-            {/* Scrollable form content */}
-            <div ref={formRef} className="flex-1 overflow-y-auto px-6 pb-6 pt-2">
+
+            {/* Scrollable Form */}
+            <div ref={formRef} className="flex-1 overflow-y-auto px-8 pb-8 pt-4">
               {isSuccess ? (
-                <div className="text-center py-12">
-                  <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-green-100 dark:bg-green-900/30 mb-4">
-                    <svg className="h-8 w-8 text-green-500" fill="none" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                <div className="text-center py-16">
+                  <div className="mx-auto flex h-14 w-14 items-center justify-center border border-white/10 mb-6">
+                    <svg className="h-6 w-6 text-white/80" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M5 13l4 4L19 7" />
                     </svg>
                   </div>
-                  <h3 className="text-xl font-semibold text-slate-800 dark:text-white mb-2">
-                    Request Received!
-                  </h3>
-                  <p className="text-slate-600 dark:text-slate-300 mb-6">
-                    We've received your request and will contact you shortly.
+                  <h3 className="text-xl font-serif italic text-white mb-3">Request Received</h3>
+                  <p className="text-sm font-light text-white/50 mb-8">
+                    We&apos;ve received your consultation request and will contact you shortly.
                   </p>
-                  <p className="text-sm text-slate-500 dark:text-slate-400">
-                    This window will close automatically...
+                  <p className="text-xs font-mono text-white/30 uppercase tracking-wider">
+                    Closing automatically...
                   </p>
                 </div>
               ) : (
-                <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+                <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+                  {/* Name */}
                   <div>
-                    <label htmlFor="name" className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
-                      Full Name <span className="text-red-500">*</span>
+                    <label htmlFor="name" className={labelClasses}>
+                      Full Name <span className="text-red-400/60">*</span>
                     </label>
                     <Input
                       id="name"
                       type="text"
-                      className={`bg-white/80 dark:bg-slate-800/80 ${errors.name ? 'border-red-500' : ''}`}
+                      className={`${inputClasses} ${errors.name ? 'border-red-400/40' : ''}`}
+                      placeholder="Your name"
                       {...register('name')}
                     />
-                    {errors.name && (
-                      <p className="mt-1 text-sm text-red-500">{errors.name.message}</p>
-                    )}
+                    {errors.name && <p className={errorClasses}>{errors.name.message}</p>}
                   </div>
 
+                  {/* Phone */}
                   <div>
-                    <label htmlFor="contact" className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
-                      Phone Number <span className="text-red-500">*</span>
+                    <label htmlFor="contact" className={labelClasses}>
+                      Phone Number <span className="text-red-400/60">*</span>
                     </label>
                     <div className="relative">
-                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <PhoneCall className="h-4 w-4 text-slate-400" />
+                      <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                        <PhoneCall className="h-3.5 w-3.5 text-white/20" />
                       </div>
                       <Input
                         id="contact"
                         type="tel"
-                        className={`pl-10 bg-white/80 dark:bg-slate-800/80 ${errors.contact ? 'border-red-500' : ''}`}
-                        placeholder="+1 (555) 000-0000"
+                        className={`${inputClasses} pl-10 ${errors.contact ? 'border-red-400/40' : ''}`}
+                        placeholder="+91 93955 82679"
                         {...register('contact', {
                           onChange: (e) => {
-                            // Format phone number as user types
                             const value = e.target.value.replace(/\D/g, '');
                             let formattedValue = '';
-                            
                             if (value.length > 0) {
                               formattedValue = `+${value.substring(0, 2)}`;
-                              if (value.length > 2) {
-                                formattedValue += ` (${value.substring(2, Math.min(7, value.length))}`;
-                              }
-                              if (value.length > 7) {
-                                formattedValue += `) ${value.substring(7, Math.min(12, value.length))}`;
-                              }
+                              if (value.length > 2) formattedValue += ` (${value.substring(2, Math.min(7, value.length))}`;
+                              if (value.length > 7) formattedValue += `) ${value.substring(7, Math.min(12, value.length))}`;
                             }
-                            
                             e.target.value = formattedValue;
                           }
                         })}
                       />
                     </div>
-                    {errors.contact && (
-                      <p className="mt-1 text-sm text-red-500">{errors.contact.message}</p>
-                    )}
-                    <p className="mt-1 text-xs text-slate-500">
+                    {errors.contact && <p className={errorClasses}>{errors.contact.message}</p>}
+                    <p className="mt-1.5 text-xs text-white/25 font-light">
                       Include country code (e.g., +1 for US, +91 for India)
                     </p>
                   </div>
 
-                  {/* Date and Time Selection */}
-                  <div className="space-y-4">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div className="space-y-2">
-                        <label className="block text-sm font-medium text-slate-700 dark:text-slate-300">
-                          Date <span className="text-red-500">*</span>
-                        </label>
-                        <Popover>
-                          <PopoverTrigger asChild>
-                            <Button
-                              variant="outline"
-                              className={`w-full justify-between text-left font-normal h-12 ${
-                                !selectedDate ? 'text-slate-500' : ''
-                              }`}
-                            >
-                              {selectedDate ? format(selectedDate, 'PPP') : 'Select a date'}
-                              <CalendarIcon className="ml-2 h-4 w-4 opacity-50" />
-                            </Button>
-                          </PopoverTrigger>
-                          <PopoverContent className="w-auto p-0" align="start">
-                            <Calendar
-                              mode="single"
-                              selected={selectedDate}
-                              onSelect={handleDateSelect}
-                              disabled={(date) => 
-                                date < new Date(new Date().setHours(0, 0, 0, 0)) || 
-                                date > addDays(new Date(), 30) ||
-                                date.getDay() === 0 || // Sunday
-                                date.getDay() === 6   // Saturday
-                              }
-                              initialFocus
-                              className="border-0"
-                            />
-                          </PopoverContent>
-                        </Popover>
-                        {errors.date && (
-                          <p className="mt-1 text-sm text-red-500">{errors.date.message}</p>
-                        )}
-                      </div>
-                      
-                      <div className="space-y-2">
-                        <label className="block text-sm font-medium text-slate-700 dark:text-slate-300">
-                          Time <span className="text-red-500">*</span>
-                        </label>
-                        <Popover>
-                          <PopoverTrigger asChild>
-                            <Button
-                              variant="outline"
-                              disabled={!selectedDate}
-                              className="w-full justify-between text-left font-normal h-12"
-                            >
-                              {watch('timeSlot') || 'Select a time'}
-                              <Clock className="ml-2 h-4 w-4 opacity-50" />
-                            </Button>
-                          </PopoverTrigger>
-                          <PopoverContent className="w-[200px] p-2" align="start">
-                            <div className="max-h-[200px] overflow-y-auto">
-                              {timeSlots.length > 0 ? (
-                                timeSlots.map((slot) => (
-                                  <Button
-                                    key={slot}
-                                    variant="ghost"
-                                    onClick={() => selectTimeSlot(slot)}
-                                    className={`w-full justify-start ${watch('timeSlot') === slot ? 'bg-slate-100 dark:bg-slate-800' : ''}`}
-                                  >
-                                    {slot.split(' - ')[0]}
-                                  </Button>
-                                ))
-                              ) : (
-                                <div className="py-2 text-center text-sm text-slate-500">
-                                  {selectedDate ? 'No available slots' : 'Select a date first'}
-                                </div>
-                              )}
-                            </div>
-                          </PopoverContent>
-                        </Popover>
-                        {errors.timeSlot && (
-                          <p className="mt-1 text-sm text-red-500">{errors.timeSlot.message}</p>
-                        )}
-                      </div>
+                  {/* Date & Time */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <label className={labelClasses}>
+                        Date <span className="text-red-400/60">*</span>
+                      </label>
+                      <Popover>
+                        <PopoverTrigger asChild>
+                          <button
+                            type="button"
+                            className={`${inputClasses} flex items-center justify-between text-left ${!selectedDate ? 'text-white/30' : 'text-white/80'}`}
+                          >
+                            <span>{selectedDate ? format(selectedDate, 'MMM d, yyyy') : 'Select date'}</span>
+                            <CalendarIcon className="h-3.5 w-3.5 text-white/20" />
+                          </button>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-auto p-0 bg-[#0a0a12] border border-white/10" align="start">
+                          <Calendar
+                            mode="single"
+                            selected={selectedDate}
+                            onSelect={handleDateSelect}
+                            disabled={(date) =>
+                              date < new Date(new Date().setHours(0, 0, 0, 0)) ||
+                              date > addDays(new Date(), 30) ||
+                              date.getDay() === 0 ||
+                              date.getDay() === 6
+                            }
+                            initialFocus
+                            className="border-0"
+                          />
+                        </PopoverContent>
+                      </Popover>
+                      {errors.date && <p className={errorClasses}>{errors.date.message}</p>}
+                    </div>
+
+                    <div>
+                      <label className={labelClasses}>
+                        Time <span className="text-red-400/60">*</span>
+                      </label>
+                      <Popover>
+                        <PopoverTrigger asChild>
+                          <button
+                            type="button"
+                            disabled={!selectedDate}
+                            className={`${inputClasses} flex items-center justify-between text-left ${!watch('timeSlot') ? 'text-white/30' : 'text-white/80'} ${!selectedDate ? 'opacity-40 cursor-not-allowed' : ''}`}
+                          >
+                            <span>{watch('timeSlot') || 'Select time'}</span>
+                            <Clock className="h-3.5 w-3.5 text-white/20" />
+                          </button>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-[200px] p-2 bg-[#0a0a12] border border-white/10" align="start">
+                          <div className="max-h-[200px] overflow-y-auto space-y-0.5">
+                            {timeSlots.length > 0 ? (
+                              timeSlots.map((slot) => (
+                                <button
+                                  key={slot}
+                                  type="button"
+                                  onClick={() => selectTimeSlot(slot)}
+                                  className={`w-full text-left px-3 py-2 text-sm font-light transition-colors ${watch('timeSlot') === slot
+                                    ? 'bg-white/[0.08] text-white'
+                                    : 'text-white/60 hover:bg-white/[0.04] hover:text-white/80'
+                                    }`}
+                                >
+                                  {slot.split(' - ')[0]}
+                                </button>
+                              ))
+                            ) : (
+                              <div className="py-3 text-center text-xs text-white/30 font-light">
+                                {selectedDate ? 'No available slots' : 'Select a date first'}
+                              </div>
+                            )}
+                          </div>
+                        </PopoverContent>
+                      </Popover>
+                      {errors.timeSlot && <p className={errorClasses}>{errors.timeSlot.message}</p>}
                     </div>
                   </div>
 
+                  {/* Message */}
                   <div>
-                    <label htmlFor="message" className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
-                      How can we help you? <span className="text-red-500">*</span>
+                    <label htmlFor="message" className={labelClasses}>
+                      How can we help? <span className="text-red-400/60">*</span>
                     </label>
                     <Textarea
                       id="message"
                       rows={4}
-                      className={`bg-white/80 dark:bg-slate-800/80 ${errors.message ? 'border-red-500' : ''}`}
+                      className={`${inputClasses} h-auto py-3 resize-none ${errors.message ? 'border-red-400/40' : ''}`}
                       placeholder="Briefly describe what you need help with..."
                       {...register('message')}
                     />
-                    {errors.message && (
-                      <p className="mt-1 text-sm text-red-500">{errors.message.message}</p>
-                    )}
+                    {errors.message && <p className={errorClasses}>{errors.message.message}</p>}
                   </div>
 
-                  {/* Honeypot field - hidden from users but visible to bots */}
+                  {/* Honeypot */}
                   <div className="absolute opacity-0 w-0 h-0 overflow-hidden">
                     <input type="text" name="bot-field" tabIndex={-1} autoComplete="off" />
                   </div>
 
-                  <div className="sticky bottom-0 bg-white dark:bg-slate-900 pt-4 pb-2 -mx-6 px-6 border-t border-slate-200 dark:border-slate-800">
-                    <Button
+                  {/* Submit */}
+                  <div className="pt-2">
+                    <button
                       type="submit"
-                      className="w-full h-14 text-base font-semibold bg-gradient-to-r from-sciscribe-blue to-sciscribe-teal hover:from-sciscribe-blue/90 hover:to-sciscribe-teal/90 text-white shadow-lg hover:shadow-xl transition-all duration-300"
+                      className="w-full h-14 flex items-center justify-center gap-2 border border-white/20 bg-white/[0.04] text-white/90 hover:bg-white/[0.08] hover:border-white/30 transition-all text-sm font-light tracking-wider uppercase disabled:opacity-30 disabled:cursor-not-allowed"
                       disabled={isSubmitting || !selectedDate || timeSlots.length === 0}
                     >
                       {isSubmitting ? (
                         <>
-                          <svg className="animate-spin -ml-1 mr-2 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                          <svg className="animate-spin h-4 w-4 text-white/60" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
                           </svg>
                           Scheduling...
                         </>
                       ) : (
                         <>
-                          <CalendarIcon className="h-5 w-5 mr-2" />
-                          {selectedDate 
+                          <CalendarIcon className="h-4 w-4 text-white/40" />
+                          {selectedDate
                             ? `Schedule for ${format(selectedDate, 'MMM d, yyyy')}`
                             : 'Select a date to continue'}
                         </>
                       )}
-                    </Button>
+                    </button>
                     {selectedDate && watch('timeSlot') && (
-                      <p className="mt-2 text-sm text-center text-slate-500 dark:text-slate-400">
-                        Selected: {format(selectedDate, 'EEE, MMM d, yyyy')} at {watch('timeSlot')}
+                      <p className="mt-3 text-xs text-center text-white/30 font-mono tracking-wider">
+                        {format(selectedDate, 'EEE, MMM d')} at {watch('timeSlot')}
                       </p>
                     )}
                   </div>
