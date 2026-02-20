@@ -1,13 +1,9 @@
+"use client";
+
 import { useState } from "react";
-import {
-  Mail,
-  MapPin,
-  Phone,
-  MessageCircleMore
-} from "lucide-react";
-import { Link } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
 import { useAnalytics } from "@/hooks/useAnalytics";
+import { motion } from "framer-motion";
 
 const ContactSection = () => {
   const [formData, setFormData] = useState({
@@ -18,7 +14,7 @@ const ContactSection = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const { toast } = useToast();
-  const { logFormSubmitted, logWhatsappClick } = useAnalytics();
+  const { logFormSubmitted } = useAnalytics();
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -30,47 +26,25 @@ const ContactSection = () => {
     }));
   };
 
-  const resetForm = () => {
-    setFormData({
-      name: "",
-      email: "",
-      message: ""
-    });
-  };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-
-    const honeypot = (
-      document.querySelector(
-        'input[name="bot-field"]'
-      ) as HTMLInputElement
-    )?.value || "";
 
     try {
       await fetch(
         "https://asia-south1-sciscribe-main.cloudfunctions.net/submitQuickContactForm",
         {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({
-            name: formData.name,
-            email: formData.email,
-            message: formData.message,
-            honeypot
-          })
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(formData)
         }
       );
 
       toast({
-        title: "Message Sent!",
-        description: "We'll get back to you as soon as possible."
+        title: "Message Sent.",
+        description: "We will respond shortly."
       });
 
-      // Track form submission with analytics
       logFormSubmitted({
         form_id: 'contact_quick',
         form_name: 'Quick Contact Form',
@@ -78,21 +52,11 @@ const ContactSection = () => {
       });
 
       setIsSuccess(true);
-      resetForm();
     } catch (error) {
       toast({
         title: "Error",
-        description:
-          "There was a problem sending your message. Please try again.",
+        description: "Failed to send message.",
         variant: "destructive"
-      });
-      
-      // Track form submission error with analytics
-      logFormSubmitted({
-        form_id: 'contact_quick',
-        form_name: 'Quick Contact Form',
-        success: false,
-        error: error instanceof Error ? error.message : 'Unknown error'
       });
     } finally {
       setIsSubmitting(false);
@@ -101,261 +65,131 @@ const ContactSection = () => {
 
   if (isSuccess) {
     return (
-      <section id="contact" className="py-20">
-        <div className="container mx-auto px-6">
-          <div className="mx-auto max-w-3xl text-center">
-            <h2 className="mb-2 text-4xl font-bold text-foreground">
-              Thank You!
-            </h2>
-            <p className="mb-8 text-lg text-foreground/80">
-              We've received your message and will get back to you shortly.
-            </p>
-            <button
-              onClick={() => setIsSuccess(false)}
-              className="btn-hover rounded-lg bg-sciscribe-navy 
-                dark:bg-primary px-6 py-3 font-medium text-white 
-                transition-all hover:bg-sciscribe-navy/90 
-                dark:hover:bg-primary/90"
-            >
-              Send Another Message
-            </button>
-          </div>
+      <section id="contact" className="py-32 md:py-48 border-t border-white/5">
+        <div className="container mx-auto px-6 text-center">
+          <h2 className="text-4xl md:text-6xl font-serif text-white mb-6">Received.</h2>
+          <p className="text-white/50 font-light mb-12">An architect will be in touch shortly.</p>
+          <button
+            onClick={() => setIsSuccess(false)}
+            className="text-white hover:text-white/60 font-mono text-sm uppercase tracking-widest transition-colors"
+          >
+            ← Return
+          </button>
         </div>
       </section>
     );
   }
 
   return (
-    <section id="contact" className="py-20">
-      <div className="container mx-auto px-6">
-        <div className="mx-auto max-w-3xl text-center">
-          <h2 className="mb-2 text-4xl font-bold text-foreground">
-            Contact Us
-          </h2>
-          <p className="mb-12 text-lg text-foreground/80">
-            Have questions about our services? We're here to help.
-          </p>
-        </div>
+    <section id="contact" className="py-32 md:py-48 border-t border-white/5 relative z-10">
+      <div className="container mx-auto px-6 md:px-12">
 
-        <div className="mx-auto grid max-w-5xl grid-cols-1 gap-10 
-          lg:grid-cols-2"
-        >
-          {/* Contact Info Panel */}
-          <div className="animate-slide-in rounded-lg bg-sciscribe-light 
-            dark:bg-card p-8"
-          >
-            <h3 className="mb-6 text-2xl font-bold text-foreground">
-              Get in Touch
-            </h3>
+        <div className="flex flex-col md:flex-row justify-between items-start gap-16 md:gap-32">
 
-            <div className="mb-8 space-y-6">
-              <ContactItem
-                icon={<Mail size={20} />}
-                title="Email"
-                lines={[
-                  "contact@sciscribesolutions.com",
-                  "support@sciscribesolutions.com"
-                ]}
-              />
-              <ContactItem
-                icon={<Phone size={20} />}
-                title="Phone"
-                lines={["+91 9395582679"]}
-                extra={
-                  <a
-                    href="https://api.whatsapp.com/message/XMKZUS2MJHUBG1"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={() => {
-                      logWhatsappClick('contact_section');
-                    }}
-                    className="flex items-center text-foreground/70 
-                      hover:text-sciscribe-gold transition-colors mt-1"
-                  >
-                    <MessageCircleMore size={16} className="mr-1" />
-                    <span>WhatsApp</span>
-                  </a>
-                }
-              />
-              <ContactItem
-                icon={<MapPin size={20} />}
-                title="Location"
-                lines={["Hazra Road", "Kolkata, India"]}
-              />
+          {/* Massive Typographic Header */}
+          <div className="w-full md:w-1/2">
+            <motion.h2
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-[8vw] md:text-[5vw] font-serif leading-[0.9] tracking-tighter text-white"
+            >
+              Initiate <br />
+              <span className="italic text-white/50">Dialogue.</span>
+            </motion.h2>
+
+            <div className="mt-16 space-y-8 text-sm font-mono text-white/40 tracking-widest uppercase">
+              <div>
+                <p className="mb-2 text-white/20">Direct Line</p>
+                <p className="text-white hover:text-white/70 transition-colors">contact@sciscribesolutions.com</p>
+              </div>
+              <div>
+                <p className="mb-2 text-white/20">Location</p>
+                <p className="text-white">Hazra Road, Kolkata</p>
+              </div>
             </div>
           </div>
 
-          {/* Contact Form */}
-          <div className="animate-slide-in rounded-lg bg-white 
-            dark:bg-card p-8 shadow-md"
-          >
-            <h3 className="mb-6 text-2xl font-bold text-foreground">
-              Send us a Message
-            </h3>
-            <form
-              onSubmit={handleSubmit}
-              className="space-y-6"
-              autoComplete="off"
-            >
-              <input
-                type="hidden"
-                name="form-name"
-                value="contact"
-              />
-              <p style={{ display: "none" }} aria-hidden="true">
-                <label>
-                  Don't fill this out if you're human:
-                  <input
-                    name="bot-field"
-                    autoComplete="off"
-                  />
-                </label>
-              </p>
+          {/* Stark Input Form */}
+          <div className="w-full md:w-1/2 mt-8 md:mt-0">
+            <form onSubmit={handleSubmit} className="space-y-12">
 
-              <InputField
-                id="name"
-                label="Your Name"
-                type="text"
-                value={formData.name}
-                onChange={handleChange}
-              />
-              <InputField
-                id="email"
-                label="Your Email"
-                type="email"
-                value={formData.email}
-                onChange={handleChange}
-              />
-              <TextareaField
-                id="message"
-                label="Your Message"
-                value={formData.message}
-                onChange={handleChange}
-              />
+              <div className="relative">
+                <input
+                  type="text"
+                  name="name"
+                  id="name"
+                  required
+                  value={formData.name}
+                  onChange={handleChange}
+                  className="w-full bg-transparent border-0 border-b border-white/20 px-0 py-4 text-white text-lg placeholder:text-transparent focus:outline-none focus:ring-0 focus:border-white transition-colors peer"
+                  placeholder="Name"
+                />
+                <label
+                  htmlFor="name"
+                  className="absolute left-0 top-4 text-white/40 text-lg transition-all peer-focus:-top-6 peer-focus:text-xs peer-focus:text-white peer-focus:font-mono peer-focus:tracking-widest peer-focus:uppercase peer-valid:-top-6 peer-valid:text-xs peer-valid:text-white/40 peer-valid:font-mono peer-valid:tracking-widest peer-valid:uppercase"
+                >
+                  Your Name
+                </label>
+              </div>
+
+              <div className="relative">
+                <input
+                  type="email"
+                  name="email"
+                  id="email"
+                  required
+                  value={formData.email}
+                  onChange={handleChange}
+                  className="w-full bg-transparent border-0 border-b border-white/20 px-0 py-4 text-white text-lg placeholder:text-transparent focus:outline-none focus:ring-0 focus:border-white transition-colors peer"
+                  placeholder="Email"
+                />
+                <label
+                  htmlFor="email"
+                  className="absolute left-0 top-4 text-white/40 text-lg transition-all peer-focus:-top-6 peer-focus:text-xs peer-focus:text-white peer-focus:font-mono peer-focus:tracking-widest peer-focus:uppercase peer-valid:-top-6 peer-valid:text-xs peer-valid:text-white/40 peer-valid:font-mono peer-valid:tracking-widest peer-valid:uppercase"
+                >
+                  Your Email
+                </label>
+              </div>
+
+              <div className="relative">
+                <textarea
+                  name="message"
+                  id="message"
+                  required
+                  rows={4}
+                  value={formData.message}
+                  onChange={handleChange}
+                  className="w-full bg-transparent border-0 border-b border-white/20 px-0 py-4 text-white text-lg placeholder:text-transparent focus:outline-none focus:ring-0 focus:border-white transition-colors peer resize-none"
+                  placeholder="Message"
+                />
+                <label
+                  htmlFor="message"
+                  className="absolute left-0 top-4 text-white/40 text-lg transition-all peer-focus:-top-6 peer-focus:text-xs peer-focus:text-white peer-focus:font-mono peer-focus:tracking-widest peer-focus:uppercase peer-valid:-top-6 peer-valid:text-xs peer-valid:text-white/40 peer-valid:font-mono peer-valid:tracking-widest peer-valid:uppercase"
+                >
+                  Project Details
+                </label>
+              </div>
 
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="btn-hover w-full rounded-lg bg-sciscribe-navy 
-                  dark:bg-primary px-6 py-3 font-medium text-white 
-                  transition-all hover:bg-sciscribe-navy/90 
-                  dark:hover:bg-primary/90 mb-4"
+                className="group relative inline-flex items-center justify-center w-full px-8 py-6 text-sm tracking-widest uppercase font-mono text-white border border-white/20 hover:border-white/60 transition-colors duration-500 overflow-hidden disabled:opacity-50"
               >
-                Send Message
+                <span className="relative z-10">
+                  {isSubmitting ? "Transmitting..." : "Send Message"}
+                </span>
+                <div className="absolute inset-0 bg-white/5 origin-left scale-x-0 transition-transform duration-500 ease-out group-hover:scale-x-100" />
               </button>
 
-              <div className="text-center">
-                <Link
-                  to="/contact"
-                  className="text-sciscribe-gold hover:text-sciscribe-gold/80 
-                    font-medium"
-                >
-                  Want a full quote? Send us more details →
-                </Link>
-              </div>
             </form>
           </div>
+
         </div>
+
       </div>
     </section>
   );
 };
-
-const ContactItem = ({
-  icon,
-  title,
-  lines,
-  extra
-}: {
-  icon: React.ReactNode;
-  title: string;
-  lines: string[];
-  extra?: React.ReactNode;
-}) => (
-  <div className="flex items-start">
-    <div className="mr-4 flex h-10 w-10 items-center justify-center 
-      rounded-lg bg-white dark:bg-sciscribe-navy/30 text-foreground"
-    >
-      {icon}
-    </div>
-    <div>
-      <p className="font-medium text-foreground">{title}</p>
-      {lines.map((line, i) => (
-        <p key={i} className="text-foreground/70">
-          {line}
-        </p>
-      ))}
-      {extra}
-    </div>
-  </div>
-);
-
-const InputField = ({
-  id,
-  label,
-  type,
-  value,
-  onChange
-}: {
-  id: string;
-  label: string;
-  type: string;
-  value: string;
-  onChange: React.ChangeEventHandler<HTMLInputElement>;
-}) => (
-  <div>
-    <label
-      htmlFor={id}
-      className="mb-2 block text-sm font-medium text-foreground"
-    >
-      {label}
-    </label>
-    <input
-      id={id}
-      name={id}
-      type={type}
-      value={value}
-      onChange={onChange}
-      required
-      className="w-full rounded-lg border border-gray-200 p-3 
-        focus:border-sciscribe-gold focus:outline-none 
-        focus:ring-2 focus:ring-sciscribe-gold/20 
-        dark:bg-sciscribe-navy/30 dark:border-sciscribe-navy/50"
-    />
-  </div>
-);
-
-const TextareaField = ({
-  id,
-  label,
-  value,
-  onChange
-}: {
-  id: string;
-  label: string;
-  value: string;
-  onChange: React.ChangeEventHandler<HTMLTextAreaElement>;
-}) => (
-  <div>
-    <label
-      htmlFor={id}
-      className="mb-2 block text-sm font-medium text-foreground"
-    >
-      {label}
-    </label>
-    <textarea
-      id={id}
-      name={id}
-      value={value}
-      onChange={onChange}
-      required
-      rows={5}
-      className="w-full rounded-lg border border-gray-200 p-3 
-        focus:border-sciscribe-gold focus:outline-none 
-        focus:ring-2 focus:ring-sciscribe-gold/20 
-        dark:bg-sciscribe-navy/30 dark:border-sciscribe-navy/50"
-    ></textarea>
-  </div>
-);
 
 export default ContactSection;

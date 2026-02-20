@@ -1,14 +1,24 @@
-import { Metadata } from 'next';
-import { getPostBySlug, mockPosts } from '@/lib/mock-blog';
-import { notFound } from 'next/navigation';
+import { getPostBySlug } from '@/lib/mock-blog';
 import BlogPostContent from './BlogPostContent';
+import { notFound } from 'next/navigation';
+import { mockPosts } from '@/lib/mock-blog';
+import { Metadata } from 'next';
 
-interface Props {
-    params: { slug: string };
+type Props = {
+    params: Promise<{ slug: string }>;
+};
+
+// Generate static parameters for all known blog posts
+export function generateStaticParams() {
+    return mockPosts.map((post) => ({
+        slug: post.slug,
+    }));
 }
 
+// Generate metadata dynamically based on the post
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-    const post = getPostBySlug(params.slug);
+    const { slug } = await params;
+    const post = getPostBySlug(slug);
 
     if (!post) {
         return {
@@ -18,11 +28,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     }
 
     return {
-        title: `${post.title} | SciScribe Blog`,
+        title: `${post.title} | SciScribe Solutions Blog`,
         description: post.excerpt,
         openGraph: {
             title: post.title,
             description: post.excerpt,
+            type: 'article',
+            publishedTime: post.date,
+            authors: [post.author.name],
             images: [
                 {
                     url: post.coverImage,
@@ -31,21 +44,19 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
                     alt: post.title,
                 },
             ],
-            type: 'article',
-            publishedTime: post.date,
-            authors: [post.author.name],
+        },
+        twitter: {
+            card: 'summary_large_image',
+            title: post.title,
+            description: post.excerpt,
+            images: [post.coverImage],
         },
     };
 }
 
-export function generateStaticParams() {
-    return mockPosts.map((post) => ({
-        slug: post.slug,
-    }));
-}
-
-export default function BlogPostPage({ params }: Props) {
-    const post = getPostBySlug(params.slug);
+export default async function BlogPostPage({ params }: Props) {
+    const { slug } = await params;
+    const post = getPostBySlug(slug);
 
     if (!post) {
         notFound();

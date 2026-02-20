@@ -5,12 +5,13 @@ import { ThemeProvider } from '@/components/theme/ThemeProvider';
 import { TooltipProvider } from '@/components/ui/tooltip';
 import { Toaster } from '@/components/ui/toaster';
 import { Toaster as Sonner } from '@/components/ui/sonner';
-import CustomCursor from '@/components/ui/CustomCursor';
 
 const inter = Inter({ subsets: ['latin'] });
 
-import Navbar from '@/components/layout/Navbar';
+import SideNav from '@/components/layout/SideNav';
 import Footer from '@/components/layout/Footer';
+import SmoothScroll from '@/components/layout/SmoothScroll';
+import { FluidIridescentBackground } from '@/components/backgrounds/FluidBackgroundWrapper';
 
 export const metadata: Metadata = {
     title: 'SciScribe | Expert Medical & Scientific Writing',
@@ -23,16 +24,19 @@ export default function RootLayout({
     children: React.ReactNode;
 }) {
     return (
-        <html lang="en" suppressHydrationWarning>
-            <body className={inter.className} suppressHydrationWarning>
-                <ThemeProvider defaultTheme="system" storageKey="sciscribe-theme">
+        <html lang="en" suppressHydrationWarning className="dark">
+            <body className={`${inter.className} bg-black text-white`} suppressHydrationWarning>
+                <ThemeProvider defaultTheme="dark" storageKey="sciscribe-theme">
                     <TooltipProvider>
-                        <CustomCursor />
-                        <Navbar />
-                        <div className="pt-24 min-h-[calc(100vh-100px)]">
-                            {children}
-                        </div>
-                        <Footer />
+                        <SmoothScroll>
+                            <FluidIridescentBackground />
+                            <SideNav />
+                            {/* Main content offset by the width of the left navigation rail */}
+                            <div className="pl-32 md:pl-48 min-h-screen relative z-10 w-full text-white">
+                                {children}
+                            </div>
+                            <Footer />
+                        </SmoothScroll>
                         <Toaster />
                         <Sonner />
                     </TooltipProvider>

@@ -1,174 +1,119 @@
 "use client";
-import { InteractiveBackground } from "@/components/background/InteractiveBackground";
-import Footer from "@/components/layout/Footer";
-import Navbar from "@/components/layout/Navbar";
+
 import { motion } from "framer-motion";
-import { FileText, BookOpen, Microscope, FileCheck, ClipboardList, BarChart } from "lucide-react";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import AddOnServicesSection from "@/components/sections/AddOnServicesSection";
-import ServicesCarouselSection from "@/components/sections/ServicesCarouselSection";
-import ServicesFAQ from "@/components/sections/ServicesFAQ";
-import LightningSeparator from "@/components/ui/lightningseparator";
+import { ArrowUpRight } from "lucide-react";
 
 const ServicesContent = () => {
-  const services = [
+  const capabilities = [
     {
-      icon: <FileText className="h-10 w-10 text-sciscribe-blue" />,
+      num: "01",
       title: "Scientific Editing",
-      description: "Professional editing of research papers, theses, and dissertations by subject matter experts with PhDs.",
-      details: "Our scientific editing service includes comprehensive language editing, structural improvements, citation formatting, and discipline-specific terminology refinement. We ensure your manuscript meets the highest standards of clarity and scientific precision."
+      desc: "Comprehensive language and structural refinement engineered for high-impact journals. We eliminate ambiguity and elevate your manuscript to native-level fluency.",
     },
     {
-      icon: <BookOpen className="h-10 w-10 text-sciscribe-blue" />,
-      title: "Journal Submission Support",
-      description: "End-to-end assistance with manuscript preparation, formatting, and submission to target journals.",
-      details: "We help you navigate the complex journal submission process by providing journal selection guidance, formatting according to specific journal guidelines, cover letter writing, and support with online submission systems."
+      num: "02",
+      title: "Journal Submission Strategy",
+      desc: "Navigating the labyrinth of peer review. We handle journal targeting, stringent formatting adherence, and authoritative cover letter architecture.",
     },
     {
-      icon: <Microscope className="h-10 w-10 text-sciscribe-blue" />,
-      title: "Research Consultancy",
-      description: "Expert guidance on research design, methodology, and analysis to strengthen your study.",
-      details: "Our experienced research consultants provide critical feedback on your research design, suggest methodological improvements, recommend appropriate analytical approaches, and help you interpret your findings within the context of current literature."
+      num: "03",
+      title: "Research Architecture",
+      desc: "Rigorous evaluation of methodology, statistical analysis frameworks, and study design before you begin the writing process.",
     },
     {
-      icon: <FileCheck className="h-10 w-10 text-sciscribe-blue" />,
-      title: "Clinical Study Writing",
-      description: "Specialized writing and editing for clinical trials, case reports, and medical manuscripts.",
-      details: "Our medical writing experts assist with drafting clinical trial protocols, patient consent forms, case reports, and clinical research manuscripts. We ensure compliance with reporting guidelines (CONSORT, STROBE, PRISMA) and medical journal requirements."
+      num: "04",
+      title: "Clinical Study Documentation",
+      desc: "Precision documentation for clinical trials and case reports, ensuring uncompromising adherence to CONSORT, STROBE, and PRISMA guidelines.",
     },
     {
-      icon: <ClipboardList className="h-10 w-10 text-sciscribe-blue" />,
-      title: "Systematic Review Assistance",
-      description: "Comprehensive support for literature searches, data extraction, and synthesis of evidence.",
-      details: "We help you plan and execute systematic reviews according to PRISMA guidelines, assisting with search strategy formulation, study selection, quality assessment, data extraction, meta-analysis planning, and manuscript preparation."
+      num: "05",
+      title: "Systematic Review Synthesis",
+      desc: "From exhaustive search strategy formulation to rigorous meta-analysis planning, we assist in synthesizing the highest level of evidence.",
     },
     {
-      icon: <BarChart className="h-10 w-10 text-sciscribe-blue" />,
-      title: "Statistical Support",
-      description: "Data analysis, interpretation, and visualization to strengthen your research findings.",
-      details: "Our statisticians provide consultation on study design, sample size calculation, data management, statistical analysis, interpretation of results, and creation of publication-ready tables and figures that effectively communicate your findings."
+      num: "06",
+      title: "Data Visualization & Statistics",
+      desc: "Transforming dense statistical outputs into intuitive, compelling visual narratives that command reviewer attention.",
     }
   ];
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: { opacity: 1, transition: { staggerChildren: 0.1 } }
-  };
-
-  const cardVariants = {
-    hidden: { y: 20, opacity: 0 },
-    visible: { y: 0, opacity: 1, transition: { duration: 0.5 } },
-    hover: { y: -10, transition: { duration: 0.3 } }
-  };
-
   return (
-    <div className="flex min-h-screen flex-col">
-      <InteractiveBackground />
-      <Navbar />
-      <main className="dark:bg-sciscribe-navy/5 pt-24">
-        {/* Hero Section */}
-        <section className="section-container">
-          <div className="max-w-4xl mx-auto text-center">
-            <motion.h1
-              className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 bg-gradient-to-r from-sciscribe-blue to-sciscribe-teal bg-clip-text text-transparent"
-              initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-            >
-              Our Services
-            </motion.h1>
-            <motion.p
-              className="text-lg mb-8 dark:text-white/80"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.2, duration: 0.5 }}
-            >
-              End-to-end research solutions you can trust — exceptional quality at the best possible price.
-            </motion.p>
-          </div>
-        </section>
+    <main className="flex flex-col relative w-full overflow-hidden z-10 pt-32 md:pt-48 pb-24">
+      <div className="container mx-auto px-6 md:px-12">
 
-        {/* Services Grid */}
-        <section className="section-container">
-          <motion.div
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-            variants={containerVariants}
-            initial="hidden"
-            animate="visible"
-          >
-            {services.map((service, index) => (
-              <motion.div
-                key={index}
-                className="premium-card-hover overflow-hidden h-[280px] rounded-xl"
-                variants={cardVariants}
-                whileHover="hover"
-              >
-                <div className="p-6 h-full flex flex-col">
-                  {/* Card Front (Always Visible) */}
-                  <div className="card-content">
-                    <div className="mb-4 p-3 inline-block rounded-full bg-gradient-to-br from-white/5 to-white/20 dark:from-sciscribe-navy/30 dark:to-sciscribe-navy/50 border border-sciscribe-mist/30 dark:border-white/10 shadow-sm">
-                      {service.icon}
-                    </div>
-                    <h3 className="text-xl font-bold mb-3">{service.title}</h3>
-                    <p className="text-muted-foreground mb-4">{service.description}</p>
-                  </div>
+        {/* Massive Page Header */}
+        <motion.div
+          className="mb-32 md:mb-48 max-w-5xl"
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+        >
+          <h1 className="text-[12vw] md:text-[8vw] font-serif leading-[0.9] tracking-tighter text-white">
+            Capabilities <br />
+            <span className="italic text-white/50">& Expertise.</span>
+          </h1>
+        </motion.div>
 
-                  {/* Card Reveal (Show on Hover) */}
-                  <div className="card-reveal absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-white dark:from-sciscribe-navy/95 via-white/95 dark:via-sciscribe-navy/90 to-white/80 dark:to-sciscribe-navy/70">
-                    <p className="mb-4 text-sm">{service.details}</p>
-                    <Link href="/contact" className="inline-block">
-                      <Button className="btn-premium">
-                        Inquire Now
-                      </Button>
-                    </Link>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </motion.div>
-        </section>
-
-        <LightningSeparator />
-
-        {/* Add-On Services Section */}
-        <AddOnServicesSection />
-
-        <LightningSeparator />
-
-        {/* Services Carousel Section */}
-        <ServicesCarouselSection />
-
-        {/* CTA Section */}
-        <section className="bg-gradient-to-r from-sciscribe-blue/10 to-sciscribe-teal/10 dark:from-sciscribe-blue/20 dark:to-sciscribe-teal/20 py-16">
-          <div className="container mx-auto px-6 text-center">
+        {/* Dense Typographic Index */}
+        <div className="border-t border-white/20">
+          {capabilities.map((item, index) => (
             <motion.div
-              className="max-w-2xl mx-auto"
+              key={index}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 0.8, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] }}
             >
-              <h2 className="text-3xl font-bold mb-4">Need a Custom Solution?</h2>
-              <p className="mb-8">
-                We understand that every research project is unique. Contact us to discuss your specific needs and how we can tailor our services to support your research goals.
-              </p>
-              <Link href="/contact">
-                <Button className="btn-premium pulse-btn shadow-lg">
-                  Get in Touch
-                </Button>
-              </Link>
+              <div className="group flex flex-col md:flex-row items-baseline justify-between py-12 md:py-20 border-b border-white/10 hover:border-white transition-colors duration-500 w-full relative">
+
+                {/* Number & Massive Title */}
+                <div className="flex flex-col md:flex-row md:items-baseline gap-4 md:gap-16 w-full md:w-1/2">
+                  <span className="text-sm font-mono text-white/30 group-hover:text-white transition-colors duration-500">
+                    {item.num}
+                  </span>
+                  <h2 className="text-3xl md:text-5xl lg:text-6xl font-serif text-white tracking-tight group-hover:italic group-hover:pl-4 transition-all duration-700 ease-[0.16,1,0.3,1]">
+                    {item.title}
+                  </h2>
+                </div>
+
+                {/* Description (Fades in on desktop, static on mobile) */}
+                <div className="w-full md:w-1/2 mt-8 md:mt-0 flex flex-col justify-end">
+                  <p className="text-sm md:text-base font-light text-white/70 max-w-md md:opacity-40 md:group-hover:opacity-100 transition-opacity duration-700 ease-in-out md:ml-auto leading-relaxed">
+                    {item.desc}
+                  </p>
+                </div>
+
+              </div>
             </motion.div>
-          </div>
-        </section>
+          ))}
+        </div>
 
-        <LightningSeparator />
+        {/* Section CTA */}
+        <motion.div
+          className="mt-32 md:mt-48 text-center flex flex-col items-center"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+        >
+          <h2 className="text-2xl md:text-4xl font-serif text-white mb-12">
+            Require a specialized approach?
+          </h2>
+          <Link
+            href="/contact"
+            className="group relative inline-flex items-center justify-center px-12 py-6 text-sm tracking-widest uppercase font-mono text-white border border-white/20 hover:border-white/60 transition-colors duration-500 overflow-hidden"
+          >
+            <span className="relative z-10 flex items-center gap-4">
+              Initiate Dialogue
+              <ArrowUpRight className="w-4 h-4 transition-transform duration-500 group-hover:translate-x-1 group-hover:-translate-y-1" />
+            </span>
+            <div className="absolute inset-0 bg-white/5 origin-left scale-x-0 transition-transform duration-500 ease-out group-hover:scale-x-100" />
+          </Link>
+        </motion.div>
 
-        {/* Add FAQ Section with structured data */}
-        <ServicesFAQ />
-      </main>
-      <Footer />
-    </div>
+      </div>
+    </main>
   );
 };
 

@@ -1,160 +1,127 @@
+"use client";
 
 import { motion } from "framer-motion";
-import { GraduationCap, UserCheck, Lock, Wrench, Clock, FileCheck, CheckCircle, ArrowRight } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import { cn } from "@/lib/utils";
+import { GraduationCap, UserCheck, Lock, Wrench, Clock, FileCheck, ArrowRight } from "lucide-react";
+import Link from "next/link";
 import { useAnalytics } from "@/hooks/useAnalytics";
 
 const WhyChooseUsSection = () => {
   const { logCtaClick } = useAnalytics();
   const reasons = [
     {
-      icon: <GraduationCap className="h-8 w-8" />,
+      icon: <GraduationCap className="w-5 h-5 mb-6 opacity-50" />,
       title: "Academic Expertise",
       description: "Our editors are subject-matter experts with research backgrounds — not just language correctors. We understand academic rigor and publication standards.",
       benefits: ["PhD-level subject expertise", "Research publication experience", "Field-specific knowledge"]
     },
     {
-      icon: <UserCheck className="h-8 w-8" />,
+      icon: <UserCheck className="w-5 h-5 mb-6 opacity-50" />,
       title: "Personalized Support",
       description: "We don't use templates. Every project is tailored to your goals, research field, and stage of submission — with real human input.",
       benefits: ["Customized editing approach", "One-on-one consultations", "Targeted feedback"]
     },
     {
-      icon: <FileCheck className="h-8 w-8" />,
+      icon: <FileCheck className="w-5 h-5 mb-6 opacity-50" />,
       title: "Transparent Pricing",
       description: "No hidden charges. No shortcuts. We offer honest pricing, transparent feedback, and maintain 100% confidentiality of your work.",
       benefits: ["Clear pricing structure", "Honest Pricing Assessment", "Best Rates in Academia"]
     },
     {
-      icon: <Wrench className="h-8 w-8" />,
+      icon: <Wrench className="w-5 h-5 mb-6 opacity-50" />,
       title: "End-to-End Services",
       description: "From manuscript editing and plagiarism reduction to thesis formatting and cover letters — all under one roof.",
       benefits: ["Comprehensive solutions", "Integrated workflow", "Single point of contact"]
     },
     {
-      icon: <Clock className="h-8 w-8" />,
+      icon: <Clock className="w-5 h-5 mb-6 opacity-50" />,
       title: "Responsive & Reliable",
       description: "We stay available throughout the process — updating you, answering questions, and delivering on time. Your deadline is our priority.",
       benefits: ["24-hour response time", "On-time delivery guarantee", "Regular progress updates"]
     },
     {
-      icon: <Lock className="h-8 w-8" />,
+      icon: <Lock className="w-5 h-5 mb-6 opacity-50" />,
       title: "Confidential & Secure",
       description: "We treat your work with care and respect. Files are stored securely and deleted after delivery unless otherwise requested.",
       benefits: ["Secure file handling", "NDA protection available", "Privacy-first approach"]
     }
   ];
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: { staggerChildren: 0.15 }
-    }
-  };
-
-  const itemVariants = {
-    hidden: { y: 30, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: { duration: 0.6, ease: "easeOut" }
-    }
-  };
-
   return (
-    <section className="py-20 relative overflow-hidden">
-      {/* Decorative background elements */}
-      <div className="absolute top-40 -left-40 w-96 h-96 bg-sciscribe-blue/5 rounded-full blur-3xl"></div>
-      <div className="absolute bottom-40 -right-40 w-96 h-96 bg-sciscribe-gold/5 rounded-full blur-3xl"></div>
-      
-      <div className="container mx-auto px-6 relative z-10">
+    <section className="py-32 md:py-48 relative w-full overflow-hidden bg-transparent text-white">
+      <div className="container mx-auto px-6 md:px-12 max-w-7xl">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="mx-auto max-w-3xl text-center mb-16"
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+          className="mb-24 md:mb-40 max-w-4xl"
         >
-          <Badge className="mb-4 bg-sciscribe-gold/10 text-sciscribe-gold hover:bg-sciscribe-gold/20 transition-colors">
+          <span className="text-xs uppercase tracking-[0.3em] font-mono text-white/70 mb-8 block">
             Our Difference
-          </Badge>
-          <h2 className="mb-4 text-4xl font-bold bg-gradient-to-r from-sciscribe-blue to-sciscribe-teal bg-clip-text text-transparent">
+          </span>
+          <h2 className="text-[10vw] md:text-[6vw] font-serif leading-[0.9] tracking-tighter text-white">
             Why Choose Us?
           </h2>
-          <p className="text-lg text-foreground/80 max-w-2xl mx-auto">
-            What sets SciScribe Solutions apart from other scientific editing services
+          <p className="mt-8 text-xl font-light text-white/90 max-w-2xl text-balance">
+            What sets SciScribe Solutions apart from other scientific editing services.
           </p>
         </motion.div>
 
-        <motion.div 
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-50px" }}
-        >
+        <div className="flex flex-col gap-y-32 md:gap-y-48 w-full border-t border-white/20 pt-12 md:pt-24 mt-12 md:mt-24">
           {reasons.map((reason, index) => (
             <motion.div
               key={index}
-              variants={itemVariants}
-              whileHover={{ y: -5, transition: { duration: 0.2 } }}
-              className={cn(
-                "premium-glassmorphism flex flex-col h-full rounded-xl overflow-hidden",
-                "border border-sciscribe-blue/10 hover:border-sciscribe-gold/30", 
-                "hover:shadow-xl transition-all duration-500"
-              )}
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-150px" }}
+              transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
+              className={`flex flex-col lg:flex-row gap-12 lg:gap-24 w-full ${index % 2 !== 0 ? 'lg:flex-row-reverse' : ''}`}
             >
-              {/* Card header with gradient */}
-              <div className="bg-gradient-to-r from-sciscribe-teal/10 to-sciscribe-gold/10 p-6 relative overflow-hidden">
-                {/* Decorative elements */}
-                <div className="absolute -right-6 -top-6 w-16 h-16 rounded-full bg-gradient-to-br from-sciscribe-gold/20 to-transparent blur-xl pointer-events-none" />
-                
-                <div className="mb-3 flex items-center justify-center">
-                  <div className="p-3 rounded-full bg-white/80 dark:bg-sciscribe-navy/50 border border-sciscribe-mist/30 dark:border-white/10 shadow-md">
-                    {reason.icon}
-                  </div>
+              {/* Elegant Typography Mark replacing massive number */}
+              <div className="lg:w-1/3 flex flex-col items-start lg:items-center">
+                <div className="flex items-baseline gap-6 mb-8 group">
+                  <span className="text-6xl md:text-8xl font-serif text-white/40 drop-shadow-[0_0_15px_rgba(255,255,255,0.1)] select-none transition-colors duration-500 group-hover:text-white">
+                    {String(index + 1).padStart(2, '0')}
+                  </span>
                 </div>
-                <h3 className="text-xl font-bold text-center bg-gradient-to-r from-sciscribe-blue to-sciscribe-teal bg-clip-text text-transparent">
+              </div>
+
+              {/* Body & Bullet Points seamlessly integrated */}
+              <div className="lg:w-2/3 flex flex-col justify-center">
+                <h3 className="text-4xl md:text-5xl font-serif tracking-tight text-white pb-6 mb-6 border-b border-white/20">
                   {reason.title}
                 </h3>
-              </div>
-              
-              {/* Card body */}
-              <div className="p-6 flex-grow flex flex-col">
-                <p className="text-foreground/80 mb-6">
+                <p className="text-xl md:text-2xl font-light text-white leading-relaxed mb-12">
                   {reason.description}
                 </p>
-                
-                {/* Benefits list */}
-                <ul className="space-y-2 mb-6">
-                  {reason.benefits?.map((benefit, i) => (
-                    <li key={i} className="flex items-center">
-                      <div className="mr-2 text-sciscribe-gold">
-                        <CheckCircle size={14} />
+                <div className="flex flex-col gap-4">
+                  {reason.benefits.map((benefit, i) => (
+                    <div key={i} className="flex flex-col group">
+                      <span className="text-sm uppercase tracking-widest font-mono text-white/70 mb-2">Feature {i + 1}</span>
+                      <div className="text-lg text-white font-medium border-l border-white/40 pl-6 py-2 transition-colors duration-500">
+                        {benefit}
                       </div>
-                      <span className="text-sm">{benefit}</span>
-                    </li>
+                    </div>
                   ))}
-                </ul>
+                </div>
               </div>
             </motion.div>
           ))}
-        </motion.div>
-        
-        {/* Call to action */}
-        <motion.div 
-          className="mt-16 text-center"
-          initial={{ opacity: 0, y: 20 }}
+        </div>
+
+        {/* Editorial Action */}
+        <motion.div
+          className="mt-40 md:mt-64 flex flex-col items-center justify-center border-t border-white/10 pt-24"
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.3 }}
+          transition={{ duration: 1 }}
         >
-          <Link 
-            to="/contact"
+          <h2 className="text-3xl md:text-5xl font-serif text-white mb-12 text-center">
+            Ready to elevate your manuscript?
+          </h2>
+          <Link
+            href="/contact"
             onClick={() => {
               logCtaClick({
                 cta_id: 'why_choose_us_get_started',
@@ -162,16 +129,16 @@ const WhyChooseUsSection = () => {
                 cta_location: 'why_choose_us_section'
               });
             }}
+            className="group relative inline-flex items-center justify-center px-12 py-6 text-sm tracking-widest uppercase font-mono text-white border border-white/20 hover:border-white/60 transition-colors duration-500 overflow-hidden"
           >
-            <Button 
-              className="bg-gradient-to-r from-sciscribe-blue to-sciscribe-teal hover:from-sciscribe-blue/90 hover:to-sciscribe-teal/90 text-white group"
-              size="lg"
-            >
+            <span className="relative z-10 flex items-center gap-6">
               Get Started Today
-              <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
-            </Button>
+              <ArrowRight className="w-4 h-4 transition-transform duration-500 group-hover:translate-x-2" />
+            </span>
+            <div className="absolute inset-0 bg-white/5 origin-left scale-x-0 transition-transform duration-500 ease-out group-hover:scale-x-100" />
           </Link>
         </motion.div>
+
       </div>
     </section>
   );

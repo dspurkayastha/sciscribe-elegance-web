@@ -19,43 +19,43 @@ export default {
 		},
 		extend: {
 			fontFamily: {
-				sans: ['Inter', 'sans-serif'],
-				heading: ['Inter', 'sans-serif'],
-				body: ['Inter', 'sans-serif'],
+				sans: ["Inter", "Helvetica", "Arial", "sans-serif"],
+				serif: ["Playfair Display", "Georgia", "Times New Roman", "serif"],
+				mono: ["Geist Mono", "JetBrains Mono", "monospace"],
 			},
 			colors: {
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',
 				ring: 'hsl(var(--ring))',
-				background: 'hsl(var(--background))',
-				foreground: 'hsl(var(--foreground))',
+				background: "#000000",
+				foreground: "#f5f5f5",
 				primary: {
-					DEFAULT: 'hsl(var(--primary))',
-					foreground: 'hsl(var(--primary-foreground))'
+					DEFAULT: "#ffffff",
+					foreground: "#000000",
 				},
 				secondary: {
-					DEFAULT: 'hsl(var(--secondary))',
-					foreground: 'hsl(var(--secondary-foreground))'
+					DEFAULT: "#1a1a1a",
+					foreground: "#e5e5e5",
 				},
 				destructive: {
 					DEFAULT: 'hsl(var(--destructive))',
 					foreground: 'hsl(var(--destructive-foreground))'
 				},
 				muted: {
-					DEFAULT: 'hsl(var(--muted))',
-					foreground: 'hsl(var(--muted-foreground))'
+					DEFAULT: "#111111",
+					foreground: "#a3a3a3",
 				},
 				accent: {
-					DEFAULT: 'hsl(var(--accent))',
-					foreground: 'hsl(var(--accent-foreground))'
+					DEFAULT: "#222222",
+					foreground: "#ffffff",
 				},
 				popover: {
-					DEFAULT: 'hsl(var(--popover))',
-					foreground: 'hsl(var(--popover-foreground))'
+					DEFAULT: "#050505",
+					foreground: "#f5f5f5",
 				},
 				card: {
-					DEFAULT: 'hsl(var(--card))',
-					foreground: 'hsl(var(--card-foreground))'
+					DEFAULT: "transparent",
+					foreground: "#f5f5f5",
 				},
 				sciscribe: {
 					navy: '#0B1B2A', // Deep Navy (keeping for compatibility)
@@ -86,9 +86,9 @@ export default {
 				}
 			},
 			borderRadius: {
-				lg: 'var(--radius)',
-				md: 'calc(var(--radius) - 2px)',
-				sm: 'calc(var(--radius) - 4px)'
+				lg: "0px",
+				md: "0px",
+				sm: "0px",
 			},
 			keyframes: {
 				'accordion-down': {

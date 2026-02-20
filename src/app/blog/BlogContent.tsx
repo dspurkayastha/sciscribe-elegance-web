@@ -1,157 +1,83 @@
 "use client";
+
 import { motion } from "framer-motion";
-import Navbar from "@/components/layout/Navbar";
-import Footer from "@/components/layout/Footer";
 import Link from "next/link";
 import { BlogPost } from "@/lib/mock-blog";
-import { ArrowRight, Calendar, Clock, ChevronRight } from "lucide-react";
-import { InteractiveBackground } from "@/components/background/InteractiveBackground";
-import Image from "next/image";
+import { ArrowUpRight } from "lucide-react";
 
 interface BlogContentProps {
     posts: BlogPost[];
 }
 
-const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-        opacity: 1,
-        transition: {
-            staggerChildren: 0.1,
-        }
-    }
-};
-
-const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-        opacity: 1,
-        y: 0,
-        transition: { duration: 0.5, ease: "easeOut" }
-    }
-};
-
 export default function BlogContent({ posts }: BlogContentProps) {
-    const featuredPost = posts[0];
-    const regularPosts = posts.slice(1);
-
     return (
-        <div className="min-h-screen bg-background relative overflow-hidden flex flex-col">
-            <InteractiveBackground />
-            <Navbar />
+        <main className="flex flex-col relative w-full overflow-hidden z-10 pt-32 md:pt-48 pb-24 min-h-screen">
+            <div className="container mx-auto px-6 md:px-12">
 
-            <main className="flex-grow pt-32 pb-24 relative z-10 w-full">
-                <div className="container mx-auto px-4 md:px-6">
-                    <motion.div
-                        initial="hidden"
-                        animate="visible"
-                        variants={containerVariants}
-                        className="w-full"
-                    >
-                        <motion.div variants={itemVariants} className="text-center max-w-3xl mx-auto mb-16">
-                            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6">
-                                Insights & <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent to-accent/80">Resources</span>
-                            </h1>
-                            <p className="text-lg md:text-xl text-muted-foreground">
-                                Expert advice on scientific writing, publication strategies, and the peer review process from our seasoned editors.
-                            </p>
-                        </motion.div>
+                {/* Massive Page Header */}
+                <motion.div
+                    className="mb-32 md:mb-48 max-w-5xl"
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+                >
+                    <h1 className="text-[12vw] md:text-[8vw] font-serif leading-[0.9] tracking-tighter text-white">
+                        Insights <br />
+                        <span className="italic text-white/50">& Resources.</span>
+                    </h1>
+                    <p className="mt-8 text-lg md:text-xl font-light text-white/50 max-w-2xl text-balance">
+                        Peer-reviewed perspectives on academic writing, journal submission, and the unseen friction within modern publishing.
+                    </p>
+                </motion.div>
 
-                        {/* Featured Post */}
-                        {featuredPost && (
-                            <motion.div variants={itemVariants} className="mb-20">
-                                <Link href={`/blog/${featuredPost.slug}`} className="group block">
-                                    <div className="grid md:grid-cols-2 gap-8 items-center bg-card/30 backdrop-blur-md rounded-3xl border border-border/50 overflow-hidden hover:bg-card/40 transition-all duration-500 shadow-apple hover:shadow-apple-hover">
-                                        <div className="relative h-64 md:h-full min-h-[400px] overflow-hidden">
-                                            <Image
-                                                src={featuredPost.coverImage}
-                                                alt={featuredPost.title}
-                                                fill
-                                                className="object-cover transition-transform duration-700 group-hover:scale-105"
-                                            />
-                                        </div>
-                                        <div className="p-8 md:p-12 pl-4 md:pl-0">
-                                            <div className="flex items-center gap-4 mb-4 text-sm text-muted-foreground">
-                                                <span className="flex items-center gap-1"><Calendar size={14} /> {featuredPost.date}</span>
-                                                <span className="flex items-center gap-1"><Clock size={14} /> {featuredPost.readingTime}</span>
-                                            </div>
-                                            <div className="flex gap-2 mb-6">
-                                                {featuredPost.tags.map(tag => (
-                                                    <span key={tag} className="px-3 py-1 bg-accent/10 text-accent rounded-full text-xs font-medium">
-                                                        {tag}
-                                                    </span>
-                                                ))}
-                                            </div>
-                                            <h2 className="text-3xl md:text-4xl font-bold mb-4 group-hover:text-accent transition-colors duration-300">
-                                                {featuredPost.title}
-                                            </h2>
-                                            <p className="text-muted-foreground mb-8 line-clamp-3 text-lg">
-                                                {featuredPost.excerpt}
-                                            </p>
-                                            <div className="flex items-center justify-between">
-                                                <div className="flex items-center gap-3">
-                                                    <Image src={featuredPost.author.avatar} alt={featuredPost.author.name} width={40} height={40} className="rounded-full" />
-                                                    <div>
-                                                        <p className="text-sm font-medium">{featuredPost.author.name}</p>
-                                                        <p className="text-xs text-muted-foreground">{featuredPost.author.role}</p>
-                                                    </div>
-                                                </div>
-                                                <div className="w-10 h-10 rounded-full bg-accent/10 flex items-center justify-center text-accent group-hover:bg-accent group-hover:text-white transition-colors duration-300">
-                                                    <ArrowRight size={20} />
-                                                </div>
-                                            </div>
+                {/* Dense Typographic Index */}
+                <div className="border-t border-white/20">
+                    {posts.map((post, index) => (
+                        <motion.div
+                            key={post.id}
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true, margin: "-50px" }}
+                            transition={{ duration: 0.8, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] }}
+                        >
+                            <Link href={`/blog/${post.slug}`} className="group block w-full">
+                                <div className="flex flex-col lg:flex-row items-baseline justify-between py-12 md:py-20 border-b border-white/10 hover:border-white transition-colors duration-500 w-full relative">
+
+                                    {/* Left: Meta */}
+                                    <div className="w-full lg:w-2/12 flex gap-4 lg:flex-col mb-4 lg:mb-0">
+                                        <span className="text-xs font-mono uppercase tracking-widest text-white/40 group-hover:text-white/80 transition-colors duration-500">
+                                            {post.date}
+                                        </span>
+                                        <span className="text-xs font-mono tracking-widest text-white/30 hidden lg:block">
+                                            {post.readingTime}
+                                        </span>
+                                    </div>
+
+                                    {/* Middle: Title & Excerpt */}
+                                    <div className="w-full lg:w-8/12 flex flex-col gap-4">
+                                        <h2 className="text-3xl md:text-5xl lg:text-6xl font-serif text-white tracking-tight group-hover:italic lg:group-hover:pl-4 transition-all duration-700 ease-[0.16,1,0.3,1] pr-8">
+                                            {post.title}
+                                        </h2>
+                                        <p className="text-sm md:text-base font-light text-white/50 max-w-2xl mt-4 lg:opacity-0 lg:group-hover:opacity-100 lg:group-hover:pl-4 transition-all duration-700 ease-in-out hidden md:block">
+                                            {post.excerpt}
+                                        </p>
+                                    </div>
+
+                                    {/* Right: Action */}
+                                    <div className="w-full lg:w-2/12 flex justify-end items-end mt-8 lg:mt-0">
+                                        <div className="flex items-center gap-4 text-white/30 group-hover:text-white transition-colors duration-500">
+                                            <span className="text-xs font-mono uppercase tracking-widest hidden md:block">Examine</span>
+                                            <ArrowUpRight className="w-5 h-5 transition-transform duration-500 group-hover:translate-x-1 group-hover:-translate-y-1" />
                                         </div>
                                     </div>
-                                </Link>
-                            </motion.div>
-                        )}
 
-                        {/* Recent Posts Grid */}
-                        <motion.div variants={itemVariants}>
-                            <div className="flex items-center justify-between mb-8">
-                                <h3 className="text-2xl font-bold">Recent Articles</h3>
-                            </div>
-                            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                                {regularPosts.map((post) => (
-                                    <motion.div key={post.id} variants={itemVariants} whileHover={{ y: -5 }}>
-                                        <Link href={`/blog/${post.slug}`} className="group block h-full">
-                                            <div className="bg-card/50 backdrop-blur-sm border border-border/50 rounded-2xl overflow-hidden h-full flex flex-col shadow-sm hover:shadow-md transition-all duration-300">
-                                                <div className="relative h-48 overflow-hidden">
-                                                    <Image
-                                                        src={post.coverImage}
-                                                        alt={post.title}
-                                                        fill
-                                                        className="object-cover transition-transform duration-500 group-hover:scale-105"
-                                                    />
-                                                </div>
-                                                <div className="p-6 flex-grow flex flex-col">
-                                                    <div className="flex items-center gap-3 mb-4 text-xs text-muted-foreground">
-                                                        <span>{post.date}</span>
-                                                        <span>•</span>
-                                                        <span>{post.readingTime}</span>
-                                                    </div>
-                                                    <h4 className="text-xl font-bold mb-3 group-hover:text-accent transition-colors duration-200 line-clamp-2">
-                                                        {post.title}
-                                                    </h4>
-                                                    <p className="text-muted-foreground text-sm mb-6 line-clamp-3 flex-grow">
-                                                        {post.excerpt}
-                                                    </p>
-                                                    <div className="flex items-center gap-2 mt-auto">
-                                                        <Image src={post.author.avatar} alt={post.author.name} width={24} height={24} className="rounded-full" />
-                                                        <span className="text-sm font-medium text-muted-foreground">{post.author.name}</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </Link>
-                                    </motion.div>
-                                ))}
-                            </div>
+                                </div>
+                            </Link>
                         </motion.div>
-                    </motion.div>
+                    ))}
                 </div>
-            </main>
 
-            <Footer className="relative z-10" />
-        </div>
+            </div>
+        </main>
     );
 }

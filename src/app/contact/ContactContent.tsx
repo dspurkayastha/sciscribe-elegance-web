@@ -1,5 +1,4 @@
 "use client";
-import { InteractiveBackground } from "@/components/background/InteractiveBackground";
 import Footer from "@/components/layout/Footer";
 import Navbar from "@/components/layout/Navbar";
 import { motion } from "framer-motion";
@@ -206,7 +205,6 @@ const ContactContent = () => {
 
   return (
     <div className="flex min-h-screen flex-col">
-      <InteractiveBackground />
       <Navbar />
       <main className="dark:bg-sciscribe-navy/5 pt-24">
         <section className="section-container">

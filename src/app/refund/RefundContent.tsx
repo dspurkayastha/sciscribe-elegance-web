@@ -1,67 +1,52 @@
 "use client";
+
 import { motion } from "framer-motion";
-import Navbar from "@/components/layout/Navbar";
-import Footer from "@/components/layout/Footer";
 import Link from "next/link";
-
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.1,
-    }
-  }
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.5,
-    }
-  }
-};
+import { useAnalytics } from "@/hooks/useAnalytics";
+import { useEffect } from "react";
 
 const RefundContent = () => {
+  const { logPageView } = useAnalytics();
+
+  useEffect(() => {
+    logPageView('/refund');
+  }, [logPageView]);
+
   return (
-    <>
-      <Navbar />
-
-      <main className="pt-20">
-        <section className="section-container">
-          <motion.div
-            initial="hidden"
-            animate="visible"
-            variants={containerVariants}
-            className="prose prose-lg dark:prose-invert max-w-3xl mx-auto"
-          >
-            <motion.h1 variants={itemVariants} className="text-center text-3xl md:text-4xl font-bold mb-8">
-              Refund Policy
-            </motion.h1>
-
-            <motion.p variants={itemVariants} className="text-muted-foreground mb-6">
+    <main className="flex flex-col relative w-full overflow-hidden z-10 pt-32 md:pt-48 pb-24 min-h-screen">
+      <article className="container mx-auto px-6 md:px-12 max-w-4xl">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+        >
+          {/* Header */}
+          <div className="mb-24 border-b border-white/20 pb-12">
+            <span className="text-xs font-mono uppercase tracking-widest text-white/40 mb-8 block">
+              Legal Foundation
+            </span>
+            <h1 className="text-[10vw] md:text-[6vw] font-serif leading-[0.9] tracking-tighter text-white mb-8">
+              Refund <br />
+              <span className="italic text-white/50">Policy.</span>
+            </h1>
+            <p className="text-sm font-mono tracking-widest text-white/40">
               Last Updated: April 12, 2025
-            </motion.p>
+            </p>
+          </div>
 
-            <motion.div variants={itemVariants} className="bg-primary/10 p-6 rounded-lg mb-8">
-              <p className="font-medium">
-                At SciScribe Solutions, customer satisfaction is our priority. This Refund Policy outlines the
-                conditions under which we issue refunds for our services.
-              </p>
-            </motion.div>
+          {/* Content */}
+          <div className="prose prose-lg md:prose-xl dark:prose-invert prose-headings:font-serif prose-headings:font-normal prose-h2:text-4xl prose-h2:mt-16 prose-p:font-light prose-p:text-white/80 prose-p:leading-relaxed prose-li:font-light prose-li:text-white/80 prose-strong:text-white max-w-none">
 
-            <motion.h2 variants={itemVariants} className="text-2xl font-bold mt-8 mb-4">
-              Eligibility for Refunds
-            </motion.h2>
+            <p className="lead text-xl text-white font-serif italic mb-12">
+              At SciScribe Solutions, customer satisfaction is our priority. This Refund Policy outlines the
+              conditions under which we issue refunds for our services.
+            </p>
 
-            <motion.p variants={itemVariants}>
+            <h2>Eligibility for Refunds</h2>
+            <p>
               We provide refunds in the following situations:
-            </motion.p>
-
-            <motion.ol variants={itemVariants} className="space-y-2 mt-4">
+            </p>
+            <ol>
               <li>
                 <strong>Service Not Rendered:</strong> If we fail to deliver the services you have paid for
                 within the agreed timeframe (plus a reasonable grace period of 2 business days), you are
@@ -81,17 +66,13 @@ const RefundContent = () => {
                 we have begun working on your document, you may be eligible for a refund less a 15%
                 administrative fee.
               </li>
-            </motion.ol>
+            </ol>
 
-            <motion.h2 variants={itemVariants} className="text-2xl font-bold mt-8 mb-4">
-              Refund Process
-            </motion.h2>
-
-            <motion.p variants={itemVariants}>
+            <h2>Refund Process</h2>
+            <p>
               To request a refund:
-            </motion.p>
-
-            <motion.ol variants={itemVariants} className="space-y-2 mt-4">
+            </p>
+            <ol>
               <li>
                 Contact our customer support team at refunds@sciscribesolutions.com with your order details
                 and the reason for your refund request.
@@ -103,17 +84,13 @@ const RefundContent = () => {
                 If your refund is approved, it will be processed within 7 business days through the original
                 payment method when possible.
               </li>
-            </motion.ol>
+            </ol>
 
-            <motion.h2 variants={itemVariants} className="text-2xl font-bold mt-8 mb-4">
-              Non-Refundable Circumstances
-            </motion.h2>
-
-            <motion.p variants={itemVariants}>
+            <h2>Non-Refundable Circumstances</h2>
+            <p>
               Refunds are not provided in the following situations:
-            </motion.p>
-
-            <motion.ul variants={itemVariants} className="space-y-2 mt-4">
+            </p>
+            <ul>
               <li>
                 After our services have been delivered and you have had the opportunity to review the work
                 and request revisions (beyond the quality guarantee period of 7 days).
@@ -129,27 +106,20 @@ const RefundContent = () => {
               <li>
                 If your request falls outside our revision policy time frame (7 days after delivery).
               </li>
-            </motion.ul>
+            </ul>
 
-            <motion.h2 variants={itemVariants} className="text-2xl font-bold mt-8 mb-4">
-              Special Consideration
-            </motion.h2>
-
-            <motion.p variants={itemVariants}>
+            <h2>Special Consideration</h2>
+            <p>
               In special circumstances not covered by our standard policy, we may consider refund requests
               on a case-by-case basis. Our decision in these cases will be final.
-            </motion.p>
+            </p>
 
-            <motion.h2 variants={itemVariants} className="text-2xl font-bold mt-8 mb-4">
-              Revision Policy
-            </motion.h2>
-
-            <motion.p variants={itemVariants}>
+            <h2>Revision Policy</h2>
+            <p>
               Before requesting a refund due to quality concerns, we encourage clients to use our revision
               service:
-            </motion.p>
-
-            <motion.ul variants={itemVariants} className="space-y-2 mt-4">
+            </p>
+            <ul>
               <li>
                 You can request revisions within 7 days of receiving your edited document.
               </li>
@@ -159,45 +129,42 @@ const RefundContent = () => {
               <li>
                 Revision requests must be specific and related to the original scope of work.
               </li>
-            </motion.ul>
+            </ul>
 
-            <motion.h2 variants={itemVariants} className="text-2xl font-bold mt-8 mb-4">
-              Payment Processing Fees
-            </motion.h2>
-
-            <motion.p variants={itemVariants}>
+            <h2>Payment Processing Fees</h2>
+            <p>
               Please note that payment gateway charges (typically 2-3%) are non-refundable even in the case
               of a full refund, as these are charges imposed by payment processors that we cannot recover.
-            </motion.p>
+            </p>
 
-            <motion.h2 variants={itemVariants} className="text-2xl font-bold mt-8 mb-4">
-              Changes to This Policy
-            </motion.h2>
-
-            <motion.p variants={itemVariants}>
+            <h2>Changes to This Policy</h2>
+            <p>
               We reserve the right to modify this Refund Policy at any time. Changes will be effective
               immediately upon posting on our website. Your continued use of our services after the posting
               of changes constitutes your acceptance of such changes.
-            </motion.p>
+            </p>
 
-            <motion.div variants={itemVariants} className="mt-12 p-6 bg-secondary/30 dark:bg-secondary/10 rounded-lg">
-              <h3 className="text-xl font-bold mb-4">Need Help?</h3>
-              <p>
-                If you have any questions about our refund policy or need assistance with a refund request,
-                please don't hesitate to contact our customer support team:
+            {/* Assistance Block */}
+            <div className="mt-16 border border-white/20 p-8 font-mono text-sm max-w-lg">
+              <p className="font-serif text-2xl text-white mb-4 normal-case">Need Assistance?</p>
+              <p className="text-white/60 mb-8 font-serif italic text-lg line-clamp-3">
+                If you have any questions about our refund policy or need assistance with a request,
+                please verify your protocols and contact us:
               </p>
-              <p className="mt-4">
-                <strong>Email:</strong> contact@sciscribesolutions.com<br />
-                <strong>Phone:</strong> +91 93955 82679<br />
-                Or visit our <Link href="/contact" className="text-primary hover:underline">Contact Page</Link>
-              </p>
-            </motion.div>
-          </motion.div>
-        </section>
-      </main>
+              <p className="mb-2 uppercase tracking-widest text-white/50">Transmission Corridors</p>
+              <p className="text-white">Email: contact@sciscribesolutions.com</p>
+              <p className="text-white">Phone: +91 93955 82679</p>
+              <div className="mt-8 pt-6 border-t border-white/10">
+                <Link href="/contact" className="text-xs uppercase tracking-widest text-white/40 hover:text-white transition-colors">
+                  [ Access Contact Portal ]
+                </Link>
+              </div>
+            </div>
 
-      <Footer />
-    </>
+          </div>
+        </motion.div>
+      </article>
+    </main>
   );
 };
 
