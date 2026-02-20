@@ -1,4 +1,3 @@
-
 // src/lib/firebase.ts
 import { initializeApp } from "firebase/app";
 import { getAnalytics, isSupported as isAnalyticsSupported } from "firebase/analytics";
@@ -6,47 +5,34 @@ import { getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
 import { getAuth, GoogleAuthProvider } from "firebase/auth";
 
-// Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyAf6-B1FcJo1FbHaH-lC1jkmWcQzKYCg3U",
-  authDomain: "sciscribe-main.firebaseapp.com",
-  projectId: "sciscribe-main",
-  storageBucket: "sciscribe-main.firebasestorage.app",
-  messagingSenderId: "905768153629",
-  appId: "1:905768153629:web:ce886bbfdbb3da91f48cf4",
-  measurementId: "G-2CN89F9HST",
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET, // no gs://
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
+  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID,
 };
 
-let app: ReturnType<typeof initializeApp> | null = null;
-let db: ReturnType<typeof getFirestore> | null = null;
-let storage: ReturnType<typeof getStorage> | null = null;
-let auth: ReturnType<typeof getAuth> | null = null;
-let googleProvider: GoogleAuthProvider | null = null;
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const storage = getStorage(app, import.meta.env.VITE_FIREBASE_STORAGE_BUCKET); // force correct bucket
+
 let analytics: ReturnType<typeof getAnalytics> | null = null;
-
-try {
-  app = initializeApp(firebaseConfig);
-  db = getFirestore(app);
-  storage = getStorage(app, firebaseConfig.storageBucket);
-  auth = getAuth(app);
-  googleProvider = new GoogleAuthProvider();
-
-  // Initialize analytics if supported
-  if (typeof window !== "undefined") {
-    isAnalyticsSupported().then((supported) => {
-      if (supported && app) {
-        analytics = getAnalytics(app);
-        // Enable debug mode in development
-        if (process.env.NODE_ENV !== "production") {
-          (window as any).gtag?.('config', firebaseConfig.measurementId, {
-            debug_mode: true
-          });
-        }
-      }
-    });
+(async () => {
+  if (await isAnalyticsSupported()) {
+    analytics = getAnalytics(app);
+    // Enable debug mode in development
+    if (import.meta.env.DEV) {
+      window.gtag?.('config', import.meta.env.VITE_FIREBASE_MEASUREMENT_ID, {
+        debug_mode: true
+      });
+    }
   }
-} catch (error) {
-  console.error('Firebase initialization failed:', error);
-}
+})();
+
+const auth = getAuth(app);
+const googleProvider = new GoogleAuthProvider();
 
 export { app, analytics, db, storage, auth, googleProvider };

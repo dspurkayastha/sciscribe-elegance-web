@@ -87,7 +87,7 @@ interface EventParamsMap {
 export function useAnalytics() {
   // Check if analytics is available (not in development) and user has given consent
   const isAnalyticsAvailable = useMemo(() => {
-    return Boolean(analytics) && process.env.NODE_ENV !== "development" && getAnalyticsConsent();
+    return Boolean(analytics) && !import.meta.env.DEV && getAnalyticsConsent();
   }, []);
 
   /**

@@ -1,9 +1,8 @@
-"use client";
-import React from "react";
+
 import { motion } from "framer-motion";
 import { Search, FileText, BarChart2, BookOpen, Clock, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import Link from "next/link";
+import { Link } from "react-router-dom";
 import { useAnalytics } from "@/hooks/useAnalytics";
 
 const AddOnServicesSection = () => {
@@ -70,13 +69,13 @@ const AddOnServicesSection = () => {
         >
           <h2 className="mb-4 text-4xl font-bold dark:text-white text-sciscribe-navy">Add-On Services</h2>
           <p className="text-lg dark:text-white/80 text-sciscribe-navy/80">
-            Enhance your research output with precision. These specialized services can be requested on
-            their own, bundled together, or added to any of our main packages. Choose what works best
+            Enhance your research output with precision. These specialized services can be requested on 
+            their own, bundled together, or added to any of our main packages. Choose what works best 
             for your project—customization is key to what we do.
           </p>
         </motion.div>
 
-        <motion.div
+        <motion.div 
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
           variants={containerVariants}
           initial="hidden"
@@ -104,12 +103,12 @@ const AddOnServicesSection = () => {
           <div className="inline-block p-6 rounded-xl bg-white/80 dark:bg-sciscribe-navy/30 backdrop-blur-sm shadow-lg border border-sciscribe-mist/30 dark:border-white/10">
             <h3 className="text-xl font-bold mb-3">Cannot find what you're looking for?</h3>
             <p className="mb-5 max-w-2xl">
-              We understand that every research project is unique. If you need a service that's not listed here, feel free to reach out.
+              We understand that every research project is unique. If you need a service that's not listed here, feel free to reach out. 
               Our team would be happy to discuss your specific requirements and tailor a solution that fits your goals.
               <strong> Customization is key to what we do.</strong>
             </p>
-            <Link
-              href="/contact"
+            <Link 
+              to="/contact"
               onClick={() => {
                 logCtaClick({
                   cta_id: 'addon_services_contact_button',

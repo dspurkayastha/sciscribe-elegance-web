@@ -1,10 +1,9 @@
-"use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import Link from "next/link";
+import { Link } from "react-router-dom";
 
 const ServicesCarouselSection = () => {
   const services = [
@@ -60,7 +59,7 @@ const ServicesCarouselSection = () => {
     if (timeoutRef.current) {
       clearTimeout(timeoutRef.current);
     }
-
+    
     // Set up auto play
     timeoutRef.current = setTimeout(() => {
       nextSlide();
@@ -76,7 +75,7 @@ const ServicesCarouselSection = () => {
   return (
     <section id="hire-us" className="py-20 relative overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-b from-sciscribe-mist/30 to-white/0 dark:from-sciscribe-navy/30 dark:to-sciscribe-navy/0"></div>
-
+      
       <div className="container mx-auto px-6 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: -20 }}
@@ -94,7 +93,7 @@ const ServicesCarouselSection = () => {
         <div className="relative max-w-5xl mx-auto">
           {/* Carousel */}
           <div className="overflow-hidden rounded-xl">
-            <div
+            <div 
               className="flex transition-transform ease-out duration-700"
               style={{ transform: `translateX(-${current * 100}%)` }}
             >
@@ -102,9 +101,9 @@ const ServicesCarouselSection = () => {
                 <div key={service.id} className="min-w-full">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6 bg-white dark:bg-sciscribe-navy/30 p-6 md:p-10 rounded-xl shadow-xl border border-sciscribe-mist/30 dark:border-white/5">
                     <div className="flex items-center justify-center">
-                      <img
-                        src={service.image}
-                        alt={service.title}
+                      <img 
+                        src={service.image} 
+                        alt={service.title} 
                         className="max-h-64 object-contain rounded-lg"
                       />
                     </div>
@@ -112,7 +111,7 @@ const ServicesCarouselSection = () => {
                       <h3 className="text-2xl font-bold mb-4 text-sciscribe-navy dark:text-white">{service.title}</h3>
                       <p className="mb-6 text-sciscribe-navy/80 dark:text-white/70">{service.description}</p>
                       <div>
-                        <Link href="/contact">
+                        <Link to="/contact">
                           <Button className="btn-premium">Get Started</Button>
                         </Link>
                       </div>
@@ -124,15 +123,15 @@ const ServicesCarouselSection = () => {
           </div>
 
           {/* Navigation Arrows */}
-          <button
+          <button 
             onClick={prevSlide}
             className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-2 md:-translate-x-6 bg-white/80 dark:bg-sciscribe-navy/80 p-2 rounded-full shadow-md hover:bg-white dark:hover:bg-sciscribe-navy transition-colors"
             aria-label="Previous slide"
           >
             <ChevronLeft className="text-sciscribe-navy dark:text-white" />
           </button>
-
-          <button
+          
+          <button 
             onClick={nextSlide}
             className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-2 md:translate-x-6 bg-white/80 dark:bg-sciscribe-navy/80 p-2 rounded-full shadow-md hover:bg-white dark:hover:bg-sciscribe-navy transition-colors"
             aria-label="Next slide"
@@ -146,10 +145,11 @@ const ServicesCarouselSection = () => {
               <button
                 key={index}
                 onClick={() => goToSlide(index)}
-                className={`w-3 h-3 rounded-full transition-all duration-300 ${index === current
-                  ? 'bg-sciscribe-gold w-6'
-                  : 'bg-sciscribe-mist dark:bg-white/30'
-                  }`}
+                className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                  index === current 
+                    ? 'bg-sciscribe-gold w-6' 
+                    : 'bg-sciscribe-mist dark:bg-white/30'
+                }`}
                 aria-label={`Go to slide ${index + 1}`}
               ></button>
             ))}

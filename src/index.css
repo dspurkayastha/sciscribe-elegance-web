@@ -1,0 +1,370 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Open+Sans:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Modern teal-inspired background */
+    --background: 180 10% 99%; 
+    /* Deep teal text */
+    --foreground: 180 40% 12%; 
+
+    --card: 0 0% 100%;
+    --card-foreground: 180 40% 12%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 180 40% 12%;
+
+    /* Vibrant Teal primary */
+    --primary: 175 84% 32%; 
+    --primary-foreground: 0 0% 100%;
+
+    /* Light Gray secondary */
+    --secondary: 220 13% 91%; 
+    --secondary-foreground: 180 40% 12%;
+
+    --muted: 210 20% 96%;
+    --muted-foreground: 215 20% 45%;
+
+    /* Accent purple */
+    --accent: 265 80% 65%; 
+    --accent-foreground: 0 0% 100%;
+
+    /* Error/destructive color */
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 214 32% 91%;
+    --input: 214 32% 91%;
+    /* Accent purple ring */
+    --ring: 265 80% 65%; 
+
+    --radius: 0.75rem;
+
+    /* Hover state color */
+    --hover: 175 84% 42%;
+
+    /* Cursor glow color for light theme */
+    --cursor-color: #000000;
+    --cursor-follower-color: rgba(0, 0, 0, 0.3);
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    /* Deep rich charcoal background */
+    --background: 200 15% 8%; 
+    --foreground: 0 0% 96%;
+
+    /* Slightly brighter for cards in dark mode */
+    --card: 200 15% 12%; 
+    --card-foreground: 0 0% 96%;
+
+    --popover: 200 15% 12%;
+    --popover-foreground: 0 0% 96%;
+
+    /* Vibrant teal stays bright in dark mode */
+    --primary: 175 84% 32%; 
+    --primary-foreground: 0 0% 96%;
+
+    /* Darker secondary in dark mode */
+    --secondary: 200 15% 18%; 
+    --secondary-foreground: 0 0% 96%;
+
+    --muted: 200 15% 18%;
+    --muted-foreground: 210 10% 70%;
+
+    /* Accent purple glows in dark mode */
+    --accent: 265 80% 65%; 
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 62.8% 40%;
+    --destructive-foreground: 0 0% 96%;
+
+    --border: 200 15% 18%;
+    --input: 200 15% 18%;
+    --ring: 265 80% 65%;
+
+    /* Darker hover shade for dark mode */
+    --hover: 175 84% 25%;
+
+    /* Cursor glow colors */
+    --cursor-color: #ffffff;
+    --cursor-follower-color: rgba(255, 255, 255, 0.3);
+
+    --sidebar-background: 217 28% 10%;
+    --sidebar-foreground: 0 0% 98%;
+    --sidebar-primary: 214 90% 52%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 217 19% 18%;
+    --sidebar-accent-foreground: 0 0% 98%;
+    --sidebar-border: 217 19% 18%;
+    --sidebar-ring: 38 96% 58%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    scroll-behavior: smooth;
+    /* Removed cursor: none !important */
+  }
+  
+  /* Custom cursor - we retain the styles but remove the !important cursor: none */
+  .cursor {
+    position: fixed;
+    width: 6px;
+    height: 6px;
+    border-radius: 100%;
+    background-color: var(--cursor-color);
+    z-index: 10000;
+    transition: transform 0.2s ease-out, 
+                opacity 0.2s ease-out;
+    user-select: none;
+    pointer-events: none;
+    transform: scale(1);
+    top: 0;
+    left: 0;
+  }
+  
+  .cursor.active {
+    opacity: 0.5;
+    transform: scale(0);
+  }
+  
+  .cursor.clicked {
+    transform: scale(0.5);
+  }
+  
+  .cursor.hovered {
+    opacity: 0.08;
+  }
+  
+  .cursor-follower {
+    position: fixed;
+    width: 20px;
+    height: 20px;
+    border-radius: 100%;
+    background-color: var(--cursor-follower-color);
+    z-index: 10000;
+    filter: blur(2px);
+    transition: transform 0.3s ease-out,
+                opacity 0.2s ease-out;
+    user-select: none;
+    pointer-events: none;
+    transform: translate(5px, 5px);
+    top: 0;
+    left: 0;
+  }
+  
+  .cursor-follower.active {
+    opacity: 0.7;
+    transform: scale(1.5);
+  }
+  
+  .cursor-follower.clicked {
+    transform: scale(0.8);
+  }
+  
+  .cursor-follower.hovered {
+    opacity: 0.08;
+  }
+  
+  /* Show default cursor by removing cursor: none !important from elements */
+  a, button, [role="button"], input, label, textarea, select, .link {
+    /* cursor styling removed */
+  }
+  
+  /* Show default cursor for small screens where custom cursor might be intrusive */
+  @media (max-width: 768px) {
+    body {
+      /* already has default cursor */
+    }
+    
+    .cursor, .cursor-follower {
+      display: none !important;
+    }
+    
+    a, button, [role="button"], input, label, textarea, select, .link {
+      cursor: pointer !important;
+    }
+  }
+}
+
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@layer components {
+  /* Infinite moving cards animation */
+  @keyframes scroll {
+    to {
+      transform: translate(calc(-50% - 0.5rem));
+    }
+  }
+  
+  .animate-scroll {
+    animation: scroll var(--animation-duration, 40s) var(--animation-direction, forwards) linear infinite;
+  }
+  
+  /* Custom animations */
+  @keyframes pulse-slow {
+    0%, 100% {
+      opacity: 0.7;
+      transform: scale(1.02);
+    }
+    50% {
+      opacity: 1;
+      transform: scale(1.05);
+    }
+  }
+
+  /* Breathing animation */
+  @keyframes breathe {
+    0%, 100% {
+      opacity: 0.6;
+      transform: scale(0.98);
+    }
+    50% {
+      opacity: 0.9;
+      transform: scale(1.02);
+    }
+  }
+  
+  .animate-breathe {
+    animation: breathe 4s ease-in-out infinite;
+  }
+
+  /* Typography */
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading font-bold;
+  }
+  
+  p {
+    @apply font-body leading-relaxed text-foreground/80;
+  }
+
+  /* Navigation */
+  .nav-link {
+    @apply relative py-2 font-medium after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 after:bg-gradient-to-r after:from-primary after:to-accent after:transition-all after:duration-300 hover:after:w-full hover:text-opacity-90;
+  }
+
+  /* Button Enhancements */
+  .btn-premium {
+    @apply relative rounded-lg bg-sciscribe-blue px-8 py-3 font-medium text-white transition-all duration-500 
+    hover:bg-sciscribe-blue/90 hover:shadow-[0_8px_20px_-6px_rgba(59,130,246,0.6)] hover:-translate-y-0.5 
+    focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 
+    active:translate-y-0 active:shadow-none;
+  }
+
+  .btn-secondary-premium {
+    @apply relative rounded-lg border border-sciscribe-navy bg-transparent px-8 py-3 font-medium 
+    text-sciscribe-navy transition-all duration-500 hover:bg-sciscribe-blue/20 hover:shadow-md 
+    hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2
+    active:translate-y-0 active:shadow-none;
+  }
+
+  .btn-hover {
+    @apply transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5;
+  }
+
+  /* Layout */
+  .section-container {
+    @apply container mx-auto px-6 py-16 md:py-20 lg:py-24 overflow-hidden;
+  }
+  
+  /* Glass Effects */
+  .glassmorphism {
+    @apply backdrop-blur-md bg-white/15 dark:bg-black/20 border border-white/30 dark:border-white/10 
+    shadow-[0_4px_30px_rgba(0,0,0,0.05)] dark:shadow-[0_4px_30px_rgba(0,0,0,0.2)];
+  }
+
+  .premium-glassmorphism {
+    @apply backdrop-blur-xl bg-white/30 dark:bg-black/30 border border-white/40 dark:border-white/10 
+    shadow-[0_10px_30px_rgba(0,0,0,0.08)] dark:shadow-[0_10px_30px_rgba(0,0,0,0.25)]
+    rounded-xl hover:shadow-[0_15px_35px_rgba(0,0,0,0.1)] dark:hover:shadow-[0_15px_35px_rgba(0,0,0,0.3)]
+    hover:-translate-y-1 transition-all duration-500;
+  }
+
+  /* Card Styles */
+  .card-gradient {
+    @apply bg-gradient-to-br from-card to-background;
+  }
+  
+  .premium-card {
+    @apply rounded-xl border border-sciscribe-mist/50 dark:border-white/5 bg-white dark:bg-sciscribe-navy/30 p-6 
+    shadow-[0_4px_20px_rgba(0,0,0,0.05)] dark:shadow-[0_4px_20px_rgba(0,0,0,0.2)] 
+    transition-all duration-500 hover:shadow-[0_15px_30px_rgba(0,0,0,0.08)] dark:hover:shadow-[0_15px_30px_rgba(0,0,0,0.3)] 
+    hover:-translate-y-1 hover:shadow-sciscribe-gold/10 hover:border-sciscribe-gold/30 hover:bg-gradient-to-b hover:from-white hover:to-sciscribe-light/10 dark:hover:from-sciscribe-navy/40 dark:hover:to-sciscribe-navy/20;
+  }
+
+  /* Fixed: Removed 'group' from @apply, it should be used directly in HTML */
+  .premium-card-hover {
+    @apply rounded-xl overflow-hidden cursor-pointer;
+  }
+
+  /* Updated selectors to use direct :hover instead of group-hover */
+  .premium-card-hover:hover .card-content {
+    @apply transition-all duration-700 ease-in-out transform translate-y-[-30%];
+  }
+
+  .premium-card-hover .card-content {
+    @apply transition-all duration-700 ease-in-out transform translate-y-0;
+  }
+
+  .premium-card-hover:hover .card-reveal {
+    @apply transition-all duration-700 ease-in-out transform translate-y-0 opacity-100;
+  }
+
+  .premium-card-hover .card-reveal {
+    @apply transition-all duration-700 ease-in-out transform translate-y-full opacity-0;
+  }
+
+  /* Portfolio Card Style with Glow */
+  .portfolio-card {
+    @apply relative overflow-hidden rounded-xl transition-all duration-500;
+  }
+  
+  .portfolio-card:hover {
+    @apply shadow-[0_0_25px_rgba(245,158,11,0.3)] border-sciscribe-gold;
+  }
+
+  /* Special Effects */
+  .shimmer-effect {
+    @apply relative overflow-hidden before:absolute before:inset-0 before:translate-x-[-100%] before:bg-gradient-shimmer before:animate-shimmer;
+  }
+
+  /* Pulse animation for button */
+  .pulse-btn {
+    @apply relative after:absolute after:inset-0 after:rounded-lg after:shadow-[0_0_0_0_rgba(14,165,233,0.7)] after:animate-[pulse_2s_infinite];
+  }
+  
+  .text-gradient {
+    @apply bg-gradient-to-r from-sciscribe-blue to-sciscribe-teal bg-clip-text text-transparent;
+  }
+  
+  .text-gradient-gold {
+    @apply bg-gradient-to-r from-sciscribe-gold to-sciscribe-amber bg-clip-text text-transparent;
+  }
+}

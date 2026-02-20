@@ -1,60 +1,93 @@
+
 import { Linkedin, Facebook, Instagram } from "lucide-react";
-import Link from "next/link";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
-    <footer className="bg-background border-t border-border pt-16 pb-8">
+    <footer className="bg-sciscribe-navy py-10 text-white">
       <div className="container mx-auto px-6">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-10 md:gap-8 mb-12 relative z-10">
-
-          {/* Brand Column */}
-          <div className="col-span-1 md:col-span-2 space-y-4">
-            <Link href="/" className="inline-block">
-              <h3 className="text-2xl font-semibold tracking-tight text-foreground">
-                SciScribe<span className="text-accent font-light">Solutions</span>
+        <div className="flex flex-col items-center justify-between space-y-6 md:flex-row md:space-y-0">
+          {/* Logo */}
+          <div className="text-center md:text-left">
+            <Link to="/">
+              <h3 className="text-xl font-bold">
+                SciScribe<span className="text-sciscribe-gold">Solutions</span>
               </h3>
             </Link>
-            <p className="text-foreground/70 text-balance max-w-md font-light">
-              Elevating scientific research and medical communications through expert, precise, and sophisticated editing.
+            <p className="mt-1 text-sm text-gray-300">
+              Elevating research through expert editing
             </p>
           </div>
 
           {/* Quick Links */}
-          <div className="col-span-1 flex flex-col space-y-3">
-            <h4 className="font-medium text-foreground mb-2">Platform</h4>
-            <Link href="/about" className="text-sm text-foreground/60 hover:text-accent transition-colors duration-300">About</Link>
-            <Link href="/services" className="text-sm text-foreground/60 hover:text-accent transition-colors duration-300">Services</Link>
-            <Link href="/portfolio" className="text-sm text-foreground/60 hover:text-accent transition-colors duration-300">Portfolio</Link>
-            <Link href="/pricing" className="text-sm text-foreground/60 hover:text-accent transition-colors duration-300">Pricing</Link>
+          <div className="flex flex-wrap justify-center gap-6 text-sm">
+            <Link to="/" className="hover:text-sciscribe-gold transition-colors duration-300">
+              Home
+            </Link>
+            <Link to="/about" className="hover:text-sciscribe-gold transition-colors duration-300">
+              About
+            </Link>
+            <Link to="/services" className="hover:text-sciscribe-gold transition-colors duration-300">
+              Services
+            </Link>
+            <Link to="/portfolio" className="hover:text-sciscribe-gold transition-colors duration-300">
+              Portfolio
+            </Link>
+            <Link to="/pricing" className="hover:text-sciscribe-gold transition-colors duration-300">
+              Pricing
+            </Link>
+            <Link to="/payment" className="hover:text-sciscribe-gold transition-colors duration-300">
+              Payment
+            </Link>
+            <Link to="/contact" className="hover:text-sciscribe-gold transition-colors duration-300">
+              Contact
+            </Link>
           </div>
 
-          {/* Connect & Legal */}
-          <div className="col-span-1 flex flex-col space-y-3">
-            <h4 className="font-medium text-foreground mb-2">Connect</h4>
-            <Link href="/contact" className="text-sm text-foreground/60 hover:text-accent transition-colors duration-300">Contact Us</Link>
-
-            <div className="flex space-x-4 pt-4">
-              <a href="https://www.linkedin.com/company/sciscribe-solutions/?viewAsMember=true" target="_blank" rel="noopener noreferrer" className="text-foreground/60 hover:text-accent transition-colors" aria-label="LinkedIn">
-                <Linkedin size={20} strokeWidth={1.5} />
-              </a>
-              <a href="https://www.facebook.com/profile.php?id=61576386514296" target="_blank" rel="noopener noreferrer" className="text-foreground/60 hover:text-accent transition-colors" aria-label="Facebook">
-                <Facebook size={20} strokeWidth={1.5} />
-              </a>
-              <a href="https://www.instagram.com/sciscribesolutions_ig/" target="_blank" rel="noopener noreferrer" className="text-foreground/60 hover:text-accent transition-colors" aria-label="Instagram">
-                <Instagram size={20} strokeWidth={1.5} />
-              </a>
-            </div>
+          {/* Social Media */}
+          <div className="flex space-x-4">
+            <a
+              href="https://www.linkedin.com/company/sciscribe-solutions/?viewAsMember=true"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="rounded-full bg-white/10 p-2 transition-colors hover:bg-sciscribe-gold"
+              aria-label="LinkedIn"
+            >
+              <Linkedin size={18} />
+            </a>
+            <a
+              href="https://www.facebook.com/profile.php?id=61576386514296"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="rounded-full bg-white/10 p-2 transition-colors hover:bg-sciscribe-gold"
+              aria-label="Facebook"
+            >
+              <Facebook size={18} />
+            </a>
+            <a
+              href="https://www.instagram.com/sciscribesolutions_ig/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="rounded-full bg-white/10 p-2 transition-colors hover:bg-sciscribe-gold"
+              aria-label="Instagram"
+            >
+              <Instagram size={18} />
+            </a>
           </div>
-
         </div>
 
-        {/* Bottom Bar */}
-        <div className="relative z-10 border-t border-border pt-8 flex flex-col items-center justify-between space-y-4 md:flex-row md:space-y-0 text-xs text-foreground/50">
+        <div className="mt-8 border-t border-white/10 pt-6 text-center text-xs text-gray-400">
           <p>&copy; {new Date().getFullYear()} SciScribe Solutions. All rights reserved.</p>
-          <div className="flex space-x-6">
-            <Link href="/privacy" className="hover:text-foreground transition-colors">Privacy Policy</Link>
-            <Link href="/terms" className="hover:text-foreground transition-colors">Terms of Service</Link>
-            <Link href="/refund" className="hover:text-foreground transition-colors">Refund Policy</Link>
+          <div className="mt-4 space-x-4">
+            <Link to="/privacy" className="hover:text-sciscribe-gold transition-colors duration-300">
+              Privacy Policy
+            </Link>
+            <Link to="/terms" className="hover:text-sciscribe-gold transition-colors duration-300">
+              Terms & Conditions
+            </Link>
+            <Link to="/refund" className="hover:text-sciscribe-gold transition-colors duration-300">
+              Refund Policy
+            </Link>
           </div>
         </div>
       </div>

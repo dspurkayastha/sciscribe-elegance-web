@@ -1,9 +1,8 @@
-"use client";
-import React, { useState } from "react";
+
 import { FileText, FileCheck, FileSearch, BarChart2, Sparkles, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
-import Link from "next/link";
+import { Link } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { useAnalytics } from "@/hooks/useAnalytics";
@@ -90,9 +89,9 @@ const ServicesSection = () => {
       {/* Decorative background elements */}
       <div className="absolute top-40 -left-40 w-96 h-96 bg-sciscribe-blue/5 rounded-full blur-3xl"></div>
       <div className="absolute bottom-40 -right-40 w-96 h-96 bg-sciscribe-gold/5 rounded-full blur-3xl"></div>
-
+      
       <div className="container mx-auto px-6 relative z-10">
-        <motion.div
+        <motion.div 
           className="mx-auto max-w-3xl text-center mb-16"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -110,7 +109,7 @@ const ServicesSection = () => {
           </p>
         </motion.div>
 
-        <motion.div
+        <motion.div 
           className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4"
           variants={containerVariants}
           initial="hidden"
@@ -132,7 +131,7 @@ const ServicesSection = () => {
               <div className="bg-gradient-to-r from-sciscribe-teal/10 to-sciscribe-gold/10 p-6 relative overflow-hidden">
                 {/* Decorative elements */}
                 <div className="absolute -right-6 -top-6 w-16 h-16 rounded-full bg-gradient-to-br from-sciscribe-gold/20 to-transparent blur-xl pointer-events-none" />
-
+                
                 <div className="mb-3 flex items-center justify-center">
                   <div className="p-3 rounded-full bg-white/80 dark:bg-sciscribe-navy/50 border border-sciscribe-mist/30 dark:border-white/10 shadow-md">
                     {service.icon}
@@ -142,13 +141,13 @@ const ServicesSection = () => {
                   {service.title}
                 </h3>
               </div>
-
+              
               {/* Card body */}
               <div className="p-6 flex-grow flex flex-col">
                 <p className="text-foreground/80 text-center mb-6">
                   {service.description}
                 </p>
-
+                
                 {/* Features list */}
                 <ul className="space-y-2 mb-6">
                   {service.features?.map((feature, i) => (
@@ -160,10 +159,10 @@ const ServicesSection = () => {
                     </li>
                   ))}
                 </ul>
-
+                
                 <div className="mt-auto flex justify-center">
-                  <Link
-                    href="/services"
+                  <Link 
+                    to="/services" 
                     className="w-full"
                     onClick={() => {
                       logCtaClick({
@@ -183,7 +182,7 @@ const ServicesSection = () => {
                   </Link>
                 </div>
               </div>
-            </motion.div>
+            </motion.div>          
           ))}
         </motion.div>
       </div>

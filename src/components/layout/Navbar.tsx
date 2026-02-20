@@ -1,119 +1,174 @@
-"use client";
 import Clarity from '@microsoft/clarity';
+const projectId = "rwq42hh9v5";
+Clarity.init(projectId);
 
 import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 import { ThemeToggle } from "@/components/theme/ThemeToggle";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { Link, useLocation } from "react-router-dom";
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const pathname = usePathname();
+  const [hasScrolled, setHasScrolled] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  const location = useLocation();
 
   useEffect(() => {
-    const projectId = "rwq42hh9v5";
-    if (typeof window !== 'undefined' && !(window as any).clarity) {
-      try {
-        Clarity.init(projectId);
-      } catch (e) {
-        console.error("Failed to init Clarity", e);
-      }
-    }
-  }, []);
-
-  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
     const handleScroll = () => {
-      // Sleek detection: switch to glass block after 50px
-      if (window.scrollY > 50) {
+      if (window.scrollY > 100) { // Increased threshold to ensure navbar appears after hero section
         setIsScrolled(true);
+        setHasScrolled(true);
       } else {
         setIsScrolled(false);
       }
     };
 
+    // Initial checks
+    handleResize();
     handleScroll();
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
+
+    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("resize", handleResize);
+    
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", handleResize);
+    };
   }, []);
 
-  const isActive = (path: string) => pathname === path;
-
-  // Zen Modular Navigation Links
-  const navLinks = [
-    { name: 'About', path: '/about' },
-    { name: 'Services', path: '/services' },
-    { name: 'Portfolio', path: '/portfolio' },
-    { name: 'Pricing', path: '/pricing' },
-    { name: 'Contact', path: '/contact' }
-  ];
+  const isActive = (path: string) => {
+    return location.pathname === path;
+  };
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 will-change-transform ${isScrolled
-        ? "py-3 glass-apple shadow-apple mx-4 mt-4 rounded-3xl"
-        : "py-6 bg-transparent"
-        }`}
+      className={`fixed top-0 z-50 w-full ${
+        isScrolled 
+          ? "dark:bg-sciscribe-navy/80 bg-white/95 shadow-sm backdrop-blur-sm opacity-100" 
+          : "opacity-0 pointer-events-none"
+      } transition-opacity duration-200`}
     >
-      <div className="container mx-auto px-6">
+      <div className="container mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <Link href="/" className="flex items-center space-x-2 group">
-            <span className="text-2xl font-semibold tracking-tight text-foreground transition-all duration-300 group-hover:opacity-80">
-              SciScribe<span className="text-accent font-light">Solutions</span>
+          <Link to="/" className="flex items-center space-x-2">
+            <span className="text-2xl font-bold dark:text-white text-sciscribe-navy">
+              SciScribe<span className="text-sciscribe-gold">Solutions</span>
             </span>
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden space-x-8 md:flex items-center">
-            {navLinks.map((link) => (
-              <Link
-                key={link.path}
-                href={link.path}
-                className={`relative py-2 text-sm font-medium transition-colors duration-300 ${isActive(link.path) ? "text-foreground" : "text-foreground/60 hover:text-foreground"
-                  }`}
-              >
-                {link.name}
-                {isActive(link.path) && (
-                  <span className="absolute bottom-0 left-0 w-full h-[2px] bg-accent rounded-t-sm" />
-                )}
-              </Link>
-            ))}
+          <div className="hidden space-x-8 md:flex">
+            <Link 
+              to="/about" 
+              className={`nav-link dark:text-white text-sciscribe-navy ${isActive('/about') ? 'after:w-full' : ''}`}>
+              About
+            </Link>
+            <Link 
+              to="/services" 
+              className={`nav-link dark:text-white text-sciscribe-navy ${isActive('/services') ? 'after:w-full' : ''}`}>
+              Services
+            </Link>
+            <Link 
+              to="/portfolio" 
+              className={`nav-link dark:text-white text-sciscribe-navy ${isActive('/portfolio') ? 'after:w-full' : ''}`}>
+              Portfolio
+            </Link>
+            <Link 
+              to="/pricing" 
+              className={`nav-link dark:text-white text-sciscribe-navy ${isActive('/pricing') ? 'after:w-full' : ''}`}>
+              Pricing
+            </Link>
+            <Link 
+              to="/payment" 
+              className={`nav-link dark:text-white text-sciscribe-navy ${isActive('/payment') ? 'after:w-full' : ''}`}>
+              Payment
+            </Link>
+            <Link 
+              to="/feedback" 
+              className={`nav-link dark:text-white text-sciscribe-navy ${isActive('/feedback') ? 'after:w-full' : ''}`}>
+              Feedback
+            </Link>
+            <Link 
+              to="/contact" 
+              className={`nav-link dark:text-white text-sciscribe-navy ${isActive('/contact') ? 'after:w-full' : ''}`}>
+              Contact
+            </Link>
           </div>
 
           <div className="flex items-center space-x-4">
             <ThemeToggle />
-
+            
             {/* Mobile Menu Button */}
             <button
-              className="text-foreground md:hidden p-2 transition-transform active:scale-95"
+              className="dark:text-white text-sciscribe-navy md:hidden p-1"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               aria-label="Toggle menu"
             >
-              {isMenuOpen ? <X size={24} strokeWidth={1.5} /> : <Menu size={24} strokeWidth={1.5} />}
+              {isMenuOpen ? <X size={22} /> : <Menu size={22} />}
             </button>
           </div>
         </div>
 
         {/* Mobile Menu */}
-        <div className={`
-          md:hidden overflow-hidden transition-all duration-500 ease-in-out
-          ${isMenuOpen ? "max-h-96 opacity-100 mt-4" : "max-h-0 opacity-0"}
-        `}>
-          <div className="flex flex-col space-y-4 pb-4 px-2">
-            {navLinks.map((link) => (
-              <Link
-                key={link.path}
-                href={link.path}
-                className="py-2 text-base font-medium text-foreground/80 hover:text-foreground border-b border-border/50"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                {link.name}
-              </Link>
-            ))}
+        {isMenuOpen && (
+          <div className="mt-4 flex flex-col space-y-4 pb-4 md:hidden dark:bg-sciscribe-navy/90 dark:backdrop-blur-md">
+            <Link
+              to="/about"
+              className="border-b border-gray-100 dark:border-gray-700 py-2 text-sciscribe-navy dark:text-white"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              About
+            </Link>
+            <Link
+              to="/services"
+              className="border-b border-gray-100 dark:border-gray-700 py-2 text-sciscribe-navy dark:text-white"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Services
+            </Link>
+            <Link
+              to="/portfolio"
+              className="border-b border-gray-100 dark:border-gray-700 py-2 text-sciscribe-navy dark:text-white"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Portfolio
+            </Link>
+            <Link
+              to="/pricing"
+              className="border-b border-gray-100 dark:border-gray-700 py-2 text-sciscribe-navy dark:text-white"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Pricing
+            </Link>
+            <Link
+              to="/payment"
+              className="border-b border-gray-100 dark:border-gray-700 py-2 text-sciscribe-navy dark:text-white"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Payment
+            </Link>
+            <Link
+              to="/feedback"
+              className="border-b border-gray-100 dark:border-gray-700 py-2 text-sciscribe-navy dark:text-white"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Feedback
+            </Link>
+            <Link
+              to="/contact"
+              className="py-2 text-sciscribe-navy dark:text-white"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Contact
+            </Link>
           </div>
-        </div>
+        )}
       </div>
     </nav>
   );

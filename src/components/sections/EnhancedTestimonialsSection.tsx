@@ -1,6 +1,5 @@
-"use client";
-import React, { useState, useEffect, useCallback } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import React from "react";
+import { motion } from "framer-motion";
 import { Badge } from "@/components/ui/badge";
 import { AnimatedTestimonials } from "@/components/ui/animated-testimonials";
 
@@ -84,7 +83,7 @@ const EnhancedTestimonialsSection: React.FC = () => {
         </motion.div>
 
         {/* Animated Testimonials */}
-        <AnimatedTestimonials
+        <AnimatedTestimonials 
           testimonials={testimonials}
           autoplay={true}
           className="py-2"

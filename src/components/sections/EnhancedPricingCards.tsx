@@ -1,8 +1,7 @@
-"use client";
 import { Check, Star, Sparkles, Zap, Award, TrendingUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
-import Link from "next/link";
+import { Link } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { useEffect } from "react";
@@ -25,7 +24,7 @@ const EnhancedPricingCards = () => {
       document.head.removeChild(styleEl);
     };
   }, []);
-
+  
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -50,8 +49,8 @@ const EnhancedPricingCards = () => {
       {/* Decorative background elements */}
       <div className="absolute top-40 -left-40 w-96 h-96 bg-sciscribe-blue/5 rounded-full blur-3xl"></div>
       <div className="absolute bottom-40 -right-40 w-96 h-96 bg-sciscribe-gold/5 rounded-full blur-3xl"></div>
-
-      <motion.div
+      
+      <motion.div 
         className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto"
         variants={containerVariants}
         initial="hidden"
@@ -59,7 +58,7 @@ const EnhancedPricingCards = () => {
         viewport={{ once: true, margin: "-50px" }}
       >
         {/* Research Launchpad Package */}
-        <motion.div
+        <motion.div 
           className="premium-glassmorphism hover:border-sciscribe-gold/50 hover:scale-[1.02] hover:shadow-xl transition-all duration-500 flex flex-col rounded-2xl shadow-lg border border-sciscribe-gold/20 dark:border-white/20 overflow-hidden"
           variants={itemVariants}
         >
@@ -76,7 +75,7 @@ const EnhancedPricingCards = () => {
             </div>
             <p className="text-sm text-muted-foreground">Ideal for students and early career researchers</p>
           </div>
-
+          
           <div className="p-6 flex-grow flex flex-col">
             <ul className="space-y-4 mb-8">
               <li className="flex items-start">
@@ -123,7 +122,7 @@ const EnhancedPricingCards = () => {
               </li>
             </ul>
             <div className="mt-auto">
-              <Link href="/payment" className="w-full">
+              <Link to="/payment" className="w-full">
                 <Button className="w-full bg-gradient-to-r from-sciscribe-gold/90 to-sciscribe-amber/90 hover:from-sciscribe-gold hover:to-sciscribe-amber text-white shadow-md hover:shadow-lg transition-all duration-300">
                   Choose Plan
                 </Button>
@@ -131,9 +130,9 @@ const EnhancedPricingCards = () => {
             </div>
           </div>
         </motion.div>
-
+        
         {/* Thesis Trailblazer Package */}
-        <motion.div
+        <motion.div 
           className="premium-glassmorphism border-2 border-sciscribe-blue/40 dark:border-sciscribe-blue/50 relative flex flex-col rounded-2xl shadow-xl scale-105 hover:scale-[1.07] hover:shadow-2xl transition-all duration-500 z-10 overflow-hidden"
           variants={itemVariants}
         >
@@ -168,7 +167,7 @@ const EnhancedPricingCards = () => {
               </span>
             </span>
           </div>
-
+          
           <div className="bg-gradient-to-r from-sciscribe-blue/30 to-sciscribe-teal/20 dark:from-sciscribe-blue/40 dark:to-sciscribe-teal/30 p-6 pb-8">
             <div className="flex items-center gap-3 mb-4 mt-6">
               <div className="p-2 bg-sciscribe-blue/20 dark:bg-sciscribe-blue/30 rounded-full">
@@ -182,7 +181,7 @@ const EnhancedPricingCards = () => {
             </div>
             <p className="text-sm text-muted-foreground">End to end thesis support, tailored for academic excellence</p>
           </div>
-
+          
           <div className="p-6 flex-grow flex flex-col">
             <ul className="space-y-4 mb-8">
               <li className="flex items-start">
@@ -223,7 +222,7 @@ const EnhancedPricingCards = () => {
               </li>
             </ul>
             <div className="mt-auto">
-              <Link href="/payment" className="w-full">
+              <Link to="/payment" className="w-full">
                 <Button className="w-full bg-gradient-to-r from-sciscribe-blue/90 to-sciscribe-teal/90 hover:from-sciscribe-blue hover:to-sciscribe-teal text-white shadow-md hover:shadow-lg transition-all duration-300">
                   Choose Plan
                 </Button>
@@ -231,9 +230,9 @@ const EnhancedPricingCards = () => {
             </div>
           </div>
         </motion.div>
-
+        
         {/* Publication Pinnacle Package */}
-        <motion.div
+        <motion.div 
           className="premium-glassmorphism hover:border-sciscribe-gold/50 hover:scale-[1.02] hover:shadow-xl transition-all duration-500 flex flex-col rounded-2xl shadow-lg border border-sciscribe-gold/20 dark:border-white/20 overflow-hidden"
           variants={itemVariants}
         >
@@ -250,7 +249,7 @@ const EnhancedPricingCards = () => {
             </div>
             <p className="text-sm text-muted-foreground">Your final push towards peer-reviewed success</p>
           </div>
-
+          
           <div className="p-6 flex-grow flex flex-col">
             <ul className="space-y-4 mb-8">
               <li className="flex items-start">
@@ -303,7 +302,7 @@ const EnhancedPricingCards = () => {
               </li>
             </ul>
             <div className="mt-auto">
-              <Link href="/payment" className="w-full">
+              <Link to="/payment" className="w-full">
                 <Button className="w-full bg-gradient-to-r from-sciscribe-gold/90 to-sciscribe-amber/90 hover:from-sciscribe-gold hover:to-sciscribe-amber text-white shadow-md hover:shadow-lg transition-all duration-300">
                   Choose Plan
                 </Button>
