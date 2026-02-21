@@ -24,10 +24,10 @@ export default function SideNav() {
             <div>
                 <Link href="/" className="block group">
                     <div className="flex flex-col items-start transition-opacity duration-300 hover:opacity-70">
-                        <span className="text-2xl md:text-3xl font-serif tracking-wide leading-none">
+                        <span className="text-2xl md:text-3xl font-serif tracking-tight leading-none italic">
                             SciScribe
                         </span>
-                        <span className="text-[10px] md:text-xs font-mono tracking-[0.2em] text-white/60 uppercase mt-2 ml-1">
+                        <span className="text-[9px] md:text-[10px] font-mono tracking-[0.35em] text-white/40 uppercase mt-1.5">
                             Solutions
                         </span>
                     </div>

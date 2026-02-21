@@ -61,7 +61,7 @@ const Navbar = () => {
 
           {/* Logo - Editorial Serif */}
           <Link href="/" className="flex items-center group">
-            <span className="text-2xl font-serif text-white tracking-wide transition-opacity duration-300 hover:opacity-70">
+            <span className="text-2xl font-serif text-white tracking-tight italic transition-opacity duration-300 hover:opacity-70">
               SciScribe
             </span>
           </Link>

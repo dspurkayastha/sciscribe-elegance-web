@@ -51,7 +51,7 @@ const Footer = () => {
           <div className="flex flex-col space-y-6 md:items-end justify-between h-full">
             <span className="text-[10px] uppercase tracking-[0.2em] font-mono text-white/40">© {new Date().getFullYear()}</span>
             <Link href="/" className="inline-block mt-auto">
-              <h3 className="text-xl font-serif tracking-tight text-white">
+              <h3 className="text-xl font-serif tracking-tight text-white italic">
                 SciScribe
               </h3>
             </Link>

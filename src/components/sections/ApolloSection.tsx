@@ -33,7 +33,7 @@ const ApolloSection = () => {
                         </span>
 
                         <h2 className="text-[12vw] md:text-[6vw] font-serif leading-[0.85] tracking-tighter text-white select-none mb-6">
-                            Apollo
+                            <span className="text-[1.3em] inline-block">A</span>pollo
                         </h2>
                         <p className="text-3xl md:text-4xl font-serif italic text-white/60 leading-tight mb-12">
                             From Synopsis to Submission.
