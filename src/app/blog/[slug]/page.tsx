@@ -1,5 +1,6 @@
 import { getPostBySlug } from '@/lib/mock-blog';
 import BlogPostContent from './BlogPostContent';
+import BlogJsonLd from '@/components/seo/BlogJsonLd';
 import { notFound } from 'next/navigation';
 import { mockPosts } from '@/lib/mock-blog';
 import { Metadata } from 'next';
@@ -51,6 +52,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
             description: post.excerpt,
             images: [post.coverImage],
         },
+        alternates: {
+            canonical: `https://www.sciscribesolutions.com/blog/${slug}`,
+        },
     };
 }
 
@@ -62,5 +66,20 @@ export default async function BlogPostPage({ params }: Props) {
         notFound();
     }
 
-    return <BlogPostContent post={post} />;
+    return (
+        <>
+            <BlogJsonLd
+                title={post.title}
+                description={post.excerpt}
+                datePublished={post.date}
+                authorName={post.author.name}
+                authorRole={post.author.role}
+                coverImage={post.coverImage}
+                slug={post.slug}
+                tags={post.tags}
+            />
+            <BlogPostContent post={post} />
+        </>
+    );
 }
+

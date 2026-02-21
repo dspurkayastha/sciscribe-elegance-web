@@ -162,7 +162,7 @@ const ContactContent = () => {
     };
 
     try {
-      const response = await fetch("https://asia-south1-sciscribe-main.cloudfunctions.net/submitContactFormV2", {
+      const response = await fetch("https://asia-south1-sciscribe-solutions.cloudfunctions.net/submitContactFormV2", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload)

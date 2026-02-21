@@ -6,15 +6,15 @@ import { getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
 import { getAuth, GoogleAuthProvider } from "firebase/auth";
 
-// Firebase configuration
+// Firebase configuration — sciscribe-solutions project
 const firebaseConfig = {
-  apiKey: "AIzaSyAf6-B1FcJo1FbHaH-lC1jkmWcQzKYCg3U",
-  authDomain: "sciscribe-main.firebaseapp.com",
-  projectId: "sciscribe-main",
-  storageBucket: "sciscribe-main.firebasestorage.app",
-  messagingSenderId: "905768153629",
-  appId: "1:905768153629:web:ce886bbfdbb3da91f48cf4",
-  measurementId: "G-2CN89F9HST",
+  apiKey: "AIzaSyDpz9g5-po850P8WT3sl0npRgxqQf0NuH8",
+  authDomain: "sciscribe-solutions.firebaseapp.com",
+  projectId: "sciscribe-solutions",
+  storageBucket: "sciscribe-solutions.firebasestorage.app",
+  messagingSenderId: "481289370765",
+  appId: "1:481289370765:web:b6ae24eceebd42ba45f6c4",
+  measurementId: "G-LBF34FLVPE",
 };
 
 let app: ReturnType<typeof initializeApp> | null = null;

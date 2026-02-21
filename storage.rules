@@ -1,0 +1,17 @@
+rules_version = '2';
+
+service firebase.storage {
+  match /b/{bucket}/o {
+    // Contact form file uploads — allow anyone to upload (max 20MB per file)
+    // Files are uploaded from the client directly
+    match /contact_uploads/{fileName} {
+      allow read: if false;
+      allow write: if request.resource.size < 20 * 1024 * 1024;
+    }
+
+    // Deny everything else
+    match /{allPaths=**} {
+      allow read, write: if false;
+    }
+  }
+}

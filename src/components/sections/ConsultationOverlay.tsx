@@ -12,6 +12,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { format, addDays } from 'date-fns';
 import { toast } from '@/components/ui/use-toast';
 import { useAnalytics } from '@/hooks/useAnalytics';
+import { submitToFirestore } from '@/lib/firestore';
 
 // Simple phone number validation (allows numbers, spaces, +, -, and ())
 const phoneRegex = /^[\d\s+\-()]{10,20}$/;
@@ -120,15 +121,7 @@ export function ConsultationOverlay({ isOpen, onClose }: ConsultationOverlayProp
         type: 'consultation', honeypot, createdAt: new Date().toISOString()
       };
 
-      const response = await fetch(
-        'https://asia-south1-sciscribe-main.cloudfunctions.net/submitConsultationForm',
-        { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(submissionData) }
-      );
-
-      if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}));
-        throw new Error(errorData.error || 'Failed to submit form');
-      }
+      await submitToFirestore("consultations", submissionData);
 
       setIsSuccess(true);
       reset();

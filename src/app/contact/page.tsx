@@ -14,6 +14,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { useRouter } from "next/navigation";
+import { submitToFirestore } from "@/lib/firestore";
 
 export default function ContactPage() {
     const router = useRouter();
@@ -122,12 +123,7 @@ export default function ContactPage() {
         };
 
         try {
-            const response = await fetch("https://asia-south1-sciscribe-main.cloudfunctions.net/submitContactFormV2", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(payload)
-            });
-            if (!response.ok) throw new Error("Submission failed");
+            await submitToFirestore("contacts", payload);
 
             toast({ title: "Message Sent", description: "Your manuscript request has been received." });
             logFormSubmitted({ form_id: 'contact_page_form', form_name: 'Contact Page Form', success: true });

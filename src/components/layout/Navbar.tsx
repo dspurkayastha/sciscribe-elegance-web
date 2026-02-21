@@ -40,9 +40,12 @@ const Navbar = () => {
 
   // Zen Editorial Navigation Links
   const navLinks = [
+    { name: 'About', path: '/about' },
     { name: 'Services', path: '/services' },
+    { name: 'Portfolio', path: '/portfolio' },
     { name: 'Pricing', path: '/pricing' },
     { name: 'Blog', path: '/blog' },
+    { name: 'Feedback', path: '/feedback' },
     { name: 'Contact', path: '/contact' }
   ];
 

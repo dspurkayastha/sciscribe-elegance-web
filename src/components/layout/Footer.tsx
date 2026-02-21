@@ -20,7 +20,9 @@ const Footer = () => {
           <div className="flex flex-col space-y-6">
             <span className="text-[10px] uppercase tracking-[0.2em] font-mono text-white/40">Sitemap</span>
             <div className="flex flex-col space-y-3">
+              <Link href="/about" className="text-sm text-white/70 hover:text-white transition-colors duration-300">About</Link>
               <Link href="/services" className="text-sm text-white/70 hover:text-white transition-colors duration-300">Services</Link>
+              <Link href="/portfolio" className="text-sm text-white/70 hover:text-white transition-colors duration-300">Portfolio</Link>
               <Link href="/pricing" className="text-sm text-white/70 hover:text-white transition-colors duration-300">Pricing</Link>
               <Link href="/blog" className="text-sm text-white/70 hover:text-white transition-colors duration-300">Blog</Link>
             </div>
@@ -30,6 +32,7 @@ const Footer = () => {
             <span className="text-[10px] uppercase tracking-[0.2em] font-mono text-white/40">Connect</span>
             <div className="flex flex-col space-y-3">
               <Link href="/contact" className="text-sm text-white/70 hover:text-white transition-colors duration-300">Contact</Link>
+              <Link href="/feedback" className="text-sm text-white/70 hover:text-white transition-colors duration-300">Feedback</Link>
               <a href="https://www.linkedin.com/company/sciscribe-solutions" target="_blank" rel="noopener noreferrer" className="text-sm text-white/70 hover:text-white transition-colors">LinkedIn</a>
               <a href="https://www.instagram.com/sciscribesolutions_ig/" target="_blank" rel="noopener noreferrer" className="text-sm text-white/70 hover:text-white transition-colors">Instagram</a>
             </div>

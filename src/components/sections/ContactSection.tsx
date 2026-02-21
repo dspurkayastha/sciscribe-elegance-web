@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { useAnalytics } from "@/hooks/useAnalytics";
 import { motion } from "framer-motion";
+import { submitToFirestore } from "@/lib/firestore";
 
 const ContactSection = () => {
   const [formData, setFormData] = useState({
@@ -31,14 +32,7 @@ const ContactSection = () => {
     setIsSubmitting(true);
 
     try {
-      await fetch(
-        "https://asia-south1-sciscribe-main.cloudfunctions.net/submitQuickContactForm",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(formData)
-        }
-      );
+      await submitToFirestore("quick_contacts", formData);
 
       toast({
         title: "Message Sent.",
