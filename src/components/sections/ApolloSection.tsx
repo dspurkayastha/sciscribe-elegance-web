@@ -4,10 +4,10 @@ import { motion } from "framer-motion";
 import { ArrowRight, GraduationCap } from "lucide-react";
 
 const features = [
-    "Upload Synopsis, Auto-Populate Thesis",
-    "University-Compliant Templates",
-    "Citation & Statistical Analysis",
-    "Expert QA & Supervision — Free",
+    "AI-Assisted Thesis Drafting",
+    "Built-In Statistical Analysis",
+    "Automated Citation Management",
+    "Expert QA Included — Free",
 ];
 
 const ApolloSection = () => {
@@ -40,10 +40,10 @@ const ApolloSection = () => {
                         </p>
 
                         <p className="text-xl md:text-2xl font-light text-white/60 max-w-2xl leading-relaxed mb-6">
-                            Think of Apollo as your personal research assistant that never sleeps — upload your approved synopsis and it builds your thesis structure, populates each chapter with AI-generated drafts, manages citations from PubMed, and exports a university-compliant PDF.
+                            Your personal research assistant that never sleeps. Apollo takes you from synopsis to submission — so you can focus on the science, not the formatting.
                         </p>
                         <p className="text-lg font-light text-white/50 max-w-2xl leading-relaxed mb-16">
-                            Built on frontier models fine-tuned for scientific writing. Expert supervision and quality assurance from our editorial team are included at no additional cost.
+                            Powered by frontier models fine-tuned for scientific writing, with expert supervision and QA from our editorial team at no additional cost.
                         </p>
 
                         <div className="flex flex-col sm:flex-row gap-6">
