@@ -1,13 +1,13 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowRight, Sparkles } from "lucide-react";
+import { ArrowRight, GraduationCap } from "lucide-react";
 
 const features = [
-    "AI-Powered Thesis Drafting",
+    "Upload Synopsis, Auto-Populate Thesis",
+    "University-Compliant Templates",
+    "Citation & Statistical Analysis",
     "Expert QA & Supervision — Free",
-    "Frontier Models for Research",
-    "End-to-End Publication Support",
 ];
 
 const ApolloSection = () => {
@@ -36,14 +36,14 @@ const ApolloSection = () => {
                             Apollo
                         </h2>
                         <p className="text-3xl md:text-4xl font-serif italic text-white/60 leading-tight mb-12">
-                            Your AI-Powered Thesis Companion.
+                            From Synopsis to Submission.
                         </p>
 
                         <p className="text-xl md:text-2xl font-light text-white/60 max-w-2xl leading-relaxed mb-6">
-                            Think agentic IDE — but for your thesis. Apollo harnesses the best frontier models, fine-tuned specifically for research and scientific writing, to help you draft, refine, and structure your work from abstract to appendix.
+                            Think of Apollo as your personal research assistant that never sleeps — upload your approved synopsis and it builds your thesis structure, populates each chapter with AI-generated drafts, manages citations from PubMed, and exports a university-compliant PDF.
                         </p>
                         <p className="text-lg font-light text-white/50 max-w-2xl leading-relaxed mb-16">
-                            Expert supervision and quality assurance are included at no additional cost — every output is reviewed under SciScribe's rigorous editorial standards.
+                            Built on frontier models fine-tuned for scientific writing. Expert supervision and quality assurance from our editorial team are included at no additional cost.
                         </p>
 
                         <div className="flex flex-col sm:flex-row gap-6">
@@ -78,7 +78,7 @@ const ApolloSection = () => {
                         transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
                     >
                         <div className="w-full bg-white/[0.02] border border-white/5 p-12 relative overflow-hidden group hover:bg-white/[0.05] transition-colors duration-1000">
-                            <Sparkles className="w-12 h-12 stroke-[1] text-white/40 mb-8" />
+                            <GraduationCap className="w-10 h-10 stroke-[1] text-white/30 mb-10" />
                             <h3 className="text-2xl font-serif text-white mb-10">What Apollo Offers</h3>
                             <ul className="space-y-6">
                                 {features.map((feat, i) => (
