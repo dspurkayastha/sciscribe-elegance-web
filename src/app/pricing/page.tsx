@@ -202,6 +202,69 @@ export default function PricingPage() {
                 </div>
             </section>
 
+            {/* Payment Info */}
+            <section className="relative w-full py-24 border-t border-white/10">
+                <div className="container mx-auto px-6 max-w-6xl">
+                    <div className="flex flex-col md:flex-row items-center gap-16 md:gap-24">
+                        <motion.div
+                            className="w-full md:w-1/2 flex flex-col items-start"
+                            initial={{ opacity: 0, y: 50 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true, margin: "-100px" }}
+                            transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+                        >
+                            <span className="text-xs uppercase tracking-[0.3em] font-mono text-white/50 mb-8 block">
+                                Payment
+                            </span>
+                            <h2 className="text-4xl md:text-5xl font-serif text-white leading-tight mb-6">
+                                How to <span className="italic text-white/60">Pay.</span>
+                            </h2>
+                            <p className="text-xl font-light text-white/60 leading-relaxed mb-12 max-w-lg">
+                                We accept UPI, bank transfer, cards, and international wire. View our step-by-step payment process, accepted methods, and FAQs.
+                            </p>
+                            <Link
+                                href="/pricing/payment"
+                                className="group relative inline-flex items-center justify-center px-10 py-5 text-sm tracking-widest uppercase font-mono text-black bg-white hover:bg-white/90 transition-colors duration-500"
+                            >
+                                <span className="flex items-center gap-4">
+                                    View Payment Details
+                                    <ArrowRight className="w-4 h-4 transition-transform duration-500 group-hover:translate-x-2" />
+                                </span>
+                            </Link>
+                        </motion.div>
+
+                        <motion.div
+                            className="w-full md:w-1/2 flex items-center justify-center"
+                            initial={{ opacity: 0, y: 50 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true, margin: "-100px" }}
+                            transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
+                        >
+                            <div className="w-full bg-white/[0.02] border border-white/5 p-12 relative overflow-hidden group hover:bg-white/[0.05] transition-colors duration-1000">
+                                <h3 className="text-2xl font-serif text-white mb-8">Quick Overview</h3>
+                                <ul className="space-y-6">
+                                    {[
+                                        { step: "01", text: "Discuss your project & receive a quote" },
+                                        { step: "02", text: "Approve & receive your invoice" },
+                                        { step: "03", text: "Pay via UPI, card, or bank transfer" },
+                                        { step: "04", text: "Work begins immediately" },
+                                    ].map(item => (
+                                        <li key={item.step} className="flex items-start group/item">
+                                            <span className="mr-8 text-white/40 font-mono text-sm mt-1 transition-colors duration-500 group-hover/item:text-white/80">
+                                                {item.step}
+                                            </span>
+                                            <span className="text-lg text-white/90 font-light group-hover/item:text-white transition-colors duration-500">
+                                                {item.text}
+                                            </span>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+                        </motion.div>
+                    </div>
+                </div>
+            </section>
+
             {/* Custom Quote Footer */}
             <section className="relative w-full py-40 border-t border-white/10 overflow-hidden bg-white text-black">
                 <div className="container mx-auto px-6 max-w-4xl text-center flex flex-col items-center">
