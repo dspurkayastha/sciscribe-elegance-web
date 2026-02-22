@@ -30,7 +30,7 @@ const HeroSection = () => {
         </motion.div>
 
         <motion.h1
-          className="flex flex-col items-start leading-[0.85] font-serif tracking-tighter text-white mb-16 select-none drop-shadow-2xl w-full"
+          className="flex flex-col items-start leading-[0.85] font-serif tracking-tighter text-white mb-16 select-none drop-shadow-2xl"
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
@@ -50,7 +50,7 @@ const HeroSection = () => {
         </motion.h1>
 
         <motion.p
-          className="max-w-2xl text-xl md:text-2xl font-light text-white/90 leading-relaxed mb-6 text-balance drop-shadow-md"
+          className="max-w-3xl text-xl md:text-2xl font-light text-white/90 leading-relaxed mb-6 text-balance drop-shadow-md text-center mx-auto"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1.5, delay: 0.4 }}
@@ -59,7 +59,7 @@ const HeroSection = () => {
         </motion.p>
 
         <motion.p
-          className="max-w-xl text-sm md:text-base font-mono tracking-widest uppercase text-white/50 mb-16 text-balance drop-shadow-md"
+          className="max-w-2xl text-sm md:text-base font-mono tracking-widest uppercase text-white/50 mb-16 text-balance drop-shadow-md text-center mx-auto"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1.5, delay: 0.5 }}
