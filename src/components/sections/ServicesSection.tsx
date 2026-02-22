@@ -66,11 +66,11 @@ const ServicesSection = () => {
   ];
 
   return (
-    <section id="services" className="py-32 md:py-48 relative w-full bg-transparent text-white" ref={containerRef}>
+    <section id="services" className="py-20 md:py-32 relative w-full bg-transparent text-white" ref={containerRef}>
 
       <div className="container mx-auto px-6 md:px-12 max-w-7xl">
         <motion.div
-          className="mb-32 md:mb-56 max-w-4xl"
+          className="mb-20 md:mb-32 max-w-4xl"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
@@ -98,7 +98,7 @@ const ServicesSection = () => {
             return (
               <motion.div
                 key={index}
-                className="flex flex-col lg:flex-row items-center justify-between w-full py-24 md:py-32 border-t border-white/10 lg:border-none relative z-10"
+                className="flex flex-col lg:flex-row items-center justify-between w-full py-16 md:py-20 border-t border-white/10 lg:border-none relative z-10"
                 initial={{ opacity: 0, y: 50 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-150px" }}

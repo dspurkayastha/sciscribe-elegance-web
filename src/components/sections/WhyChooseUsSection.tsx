@@ -47,7 +47,7 @@ const WhyChooseUsSection = () => {
   ];
 
   return (
-    <section className="py-32 md:py-48 relative w-full overflow-hidden bg-transparent text-white">
+    <section className="py-20 md:py-32 relative w-full overflow-hidden bg-transparent text-white">
       <div className="container mx-auto px-6 md:px-12 max-w-7xl">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

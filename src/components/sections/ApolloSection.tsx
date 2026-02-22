@@ -12,7 +12,7 @@ const features = [
 
 const ApolloSection = () => {
     return (
-        <section className="relative w-full py-48 border-t border-white/10 overflow-hidden">
+        <section className="relative w-full py-20 md:py-32 border-t border-white/10 overflow-hidden">
 
             {/* Ambient Floating Orbs for AI Dynamic Feel */}
             <motion.div
