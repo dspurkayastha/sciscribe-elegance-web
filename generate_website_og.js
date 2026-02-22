@@ -6,7 +6,8 @@ import path from 'path';
   const browser = await chromium.launch();
 
   const page = await browser.newPage({
-    viewport: { width: 1200, height: 630 }
+    viewport: { width: 1200, height: 630 },
+    deviceScaleFactor: 2 // Retina resolution so the 60% zoom doesn't become blurry
   });
 
   // Force framer-motion to skip enter animations so elements don't get stuck at opacity: 0
@@ -26,6 +27,9 @@ import path from 'path';
 
     /* Hide SideNav */
     nav { display: none !important; }
+    
+    /* Hide Next.js dev build indicator and portals */
+    nextjs-portal, #nextjs-build-indicator, iframe { display: none !important; }
     
     /* Hide all fixed overlays (Consultation button, Cookie consent) */
     .fixed { display: none !important; }
