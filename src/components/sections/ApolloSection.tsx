@@ -14,8 +14,15 @@ const ApolloSection = () => {
     return (
         <section className="relative w-full py-48 border-t border-white/10 overflow-hidden">
 
-            {/* Subtle radial glow */}
-            <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_at_30%_50%,rgba(255,255,255,0.04)_0%,transparent_70%)]" />
+            {/* Subtle animated radial glow */}
+            <motion.div
+                className="absolute inset-0 pointer-events-none"
+                animate={{ opacity: [0.4, 0.8, 0.4] }}
+                transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+                style={{
+                    background: "radial-gradient(ellipse at 30% 50%, rgba(255,40,255,0.03) 0%, transparent 70%)"
+                }}
+            />
 
             <div className="container mx-auto px-6 max-w-7xl relative z-10">
                 <div className="flex flex-col md:flex-row items-start gap-16 md:gap-24">
@@ -33,7 +40,13 @@ const ApolloSection = () => {
                         </span>
 
                         <h2 className="text-[12vw] md:text-[6vw] font-serif leading-[0.85] tracking-tighter text-white select-none mb-6">
-                            <span className="text-[1.3em] inline-block italic">A</span>pollo
+                            <motion.span
+                                className="text-[1.3em] inline-block italic"
+                                animate={{ y: [0, -4, 0], opacity: [0.9, 1, 0.9] }}
+                                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                            >
+                                A
+                            </motion.span>pollo
                         </h2>
                         <p className="text-3xl md:text-4xl font-serif italic text-white/60 leading-tight mb-12">
                             From Synopsis to Submission.
@@ -77,24 +90,34 @@ const ApolloSection = () => {
                         viewport={{ once: true, margin: "-100px" }}
                         transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
                     >
-                        <div className="w-full bg-white/[0.02] border border-white/5 p-12 relative overflow-hidden group hover:bg-white/[0.05] transition-colors duration-1000">
-                            <GraduationCap className="w-10 h-10 stroke-[1] text-white/30 mb-10" />
-                            <h3 className="text-2xl font-serif text-white mb-10">What Apollo Offers</h3>
-                            <ul className="space-y-6">
+                        <div className="w-full bg-white/[0.02] border border-white/5 p-12 relative overflow-hidden group hover:bg-white/[0.04] transition-colors duration-1000 backdrop-blur-sm">
+                            <div className="absolute top-0 right-0 w-64 h-64 bg-white/[0.02] blur-3xl rounded-full translate-x-1/2 -translate-y-1/2 group-hover:bg-white/[0.04] transition-colors duration-1000" />
+                            <GraduationCap className="w-10 h-10 stroke-[1] text-white/30 mb-10 relative z-10 group-hover:scale-110 transition-transform duration-700" />
+                            <h3 className="text-2xl font-serif text-white mb-10 relative z-10">What Apollo Offers</h3>
+                            <ul className="space-y-6 relative z-10">
                                 {features.map((feat, i) => (
-                                    <li key={feat} className="flex items-start group/item">
-                                        <span className="mr-8 text-white/40 font-mono text-sm mt-1 transition-colors duration-500 group-hover/item:text-white/80">
+                                    <motion.li
+                                        key={feat}
+                                        className="flex items-start group/item"
+                                        initial={{ opacity: 0, x: 20 }}
+                                        whileInView={{ opacity: 1, x: 0 }}
+                                        viewport={{ once: true }}
+                                        transition={{ duration: 0.8, delay: 0.4 + (i * 0.1), ease: "easeOut" }}
+                                    >
+                                        <span className="mr-8 text-white/40 font-mono text-sm mt-1 transition-colors duration-500 group-hover/item:text-white/80 group-hover/item:-translate-y-1 transform">
                                             {(i + 1).toString().padStart(2, '0')}
                                         </span>
                                         <span className="text-lg text-white/90 font-light group-hover/item:text-white transition-colors duration-500">
                                             {feat}
                                         </span>
-                                    </li>
+                                    </motion.li>
                                 ))}
                             </ul>
-                            <div className="absolute bottom-12 right-12 font-serif text-[8rem] text-white/[0.03] select-none leading-none">
+                            <motion.div
+                                className="absolute bottom-12 right-12 font-serif text-[8rem] text-white/[0.02] select-none leading-none group-hover:text-white/[0.04] transition-colors duration-1000"
+                            >
                                 α
-                            </div>
+                            </motion.div>
                         </div>
                     </motion.div>
 

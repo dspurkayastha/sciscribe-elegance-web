@@ -12,16 +12,17 @@ const HeroSection = () => {
   const { logCtaClick } = useAnalytics();
 
   return (
-    <section className="relative w-full min-h-[90vh] flex flex-col items-center justify-center bg-transparent text-white overflow-hidden pt-20">
+    <section className="relative w-full pt-[15vh] pb-32 flex flex-col items-center bg-transparent text-white overflow-hidden pl-0 md:pl-48">
 
       {/* Editorial Content */}
-      <div className="container mx-auto px-6 md:px-12 max-w-7xl relative z-10 flex flex-col items-center text-center">
+      <div className="container mx-auto px-6 max-w-7xl relative z-10 flex flex-col items-center">
 
+        {/* Eyebrow - Centered to the screen container */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-          className="mb-8"
+          className="mb-12 w-full text-center"
         >
           <span className="text-xs tracking-[0.3em] font-mono text-white/70 uppercase drop-shadow-md">
             Premium Medical & Scientific Writing Services
@@ -134,29 +135,29 @@ const HeroSection = () => {
         </motion.div>
       </div>
 
-      {/* Trust / Stats Banner */}
+      {/* Trust / Stats Banner - IN FLOW to prevent overlap */}
       <motion.div
-        className="absolute bottom-32 left-0 right-0 w-full border-y border-white/10 bg-black/20 backdrop-blur-sm py-6 hidden md:block"
+        className="relative w-full max-w-6xl mx-auto border-y border-white/10 bg-black/20 backdrop-blur-sm py-8 mt-24 hidden md:block z-20"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.2, duration: 1 }}
       >
-        <div className="container mx-auto px-6 max-w-7xl flex justify-between items-center text-center divide-x divide-white/10">
+        <div className="px-6 flex justify-between items-center text-center divide-x divide-white/10">
           <div className="flex-1 px-4">
-            <span className="block text-2xl font-serif text-white mb-1">500+</span>
-            <span className="text-[10px] uppercase font-mono tracking-[0.2em] text-white/50">Manuscripts Edited</span>
+            <span className="block text-3xl font-serif text-white mb-2">500+</span>
+            <span className="text-[10px] uppercase font-mono tracking-[0.2em] text-white/50">Manuscripts</span>
           </div>
           <div className="flex-1 px-4">
-            <span className="block text-2xl font-serif text-white mb-1">98%</span>
-            <span className="text-[10px] uppercase font-mono tracking-[0.2em] text-white/50">Acceptance Rate</span>
+            <span className="block text-3xl font-serif text-white mb-2">98%</span>
+            <span className="text-[10px] uppercase font-mono tracking-[0.2em] text-white/50">Acceptance</span>
           </div>
           <div className="flex-1 px-4">
-            <span className="block text-2xl font-serif text-white mb-1">50+</span>
+            <span className="block text-3xl font-serif text-white mb-2">50+</span>
             <span className="text-[10px] uppercase font-mono tracking-[0.2em] text-white/50">PhD Experts</span>
           </div>
           <div className="flex-1 px-4">
-            <span className="block text-2xl font-serif text-white mb-1">100%</span>
-            <span className="text-[10px] uppercase font-mono tracking-[0.2em] text-white/50">Confidentiality</span>
+            <span className="block text-3xl font-serif text-white mb-2">100%</span>
+            <span className="text-[10px] uppercase font-mono tracking-[0.2em] text-white/50">Secure</span>
           </div>
         </div>
       </motion.div>
