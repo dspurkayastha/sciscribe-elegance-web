@@ -39,6 +39,11 @@ import path from 'path';
     /* Hide the scroll indicator */
     .absolute.bottom-12 { display: none !important; }
 
+    /* Scale the page down so it fits beautifully in the 1200x630 viewport */
+    body {
+      zoom: 0.6 !important; 
+    }
+
     /* Force opacity on Framer Motion elements just in case */
     [style*="opacity: 0"] {
         opacity: 1 !important;
