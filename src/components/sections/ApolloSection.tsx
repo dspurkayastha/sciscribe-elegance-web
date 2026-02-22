@@ -12,11 +12,11 @@ const features = [
 
 const ApolloSection = () => {
     return (
-        <section className="relative w-full py-20 md:py-32 border-t border-white/10 overflow-hidden">
+        <section className="relative w-full py-20 md:py-32 overflow-hidden bg-[radial-gradient(ellipse_at_bottom,_var(--tw-gradient-stops))] from-indigo-900/50 via-purple-900/15 to-black border-t border-white/20">
 
             {/* Ambient Floating Orbs for AI Dynamic Feel */}
             <motion.div
-                className="absolute top-[10%] left-[10%] w-[40vw] h-[40vw] max-w-[600px] max-h-[600px] bg-white/[0.02] rounded-full blur-[100px] pointer-events-none"
+                className="absolute top-[10%] left-[10%] w-[40vw] h-[40vw] max-w-[600px] max-h-[600px] bg-indigo-500/[0.08] rounded-full blur-[100px] pointer-events-none"
                 animate={{
                     x: [0, 100, -50, 0],
                     y: [0, -50, 100, 0],
@@ -25,7 +25,7 @@ const ApolloSection = () => {
                 transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
             />
             <motion.div
-                className="absolute bottom-[10%] right-[10%] w-[30vw] h-[30vw] max-w-[500px] max-h-[500px] bg-white/[0.015] rounded-full blur-[80px] pointer-events-none"
+                className="absolute bottom-[10%] right-[10%] w-[30vw] h-[30vw] max-w-[500px] max-h-[500px] bg-purple-500/[0.06] rounded-full blur-[80px] pointer-events-none"
                 animate={{
                     x: [0, -80, 50, 0],
                     y: [0, 80, -40, 0],
