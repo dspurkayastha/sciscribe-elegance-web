@@ -14,14 +14,24 @@ const ApolloSection = () => {
     return (
         <section className="relative w-full py-48 border-t border-white/10 overflow-hidden">
 
-            {/* Subtle animated radial glow */}
+            {/* Ambient Floating Orbs for AI Dynamic Feel */}
             <motion.div
-                className="absolute inset-0 pointer-events-none"
-                animate={{ opacity: [0.4, 0.8, 0.4] }}
-                transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-                style={{
-                    background: "radial-gradient(ellipse at 30% 50%, rgba(255,40,255,0.03) 0%, transparent 70%)"
+                className="absolute top-[10%] left-[10%] w-[40vw] h-[40vw] max-w-[600px] max-h-[600px] bg-white/[0.02] rounded-full blur-[100px] pointer-events-none"
+                animate={{
+                    x: [0, 100, -50, 0],
+                    y: [0, -50, 100, 0],
+                    scale: [1, 1.2, 0.8, 1]
                 }}
+                transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
+            />
+            <motion.div
+                className="absolute bottom-[10%] right-[10%] w-[30vw] h-[30vw] max-w-[500px] max-h-[500px] bg-white/[0.015] rounded-full blur-[80px] pointer-events-none"
+                animate={{
+                    x: [0, -80, 50, 0],
+                    y: [0, 80, -40, 0],
+                    scale: [1, 1.5, 0.9, 1]
+                }}
+                transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
             />
 
             <div className="container mx-auto px-6 max-w-7xl relative z-10">
@@ -84,13 +94,18 @@ const ApolloSection = () => {
 
                     {/* Right — Features Card */}
                     <motion.div
-                        className="w-full md:w-2/5 flex items-stretch"
+                        className="w-full md:w-2/5 flex items-stretch relative z-20"
                         initial={{ opacity: 0, y: 50 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true, margin: "-100px" }}
                         transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
                     >
-                        <div className="w-full bg-white/[0.02] border border-white/5 p-12 relative overflow-hidden group hover:bg-white/[0.04] transition-colors duration-1000 backdrop-blur-sm">
+                        {/* Continuous levitation effect on the card */}
+                        <motion.div
+                            animate={{ y: [0, -12, 0] }}
+                            transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+                            className="w-full bg-black/40 border border-white/10 p-12 relative overflow-hidden group hover:bg-black/60 transition-colors duration-1000 backdrop-blur-md shadow-[0_0_50px_rgba(255,255,255,0.03)] rounded-sm"
+                        >
                             <div className="absolute top-0 right-0 w-64 h-64 bg-white/[0.02] blur-3xl rounded-full translate-x-1/2 -translate-y-1/2 group-hover:bg-white/[0.04] transition-colors duration-1000" />
                             <GraduationCap className="w-10 h-10 stroke-[1] text-white/30 mb-10 relative z-10 group-hover:scale-110 transition-transform duration-700" />
                             <h3 className="text-2xl font-serif text-white mb-10 relative z-10">What Apollo Offers</h3>
@@ -113,12 +128,16 @@ const ApolloSection = () => {
                                     </motion.li>
                                 ))}
                             </ul>
+
+                            {/* Animated glowing alpha character */}
                             <motion.div
-                                className="absolute bottom-12 right-12 font-serif text-[8rem] text-white/[0.02] select-none leading-none group-hover:text-white/[0.04] transition-colors duration-1000"
+                                className="absolute bottom-4 right-8 font-serif text-[10rem] text-white/[0.03] select-none leading-none group-hover:text-white/[0.06] transition-colors duration-1000"
+                                animate={{ rotate: [0, 5, -5, 0], scale: [1, 1.05, 1] }}
+                                transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
                             >
                                 α
                             </motion.div>
-                        </div>
+                        </motion.div>
                     </motion.div>
 
                 </div>

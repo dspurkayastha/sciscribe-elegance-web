@@ -12,7 +12,7 @@ const HeroSection = () => {
   const { logCtaClick } = useAnalytics();
 
   return (
-    <section className="relative w-full pt-[15vh] pb-32 flex flex-col items-center bg-transparent text-white overflow-hidden pl-0 md:pl-48">
+    <section className="relative w-full pt-[15vh] pb-32 flex flex-col items-center bg-transparent text-white overflow-hidden">
 
       {/* Editorial Content */}
       <div className="container mx-auto px-6 max-w-7xl relative z-10 flex flex-col items-center">
