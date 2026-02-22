@@ -24,7 +24,7 @@ const HeroSection = () => {
           className="mb-8"
         >
           <span className="text-xs tracking-[0.3em] font-mono text-white/70 uppercase drop-shadow-md">
-            Redefining Scientific Communication
+            Premium Medical & Scientific Writing Services
           </span>
         </motion.div>
 
@@ -35,13 +35,13 @@ const HeroSection = () => {
           transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
         >
           <span className="text-[6vw] md:text-[4.5vw] font-light tracking-wide text-white/90 mb-2 pl-1 md:pl-2">
-            Elevate Your
+            Elevate your
           </span>
           <span className="text-[14vw] md:text-[12vw] italic text-white mb-6 self-center drop-shadow-[0_0_15px_rgba(255,255,255,0.1)]">
             Research.
           </span>
           <span className="text-[6vw] md:text-[4.5vw] font-light tracking-wide text-white/90 mb-2 mt-4 md:mt-2 pl-1 md:pl-2">
-            Perfect Your
+            Perfect your
           </span>
           <span className="text-[14vw] md:text-[12vw] text-white self-center drop-shadow-[0_0_15px_rgba(255,255,255,0.1)]">
             Manuscript.
@@ -49,12 +49,21 @@ const HeroSection = () => {
         </motion.h1>
 
         <motion.p
-          className="max-w-2xl text-xl md:text-2xl font-light text-white/90 leading-relaxed mb-16 text-balance drop-shadow-md"
+          className="max-w-2xl text-xl md:text-2xl font-light text-white/90 leading-relaxed mb-6 text-balance drop-shadow-md"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1.5, delay: 0.4 }}
         >
           Expert editing, advanced statistics, and publication support — delivered with speed, clarity, and guaranteed results.
+        </motion.p>
+
+        <motion.p
+          className="max-w-xl text-sm md:text-base font-mono tracking-widest uppercase text-white/50 mb-16 text-balance drop-shadow-md"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1.5, delay: 0.5 }}
+        >
+          For PhD Candidates, Medical Professionals, & Principal Investigators.
         </motion.p>
 
         <motion.div
@@ -125,9 +134,36 @@ const HeroSection = () => {
         </motion.div>
       </div>
 
+      {/* Trust / Stats Banner */}
+      <motion.div
+        className="absolute bottom-32 left-0 right-0 w-full border-y border-white/10 bg-black/20 backdrop-blur-sm py-6 hidden md:block"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1.2, duration: 1 }}
+      >
+        <div className="container mx-auto px-6 max-w-7xl flex justify-between items-center text-center divide-x divide-white/10">
+          <div className="flex-1 px-4">
+            <span className="block text-2xl font-serif text-white mb-1">500+</span>
+            <span className="text-[10px] uppercase font-mono tracking-[0.2em] text-white/50">Manuscripts Edited</span>
+          </div>
+          <div className="flex-1 px-4">
+            <span className="block text-2xl font-serif text-white mb-1">98%</span>
+            <span className="text-[10px] uppercase font-mono tracking-[0.2em] text-white/50">Acceptance Rate</span>
+          </div>
+          <div className="flex-1 px-4">
+            <span className="block text-2xl font-serif text-white mb-1">50+</span>
+            <span className="text-[10px] uppercase font-mono tracking-[0.2em] text-white/50">PhD Experts</span>
+          </div>
+          <div className="flex-1 px-4">
+            <span className="block text-2xl font-serif text-white mb-1">100%</span>
+            <span className="text-[10px] uppercase font-mono tracking-[0.2em] text-white/50">Confidentiality</span>
+          </div>
+        </div>
+      </motion.div>
+
       {/* Elegant scroll indicator */}
       <motion.div
-        className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-4"
+        className="absolute bottom-8 md:bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-4"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.5, duration: 1 }}

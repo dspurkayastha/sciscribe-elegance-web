@@ -132,7 +132,7 @@ const WhyChooseUsSection = () => {
             className="group relative inline-flex items-center justify-center px-12 py-6 text-sm tracking-widest uppercase font-mono text-white border border-white/20 hover:border-white/60 transition-colors duration-500 overflow-hidden"
           >
             <span className="relative z-10 flex items-center gap-6">
-              Get Started Today
+              Submit Your Manuscript for a Free Review
               <ArrowRight className="w-4 h-4 transition-transform duration-500 group-hover:translate-x-2" />
             </span>
             <div className="absolute inset-0 bg-white/5 origin-left scale-x-0 transition-transform duration-500 ease-out group-hover:scale-x-100" />
