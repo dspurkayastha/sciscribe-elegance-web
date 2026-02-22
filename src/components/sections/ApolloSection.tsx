@@ -12,7 +12,7 @@ const features = [
 
 const ApolloSection = () => {
     return (
-        <section className="relative w-full py-20 md:py-32 overflow-hidden bg-[radial-gradient(ellipse_at_bottom,_var(--tw-gradient-stops))] from-indigo-900/50 via-purple-900/15 to-black border-t border-white/20">
+        <section className="relative w-full py-20 md:py-32 overflow-hidden bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-indigo-900/50 via-purple-900/15 to-black border-t border-white/20">
 
             {/* Ambient Floating Orbs for AI Dynamic Feel */}
             <motion.div
