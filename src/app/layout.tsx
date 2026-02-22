@@ -15,6 +15,7 @@ import SmoothScroll from '@/components/layout/SmoothScroll';
 import { FluidIridescentBackground } from '@/components/backgrounds/FluidBackgroundWrapper';
 import CookieConsent from '@/components/layout/CookieConsent';
 import JsonLd from '@/components/seo/JsonLd';
+import PageViewTracker from '@/components/analytics/PageViewTracker';
 
 // ── GA4 Measurement ID (will be updated with new Firebase project) ──
 const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || 'G-LBF34FLVPE';
@@ -110,7 +111,8 @@ export default function RootLayout({
                 {/* Structured Data */}
                 <JsonLd />
             </head>
-            <body className={`${inter.className} bg-black text-white`} suppressHydrationWarning>
+            <body className={`${inter.className} bg-[#020817] text-white selection:bg-sciscribe-blue/30 selection:text-white min-h-screen relative antialiased`} suppressHydrationWarning>
+                <PageViewTracker />
                 <ThemeProvider defaultTheme="dark" storageKey="sciscribe-theme">
                     <TooltipProvider>
                         <SmoothScroll>
