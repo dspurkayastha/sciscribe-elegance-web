@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { motion } from "framer-motion";
+import Image from "next/image";
 
 const PortfolioSection = () => {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -76,7 +77,7 @@ const PortfolioSection = () => {
         <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-sciscribe-gold/30 to-transparent" />
         <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-sciscribe-blue/30 to-transparent" />
       </div>
-      
+
       <motion.div
         className="absolute top-20 -left-40 h-80 w-80 rounded-full bg-sciscribe-teal/5 blur-3xl"
         animate={{
@@ -105,7 +106,7 @@ const PortfolioSection = () => {
 
       <div className="container mx-auto px-6 relative z-10">
         <div className="mx-auto max-w-3xl text-center">
-          <motion.h2 
+          <motion.h2
             className="mb-2 text-4xl font-bold text-sciscribe-navy dark:text-white"
             initial={{ opacity: 0, y: -20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -114,7 +115,7 @@ const PortfolioSection = () => {
           >
             Recent Work
           </motion.h2>
-          <motion.p 
+          <motion.p
             className="mb-12 text-lg text-sciscribe-navy/80 dark:text-white/80"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
@@ -137,11 +138,13 @@ const PortfolioSection = () => {
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1, duration: 0.5 }}
               >
-                <div className="relative h-48 overflow-hidden">
-                  <img
+                <div className="relative h-48 overflow-hidden pointer-events-none">
+                  <Image
                     src={item.image}
                     alt={item.title}
-                    className="h-full w-full object-cover transition-transform duration-500 hover:scale-105"
+                    fill
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
                   />
                 </div>
                 <div className="p-5 bg-white/80 dark:bg-sciscribe-navy/40 backdrop-blur-sm">
@@ -175,9 +178,8 @@ const PortfolioSection = () => {
               <button
                 key={index}
                 onClick={() => setActiveIndex(index)}
-                className={`h-2 w-2 rounded-full transition-all ${
-                  activeIndex === index ? "w-6 bg-sciscribe-gold" : "bg-gray-300 dark:bg-gray-600"
-                }`}
+                className={`h-2 w-2 rounded-full transition-all ${activeIndex === index ? "w-6 bg-sciscribe-gold" : "bg-gray-300 dark:bg-gray-600"
+                  }`}
                 aria-label={`Go to slide ${index + 1}`}
               ></button>
             ))}

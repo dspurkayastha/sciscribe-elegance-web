@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import Image from "next/image";
 
 const ServicesCarouselSection = () => {
   const services = [
@@ -101,11 +102,13 @@ const ServicesCarouselSection = () => {
               {services.map((service) => (
                 <div key={service.id} className="min-w-full">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6 bg-white dark:bg-sciscribe-navy/30 p-6 md:p-10 rounded-xl shadow-xl border border-sciscribe-mist/30 dark:border-white/5">
-                    <div className="flex items-center justify-center">
-                      <img
+                    <div className="flex items-center justify-center relative h-64 w-full">
+                      <Image
                         src={service.image}
                         alt={service.title}
-                        className="max-h-64 object-contain rounded-lg"
+                        fill
+                        sizes="(max-width: 768px) 100vw, 50vw"
+                        className="object-contain rounded-lg p-4"
                       />
                     </div>
                     <div className="flex flex-col justify-center text-center md:text-left">

@@ -44,7 +44,7 @@ export const metadata: Metadata = {
         description: 'Premium medical writing, scientific editing, and publication support services for researchers, academics, and healthcare professionals worldwide.',
         images: [
             {
-                url: '/og-image.png',
+                url: '/images/og-image.png',
                 width: 1200,
                 height: 630,
                 alt: 'SciScribe Solutions',

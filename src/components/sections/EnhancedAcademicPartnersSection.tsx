@@ -3,6 +3,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
+import Image from "next/image";
 
 // Premium glassmorphism style for cards and containers
 const premiumGlassmorphism = "bg-white/30 dark:bg-sciscribe-navy/20 backdrop-blur-md border border-white/20 dark:border-sciscribe-blue/10";
@@ -209,10 +210,12 @@ const EnhancedAcademicPartnersSection = () => {
                 >
                   <div className="h-24 w-full relative flex items-center justify-center p-3 rounded-lg bg-gradient-to-br from-white/70 to-white/40 dark:from-sciscribe-navy/40 dark:to-sciscribe-navy/20 border border-sciscribe-mist/20 dark:border-white/5 shadow-sm group-hover:shadow-lg group-hover:border-sciscribe-teal/30 transition-all duration-300 mx-auto overflow-hidden">
                     <div className="absolute inset-0 bg-gradient-to-r from-sciscribe-teal/5 to-sciscribe-gold/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                    <img
+                    <Image
                       src={partner.logo}
                       alt={partner.alt}
-                      className="max-h-full max-w-full object-contain filter grayscale hover:grayscale-0 transition-all duration-300"
+                      fill
+                      sizes="(max-width: 768px) 33vw, 15vw"
+                      className="object-contain filter grayscale hover:grayscale-0 transition-all duration-300 p-4"
                     />
                   </div>
                   <span className="text-xs text-foreground/60 mt-2 group-hover:text-foreground transition-colors duration-300 text-center w-full">{partner.name}</span>
@@ -249,10 +252,12 @@ const EnhancedAcademicPartnersSection = () => {
                 >
                   <div className="h-20 w-full relative flex items-center justify-center p-3 rounded-lg bg-gradient-to-br from-white/70 to-white/40 dark:from-sciscribe-navy/40 dark:to-sciscribe-navy/20 border border-sciscribe-mist/20 dark:border-white/5 shadow-sm group-hover:shadow-lg group-hover:border-sciscribe-gold/30 transition-all duration-300 mx-auto overflow-hidden">
                     <div className="absolute inset-0 bg-gradient-to-r from-sciscribe-gold/5 to-sciscribe-amber/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                    <img
+                    <Image
                       src={publisher.logo}
                       alt={publisher.alt}
-                      className="max-h-full max-w-full object-contain filter grayscale hover:grayscale-0 transition-all duration-300"
+                      fill
+                      sizes="(max-width: 768px) 50vw, 20vw"
+                      className="object-contain filter grayscale hover:grayscale-0 transition-all duration-300 p-4"
                     />
                   </div>
                   <span className="text-xs text-foreground/60 mt-2 group-hover:text-foreground transition-colors duration-300 text-center w-full">{publisher.name}</span>
@@ -300,11 +305,13 @@ const EnhancedAcademicPartnersSection = () => {
                 {/* Decorative elements */}
                 <div className="absolute -right-6 -top-6 w-16 h-16 rounded-full bg-gradient-to-br from-sciscribe-gold/20 to-transparent blur-xl pointer-events-none" />
 
-                <div className="h-32 mb-3 overflow-hidden rounded-lg">
-                  <img
+                <div className="h-32 mb-3 overflow-hidden rounded-lg relative">
+                  <Image
                     src={category.image}
                     alt={category.title}
-                    className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+                    fill
+                    sizes="(max-width: 768px) 100vw, 25vw"
+                    className="object-cover transition-transform duration-500 hover:scale-105"
                   />
                 </div>
 
