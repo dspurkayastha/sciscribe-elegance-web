@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import { Inter } from 'next/font/google';
+import { Suspense } from 'react';
 import Script from 'next/script';
 import { ThemeProvider } from '@/components/theme/ThemeProvider';
 import { TooltipProvider } from '@/components/ui/tooltip';
@@ -112,7 +113,7 @@ export default function RootLayout({
                 <JsonLd />
             </head>
             <body className={`${inter.className} bg-[#020817] text-white selection:bg-sciscribe-blue/30 selection:text-white min-h-screen relative antialiased`} suppressHydrationWarning>
-                <PageViewTracker />
+                <Suspense fallback={null}><PageViewTracker /></Suspense>
                 <ThemeProvider defaultTheme="dark" storageKey="sciscribe-theme">
                     <TooltipProvider>
                         <SmoothScroll>
