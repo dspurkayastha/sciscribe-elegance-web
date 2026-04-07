@@ -110,11 +110,10 @@ export default function RootLayout({
                 </Script>
 
                 {/* Ahrefs Web Analytics */}
-                <Script
+                <script
                     src="https://analytics.ahrefs.com/analytics.js"
                     data-key="BvdEqAh8YdrMHSmJn4iw2w"
                     async
-                    strategy="afterInteractive"
                 />
 
                 {/* Structured Data */}
