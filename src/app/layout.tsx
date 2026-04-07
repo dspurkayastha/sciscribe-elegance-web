@@ -109,6 +109,14 @@ export default function RootLayout({
                     `}
                 </Script>
 
+                {/* Ahrefs Web Analytics */}
+                <Script
+                    src="https://analytics.ahrefs.com/analytics.js"
+                    data-key="BvdEqAh8YdrMHSmJn4iw2w"
+                    async
+                    strategy="afterInteractive"
+                />
+
                 {/* Structured Data */}
                 <JsonLd />
             </head>
