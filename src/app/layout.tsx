@@ -57,6 +57,14 @@ export const metadata: Metadata = {
         card: 'summary_large_image',
         title: 'SciScribe Solutions | Expert Medical & Scientific Writing',
         description: 'Premium medical writing, scientific editing, and publication support.',
+        images: [
+            {
+                url: '/images/og-image.png',
+                width: 1200,
+                height: 630,
+                alt: 'SciScribe Solutions',
+            },
+        ],
     },
     robots: {
         index: true,

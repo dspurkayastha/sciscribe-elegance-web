@@ -24,6 +24,9 @@ export default function JsonLd() {
         email: "contact@sciscribesolutions.com",
         sameAs: [
             "https://wa.me/919395582679",
+            "https://www.facebook.com/profile.php?id=61576386514296",
+            "https://www.instagram.com/sciscribesolutions_ig/",
+            "https://www.linkedin.com/company/sciscribe-solutions",
         ],
         serviceType: [
             "Medical Writing",

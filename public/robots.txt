@@ -11,11 +11,9 @@ Sitemap: https://www.sciscribesolutions.com/sitemap.xml
 # Search engine specific
 User-agent: Googlebot
 Allow: /
-Crawl-delay: 1
 
 User-agent: Bingbot
 Allow: /
-Crawl-delay: 2
 
 # Social media bots
 User-agent: Twitterbot
@@ -30,11 +28,24 @@ Allow: /
 User-agent: Slackbot
 Allow: /
 
-# Block AI training crawlers (keep content for search, block scraping)
-User-agent: GPTBot
-Disallow: /
-
+# AI search bots (allow — these power search results and citations)
 User-agent: ChatGPT-User
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: meta-externalagent
+Allow: /
+
+# Block AI training crawlers (scraping for model training, not search)
+User-agent: GPTBot
 Disallow: /
 
 User-agent: Google-Extended
@@ -44,7 +55,4 @@ User-agent: CCBot
 Disallow: /
 
 User-agent: anthropic-ai
-Disallow: /
-
-User-agent: Claude-Web
 Disallow: /
